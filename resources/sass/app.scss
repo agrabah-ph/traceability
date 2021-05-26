@@ -1,0 +1,19 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.profile-pic {
+    height: 48px;
+    width: 48px;
+}
+
+.no-resize {
+    resize: vertical;
+    overflow: auto;
+    height: 106px !important;
+}
