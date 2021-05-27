@@ -29,6 +29,7 @@ Route::resource('farmer', 'FarmerController');
 Route::resource('product', 'ProductController');
 
 Route::resource('inventory', 'InventoryController');
+Route::get('farmer-inventory', 'InventoryController@farmerInventory')->name('farmer-inventory');
 
 Route::resource('trace', 'TraceController');
 

@@ -18,7 +18,7 @@
         </div>
         <div class="col-sm-8">
             <div class="title-action">
-                <a href="#" class="btn btn-primary">This is action area</a>
+                <button type="button" class="btn btn-primary btn-action" data-action="store">Store</button>
             </div>
         </div>
     </div>
@@ -40,48 +40,70 @@
                         </div>
 
                         <div class="visible-print text-center">
-                            {!! QrCode::size(200)->generate($url); !!}
-{{--                            <p>Scan me to return to the original page.</p>--}}
+                            {!! QrCode::size(100)->generate($url.'/'.$random); !!}
+{{--                            <p>Scan me to return to the original page.</p>--}} <br><br>
+                            <small>url: {{ $url.'/'.$random }}</small>
                         </div>
 
                     </div>
                 </div>
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Dispatch <small>info</small></h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-group">
+                            <label>Driver Name</label>
+                            <input type="text" name="driver-name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Vehicle Type</label>
+                            <input type="text" name="vehicle-type" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Plate No.</label>
+                            <input type="text" name="vehicle-plate" class="form-control">
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-8">
                 <div class="ibox float-e-margins">
 
                     <div class="ibox-content">
-
-                        <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
-                            <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th class="text-right" style="width: 50px">Qty</th>
-                                <th class="text-right" data-sort-ignore="true"><i class="fa fa-cogs text-success"></i></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($datas as $data)
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
                                 <tr>
-                                    <td>{{ $data->product->display_name }}
-                                    <td><input type="number" value="{{ $data->quantity }}" data-id="{{ $data->id }}" class="form-control"></td>
-                                    <td class="text-right">
-                                        <div class="btn-group text-right">
-                                            <a href="" class="action btn-white btn btn-xs"><i class="fa fa-search text-success"></i> Show</a>
-                                        </div>
+                                    <th>Product</th>
+                                    <th class="text-right" style="width: 120px">Qty</th>
+                                    <th class="text-right" style="width: 100px" data-sort-ignore="true"><i class="fa fa-cogs text-success"></i></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($datas as $data)
+                                    <tr>
+                                        <td>{{ $data->product->display_name }}
+{{--                                        <td class="text-right"><input type="text" value="{{ $data->quantity }}" data-id="{{ $data->id }}" class="form-control numonly input-s"></td>--}}
+                                        <td class="text-right">{{ $data->quantity }} {{ $data->unit }}</td>
+                                        <td class="text-right">
+                                            <div class="btn-group text-right">
+                                                <a href="" class="action btn-white btn btn-xs"><i class="fa fa-times text-danger"></i> remove</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td class="text-right" colspan="3">
+                                        <button type="button" class="btn btn-success btn-action" data-action="add-item">Add</button>
                                     </td>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td colspan="5">
-                                    <ul class="pagination pull-right"></ul>
-                                </td>
-                            </tr>
-                            </tfoot>
-                        </table>
+                                </tfoot>
+                            </table>
+                        </div>
 
                     </div>
                 </div>
@@ -133,9 +155,12 @@
                         // $('#form').submit();
                         var datas = new Array();
                         var inv = new Array();
-                        datas.push($('input[name=]').val());
-                        datas.push($('input[name=]').val());
-                        datas.push($('input[name=]').val());
+                        datas.push($('input[name=reference]').val());
+                        datas.push($('input[name=url]').val());
+                        datas.push($('input[name=driver-name]').val());
+                        datas.push($('input[name=vehicle-type]').val());
+                        datas.push($('input[name=vehicle-plate]').val());
+                        // datas.push($('input[name=]').val());
 
                         console.log(datas);
                         console.log(inv);
@@ -148,10 +173,13 @@
                         {{--});--}}
 
                         break;
+                    case 'add-item':
+                        addItem();
+                        break;
                 }
             });
 
-            {{--var modal = $('#modal');--}}
+            var modal = $('#modal');
             {{--$(document).on('click', '', function(){--}}
             {{--    modal.modal({backdrop: 'static', keyboard: false});--}}
             {{--    modal.modal('toggle');--}}
@@ -176,6 +204,13 @@
             {{-- });--}}
 
             {{--table.ajax.reload();--}}
+
+            function addItem() {
+                modal.find('.modal-title').text('Farmer Inventory');
+                modal.find('#modal-size').removeClass().addClass('modal-dialog modal-lg');
+                $.get('');
+                modal.modal({backdrop: 'static', keyboard: false});
+            }
 
         });
     </script>

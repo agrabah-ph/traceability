@@ -25,15 +25,16 @@ class TraceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $datas = Inventory::with('product')->get();
 //            return $datas;
-        $random = Str::random(10);
+        $random = Str::random(15);
 
         $host_names = explode(".", $_SERVER['HTTP_HOST']);
-        $domain = $host_names[count($host_names)-2] . "." . $host_names[count($host_names)-1]."/".$random;
-        return response()->view('user.trace.create', compact('datas', 'random', 'domain'));
+        $url = $host_names[count($host_names)-2] . "." . $host_names[count($host_names)-1]."/".$random;
+//        $url = $request->fullUrlWithQuery(['bar' => 'baz']);
+        return response()->view('user.trace.create', compact('datas', 'random', 'url'));
     }
 
     /**
