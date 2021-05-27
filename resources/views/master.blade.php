@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>MAMS LT&G | @yield('title')</title>
+    <title>Trace | @yield('title')</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png">
@@ -47,7 +47,7 @@
                         </ul>
                     </div>
                     <div class="logo-element">
-                        LTG
+                        Trace
                     </div>
                 </li>
 
@@ -93,10 +93,10 @@
 
         <div class="footer">
             <div class="float-right">
-                Developer: <strong>Agravah</strong>
+                <strong></strong>
             </div>
             <div>
-                <strong>Copyright</strong> MAMS LT&G Franchising Corporation &copy; 2015-2020
+                <strong></strong>
             </div>
         </div>
 

@@ -19,7 +19,7 @@ class UserTest extends TestCase
 //        $this->assertTrue(true);
 //    }
 
-    public function testAccountCreatedSuccessfully(Faker $faker)
+    public function testAccountCreatedSuccessfully() // Faker $faker
     {
 //        $user = factory(User::class)->create();
         $this->assertTrue(true);

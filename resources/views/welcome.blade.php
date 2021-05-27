@@ -82,7 +82,7 @@
             <div class="content">
                 <p>Welcome to:</p>
                 <div class="title m-b-md">
-                    AGRAVAH TRACE
+                    AGRABAH TRACE
                 </div>
             </div>
         </div>

@@ -27,11 +27,12 @@ Agrabah knows that with a better marketplace, we can help our Filipino farmers a
       ServerName agrabah-trace.test
       DocumentRoot /var/www/agrabah/public/
     ```
-1. rename laradock/.env.example to .env and update laradock/.env
+1. change to PHP v7.3 rename laradock/.env.example to .env and update laradock/.env
     ```
     PHP_VERSION=7.3
     ```
-1. run ```docker-compose build php-fpm``` and ```docker-compose build workspace```
+    run ```docker-compose build php-fpm``` 
+1. run ```docker-compose build workspace```
 1. go to laradock folder and run ```docker-compose up -d apache2 mysql```
 1. run ```docker-compose exec workspace bash```
 1. go to /var/www/agrabah-trace
