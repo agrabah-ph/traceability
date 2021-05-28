@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>MAMS LT&G | @yield('title')</title>
+    <title>Trace | @yield('title')</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png">
@@ -93,19 +93,15 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <h3 class="text-success">MAMS LT&G Franchising Corp.</h3>
+                        <h3 class="text-success">Agrabah</h3>
                     </div>
                 </div>
                 <div class="row m-b-lg justify-content-center">
                     <div class="col-lg-3">
                         <address>
                             <strong><span class="text-success">Head Office</span></strong><br/>
-                            2nd Floor, Soliman Building,<br/>
-                            Imelda Roces Ave.,<br/>
-                            Tahao Road,<br/>
-                            Legazpi City, 4500,<br/>
-                            Philippines <br>
-                            <abbr title="Phone"><i class="fa fa-phone"></i> : </abbr> (63) 052 431-2010
+                            
+                            <abbr title="Phone"><i class="fa fa-phone"></i> : </abbr>
                         </address>
                     </div>
                     <div class="col-lg-3 text-right">
@@ -127,20 +123,13 @@
                             Or follow us on social platform
                         </p>
                         <ul class="list-inline social-icon">
-                            <li class="list-inline-item">
-                                <a href="https://www.youtube.com/channel/UCpxZqYEJOLeH0fTfbu0--SA/featured" target="_blank"><i class="fa fa-youtube"></i></a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="https://www.facebook.com/mamsltg" target="_blank"><i class="fa fa-facebook"></i></a>
-                            </li>
-{{--                            <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a>--}}
-{{--                            </li>--}}
+                            
                         </ul>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12 text-center m-t-lg m-b-lg">
-                        <p><strong>&copy; 2015 MAMS LT&G Franchising Corporation</strong><br/> Franchise now!</p>
+                        <p></p>
                     </div>
                 </div>
             </div>
