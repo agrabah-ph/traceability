@@ -1,0 +1,60 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.profile-pic {
+    height: 48px;
+    width: 48px;
+}
+
+.no-resize {
+    resize: vertical;
+    overflow: auto;
+    height: 106px !important;
+}
+
+.agravah {
+
+}
+
+.farmer-login {
+
+    //border: 2px solid #808080;
+    max-width: 500px;
+    width: 90%;
+    margin: auto;
+    input {
+        border: none;
+        border-bottom: 2px solid #808080;
+        background-color: transparent;
+        font-size: 30px;
+        font-weight: bold;
+        text-align: center;
+        &:focus {
+            background-color: transparent;
+        }
+    }
+}
+
+.farmer-id {
+    border: 2px solid #808080;
+    background-color: #FFFFFF;
+    max-width: 300px;
+    width: 50%;
+    margin: auto;
+    img {
+        &.logo {
+            width: 150px;
+        }
+        &.qr{
+            border: 1px solid #3d3d3d;
+            padding: 5px;
+            width: 200px;
+        }
+    }
+}
