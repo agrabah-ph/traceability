@@ -1,6 +1,81 @@
 <?php
 
 use App\Profile;
+use App\User;
+use App\Farmer;
+use App\Inventory;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
+
+if (!function_exists('subdomain_title')) {
+    function subdomain_title($case)
+    {
+        $subdomain = join('.', explode('.', $_SERVER['HTTP_HOST'], -2));
+
+        switch($case){
+            case 'ucfirst':
+                $subdomain = ucfirst(config('app.name').' '.$subdomain);
+                break;
+            case 'ucwords':
+                $subdomain = ucwords(config('app.name').' '.$subdomain);
+                break;
+            default:
+                $subdomain = strtoupper(config('app.name').' '.$subdomain);
+                break;
+        }
+
+        return $subdomain;
+    }
+}
+if (!function_exists('subdomain_name')) {
+    function subdomain_name()
+    {
+        $subdomain = join('.', explode('.', $_SERVER['HTTP_HOST'], -2));
+
+        return $subdomain;
+    }
+}
+if (!function_exists('subDomainPath')) {
+    function subDomainPath($path)
+    {
+        $subdomain = join('.', explode('.', $_SERVER['HTTP_HOST'], -2));
+        if(is_null(Auth::user())){
+
+        }else{
+            if(auth()->user()->hasRole('super-admin')){
+                return 'admin.'.$path;
+            }
+        }
+
+        return $subdomain.'.'.$path;
+    }
+}
+if (!function_exists('farmerCount')) {
+    function farmerCount($id)
+    {
+        $ids = Inventory::where('leader_id', $id)->distinct('farmer_id')->pluck('farmer_id')->toArray();
+        $count = Farmer::whereIn('id', $ids)
+            ->count();
+
+//        $count = Farmer::where('master_id', $id)->count();
+
+        return $count;
+    }
+}
+if (!function_exists('productInvCount')) {
+    function productInvCount($id)
+    {
+        if(auth()->user()->hasRole('super-admin')){
+            $count = Inventory::where('product_id', $id)
+                ->count();
+        }else{
+            $count = Inventory::where('product_id', $id)
+                ->where('leader_id', Auth::user()->leader->id)
+                ->count();
+        }
+        return $count;
+    }
+}
 
 if (!function_exists('mobileMask')) {
     function mobileMask($string)
@@ -102,3 +177,25 @@ if (!function_exists('authProfilePic')) {
         return $data;
     }
 }
+
+
+if (!function_exists('computeAmortization')) {
+    function computeAmortization($amount, $terms, $interest, $decimal = 2)
+    {
+        $interest = $amount * ($interest/100);
+        $amount = $amount + $interest;
+        $amor = $amount / $terms;
+        $amor = preg_replace('/,/', '',number_format($amor, 2));
+        $amor = floatval($amor);
+        return $amor;
+    }
+}
+
+if (!function_exists('currency_format')) {
+    function currency_format($amount, $decimal = 2)
+    {
+        return number_format($amount, $decimal);
+    }
+}
+
+

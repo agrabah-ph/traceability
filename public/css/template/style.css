@@ -5193,6 +5193,16 @@ table.table-mail tr td {
 .text-success {
   color: #1c84c6 !important;
 }
+
+.text-green {
+  color: #38c172 !important;
+}
+
+a.text-green:hover,
+a.text-green:focus {
+  color: #27864f !important;
+}
+
 .text-info {
   color: #23c6c8 !important;
 }
