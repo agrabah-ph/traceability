@@ -18,6 +18,7 @@
     {!! Html::style('/font-awesome/css/font-awesome.css') !!}
     {!! Html::style('/css/template/animate.css') !!}
 {{--    {!! Html::style('/css/template/style.css') !!}--}}
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     @yield('styles')
 </head>
 <body style="background: #FFFFFF">

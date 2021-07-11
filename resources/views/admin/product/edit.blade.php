@@ -1,6 +1,6 @@
 @extends('admin.master')
 
-@section('title', 'Product Create')
+@section('title', 'Product Edit')
 
 @section('content')
 
@@ -18,7 +18,7 @@
         </div>
         <div class="col-sm-8">
             <div class="title-action">
-                <button type="button" class="btn btn-primary btn-action" data-action="store">Store</button>
+                <button type="button" class="btn btn-primary btn-action" data-action="store">Update</button>
             </div>
         </div>
     </div>
@@ -31,14 +31,14 @@
                     <div class="ibox-title">
                         <h5>Product Info</h5>
                     </div>
-                    <div class="ibox-content" id="product-info">
+                    <div class="ibox-content" id="product-info" data-id="{!! $product->id !!}">
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" class="form-control" name="name">
+                            <input type="text" value="{!! $product->display_name !!}" class="form-control" name="name">
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea name="description" class="form-control no-resize"></textarea>
+                            <textarea name="description" class="form-control no-resize">{!! $product->description !!}</textarea>
                         </div>
                     </div>
                 </div>
@@ -49,21 +49,45 @@
                         <h5>Product Unit/s</h5>
                     </div>
                     <div class="ibox-content" id="unit-info">
-                        <div class="row">
-                            <div class="col-sm-7">
-                                <div class="form-group">
-                                    <label>Name</label>
-                                    <input type="text" name="unit-name" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-5">
-                                <div class="form-group">
-                                    <label>Abbreviation</label>
-                                    <input type="text" name="unit-abbr" class="form-control">
-                                </div>
 
-                            </div>
-                        </div>
+                        @foreach($product->units as $key => $unit)
+                            @if ($key === 0)
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input type="text" name="unit-name" value="{{ $unit->name }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label>Abbreviation</label>
+                                            <input type="text" name="unit-abbr" value="{{ $unit->abbr }}" class="form-control">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            @else
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <div class="form-group">
+                                            <input type="text" name="unit-name" value="{{ $unit->name }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="text" name="unit-abbr" value="{{ $unit->abbr }}" class="form-control">
+                                                <span class="input-group-append">
+                                                <button type="button" class="btn btn-white btn-action" data-action="remove-unit"><i class="fa fa-minus-circle text-danger"></i></button>
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
+                        @endforeach
                     </div>
                     <div class="ibox-footer">
                         <button type="button" class="btn btn-block btn-success btn-action" data-action="add-unit">Add another</button>
@@ -124,35 +148,32 @@
                     case 'add-unit':
                         box.append('' +
                             '<div class="row">' +
-                                '<div class="col-sm-7">' +
-                                    '<div class="form-group">' +
-                                        '<input type="text" name="unit-name" class="form-control">' +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="col-sm-5">' +
-                                    '<div class="form-group">' +
-                                        '<div class="input-group">' +
-                                            '<input type="text" name="unit-abbr" class="form-control">' +
-                                            '<span class="input-group-append">' +
-                                                '<button type="button" class="btn btn-white btn-action" data-action="remove-unit"><i class="fa fa-minus-circle text-danger"></i></button>' +
-                                            '</span>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
+                            '<div class="col-sm-7">' +
+                            '<div class="form-group">' +
+                            '<input type="text" name="unit-name" class="form-control">' +
                             '</div>' +
-                        '');
+                            '</div>' +
+                            '<div class="col-sm-5">' +
+                            '<div class="form-group">' +
+                            '<div class="input-group">' +
+                            '<input type="text" name="unit-abbr" class="form-control">' +
+                            '<span class="input-group-append">' +
+                            '<button type="button" class="btn btn-white btn-action" data-action="remove-unit"><i class="fa fa-minus-circle text-danger"></i></button>' +
+                            '</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '');
                         break;
                     case 'store':
                         var product = new Array();
                         var unit = new Array();
-                        console.log(validateForms());
-                        if(validateForms() > 0){
-                            return false;
-                        }
                         $('#product-info').find('.form-control').each(function(){
                             product.push($(this).val());
                         });
-                        product.push('store');
+                        product.push('update');
+                        product.push($('#product-info').data('id'));
                         $('#unit-info').find('.row').each(function(){
                             var unitList = new Array();
                             unitList.push($(this).find('input[name=unit-name]').val());
@@ -172,18 +193,6 @@
                     case 'remove-unit':
                         $(this).closest('.row').remove();
                         break;
-                }
-
-                function validateForms(){
-                    var error = 0;
-                    $('.form-group').removeClass('has-error');
-                    $('.form-control').each(function(){
-                        if($(this).val().length < 1){
-                            error += 1;
-                            $(this).closest('.form-group').addClass('has-error');
-                        }
-                    });
-                    return error;
                 }
             });
         });

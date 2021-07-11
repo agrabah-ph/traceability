@@ -27,68 +27,134 @@
     </div>
 
     <div id="app" class="wrapper wrapper-content">
-{{--        {{ Form::open(array('route'=>array('farmer.store'), array('id'=>'form'))) }}--}}
-{{--        {{ Form::open(array('route'=>array('farmer.store'), 'method'=>'post', 'id'=>'form')) }}--}}
-        {{ Form::open(['route'=>'products.store','id'=>'form']) }}
-            <div class="row">
-                @csrf
-                <div class="col-sm-6">
+        {{--        {{ Form::open(array('route'=>array('farmer.store'), array('id'=>'form'))) }}--}}
+        {{--        {{ Form::open(array('route'=>array('farmer.store'), 'method'=>'post', 'id'=>'form')) }}--}}
 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Information
+        {{ Form::open(['route'=>'products.store','id'=>'form']) }}
+        <div class="row">
+            <div class="col-sm-6">
+                @csrf
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Information
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Financial Production Name</label>
+                            {{ Form::text('name', null, array('class'=>'form-control','required')) }}
                         </div>
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label>Financial Production Name</label>
-                                {{ Form::text('name', null, array('class'=>'form-control','required')) }}
-                            </div>
-                            <div class="form-group">
-                                <label>Financial Product Type</label>
-                                {{ Form::select('type', $types, null, array('class'=>'form-control')) }}
-                            </div>
-                            <div class="form-group">
-                                <label>Product Description</label>
-                                <textarea name="description" id="" cols="30" rows="5" class="form-control" style="resize: none"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Loanable Amount</label>
-                                <input name="amount" type="text" class="form-control money">
-                            </div>
-                            <div class="form-group">
-                                <label>Loan Duration (Days)</label>
-                                <input name="duration" type="text" data-mask="0#" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Interest Rate (%)</label>
-                                <input name="interest_rate" type="text" data-mask="##0%"   class="form-control">
-                            </div>
+                        <div class="form-group">
+                            <label>Financial Product Type</label>
+                            {{ Form::select('type', $types, null, array('class'=>'form-control')) }}
+                        </div>
+                        <div class="form-group">
+                            <label>Product Description</label>
+                            <textarea name="description" id="" cols="30" rows="5" class="form-control"
+                                      style="resize: none"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Loanable Amount</label>
+                            <input name="amount" id="amount" type="text" class="form-control money changeSchedule">
+                        </div>
+                        <div class="form-group">
+                            <label>Loan Terms</label>
+                            <input name="duration" id="duration" type="text" data-mask="0#" class="form-control changeSchedule">
+                        </div>
+                        <div class="form-group">
+                            <label>Interest Rate (%)</label>
+                            <input name="interest_rate" id="interest_rate" type="text" data-mask="##0%" class="form-control changeSchedule">
                         </div>
                     </div>
-
                 </div>
+
+                <input type="hidden" name="payment_schedule_input" id="payment_schedule_input">
+            </div>
+
+            <div class="col-sm-6">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Payment Schedules
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Timing</label>
+                            <select name="timing" id="timing" class="form-control changeSchedule">
+                                <option value="day">Day</option>
+                                <option value="monthly" selected>Monthly</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Allowance</label>
+                                    <input name="allowance" id="allowance" type="text" data-mask="0#" value="1" class="form-control changeSchedule">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>1st Payment Allowance</label>
+                                    <input name="first_allowance" id="first_allowance" type="text" data-mask="0#" value="0" class="form-control changeSchedule">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="schedule_inputs">
+                            <div class="col">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td>Assuming Approved Date</td>
+                                        <td class="text-right">{{now()->toFormattedDateString()}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Loan Amount</td>
+                                        <td id="total_loan_amount" class="text-right">0</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Due Date</th>
+                                <th class="text-right">Amount</th>
+{{--                                <th class="text-right">Action</th>--}}
+                            </tr>
+                            </thead>
+                            <tbody id="payment_schedule_review">
+                                <tr>
+                                    <td colspan="99">--</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
         {{ Form::close() }}
 
-    </div>
+        <div class="modal inmodal fade" id="modal" data-type="" tabindex="-1" role="dialog" aria-hidden="true"
+             data-category="" data-variant="" data-bal="">
+            <div id="modal-size">
+                <div class="modal-content">
+                    <div class="modal-header" style="padding: 15px;">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                                    class="sr-only">Close</span></button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
 
-    <div class="modal inmodal fade" id="modal" data-type="" tabindex="-1" role="dialog" aria-hidden="true" data-category="" data-variant="" data-bal="">
-        <div id="modal-size">
-            <div class="modal-content">
-                <div class="modal-header" style="padding: 15px;">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="modal-save-btn">Save changes</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="modal-save-btn">Save changes</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 @endsection
 
 
@@ -108,11 +174,57 @@
     {{--    {!! Html::script('/js/template/plugins/sweetalert/sweetalert.min.js') !!}--}}
     {{--    {!! Html::script('/js/template/moment.js') !!}--}}
     <script>
-        $(document).ready(function(){
 
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function populateSchedule() {
+            var duration = $('#duration').val()
+            var amount = $('#amount').val()
+            var interest_rate = $('#interest_rate').val()
+            var timing = $('#timing').val()
+            var allowance = $('#allowance').val()
+            var first_allowance = $('#first_allowance').val()
+
+            $.get('{!! route('generate-schedule') !!}', {
+                duration:duration,
+                amount:amount,
+                interest_rate:interest_rate,
+                timing:timing,
+                allowance:allowance,
+                first_allowance:first_allowance,
+            }, function(data){
+
+                var table = '';
+                var total = 0;
+                for (let i = 0; i < data.length; i++) {
+                    const datum = data[i];
+                    table +='<tr>';
+                    table +='<td>';
+                    table += datum.date;
+                    table +='</td>'
+                    table +='<td class="text-right">';
+                    table += numberWithCommas(datum.amount);
+                    table +='</td>';
+                    table +='</tr>';
+                    total += datum.amount;
+                }
+                $('#total_loan_amount').html(numberWithCommas(total));
+                $('#payment_schedule_review').empty().append(table);
+                $('#payment_schedule_input').val(JSON.stringify(data))
+            });
+        }
+
+        $(document).on('change, input', '.changeSchedule', function () {
+            populateSchedule();
+        });
+
+        $(document).ready(function () {
+            populateSchedule();
             $('.money').mask("#,##0.00", {reverse: true});
 
-            $(document).on('click', '.btn-action', function(){
+            $(document).on('click', '.btn-action', function () {
                 switch ($(this).data('action')) {
                     case 'store':
                         $('#form').submit();

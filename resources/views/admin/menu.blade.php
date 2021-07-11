@@ -30,6 +30,10 @@
     </ul>
 </li>
 
+<li class="{{ (request()->is('loan/applicants')) ? 'active' : '' }}">
+    <a href="{!! route('loan-applicant') !!}"><i class="fa fa-money"></i> <span class="nav-label">Loan Applications</span></a>
+</li>
+
 <li class="{{ (request()->is('inventory*')) ? 'active' : '' }}">
     <a href="{!! route('inventory.index') !!}"><i class="fa fa-list-alt"></i> <span class="nav-label">Inventory</span></a>
 </li>

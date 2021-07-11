@@ -21,6 +21,8 @@ class CreateInventoriesTable extends Migration
             $table->enum('quality', array('High', 'Medium', 'Low'));
             $table->integer('quantity');
             $table->string('unit');
+            $table->double('price');
+            $table->double('total');
             $table->text('details')->nullable();
             $table->enum('status', array('Accepted', 'Loaded', 'Depart', 'Transit', 'Arrive', 'Delivered', 'Undeliverable'));
             $table->string('remark')->nullable();

@@ -150,36 +150,50 @@
                         modal.find('#modal-size').removeClass().addClass('modal-dialog modal-sm');
                         modal.find('.modal-body').empty().append('' +
                             '<div class="form-group">' +
-                            '<label>Products <small class="text-danger">*</small></label>' +
-                            // '<select name="product" class="form-control">' +
-                            '<select name="product" class="select2 form-control">' +
-                            '<option value=""></option>' +
-                            lists.join('') +
-                            '</select>' +
-                            '</div>' +
-                            '<div class="form-group">' +
-                            '<label>Quality <small class="text-danger">*</small></label>' +
-                            '<select name="quality" class="form-control">' +
-                            '<option value="">select</option>' +
-                            '<option value="High">High</option>' +
-                            '<option value="Medium">Medium</option>' +
-                            '<option value="Low">Low</option>' +
-                            '</select>' +
+                                '<label>Products <small class="text-danger">*</small></label>' +
+                                '<select name="product" class="select2 form-control">' +
+                                    '<option value=""></option>' +
+                                    lists.join('') +
+                                '</select>' +
                             '</div>' +
                             '<div class="row">' +
-                            '<div class="col-sm-7 form-group">' +
-                            '<label>Unit <small class="text-danger">*</small></label>' +
-                            '<select name="unit" class="form-control"></select>' +
-                            // '<input type="text" name="unit" class="form-control">' +
+                                '<div class="col">' +
+                                    '<div class="form-group">' +
+                                        '<label>Quality <small class="text-danger">*</small></label>' +
+                                        '<select name="quality" class="form-control">' +
+                                            '<option value="">select</option>' +
+                                            '<option value="High">High</option>' +
+                                            '<option value="Medium">Medium</option>' +
+                                            '<option value="Low">Low</option>' +
+                                        '</select>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="col">' +
+                                    '<div class="form-group">' +
+                                        '<label>Unit <small class="text-danger">*</small></label>' +
+                                        '<select name="unit" class="form-control"></select>' +
+                                    '</div>' +
+                                '</div>' +
                             '</div>' +
-                            '<div class="col form-group">' +
-                            '<label>Qty <small class="text-danger">*</small></label>' +
-                            '<input type="text" name="quantity" class="form-control numonly">' +
+                            '<div class="row">' +
+                                '<div class="col-lg-5 form-group">' +
+                                    '<label>Qty <small class="text-danger">*</small></label>' +
+                                    '<input type="number" name="quantity" value="0" class="form-control numonly amount-input text-right">' +
+                                '</div>' +
+                                '<div class="col form-group">' +
+                                    '<label>Unit price <small class="text-danger">*</small></label>' +
+                                    '<input type="text" name="price" value="0" class="form-control numonly amount-input text-right">' +
+                                '</div>' +
                             '</div>' +
+                            '<div class="row">' +
+                                '<div class="col form-group">' +
+                                    '<label>Total amount <small class="text-danger">*</small></label>' +
+                                    '<input type="text" name="total" placeholder="0.00" class="form-control text-right" readonly>' +
+                                '</div>' +
                             '</div>' +
                             '<div class="form-group">' +
-                            '<label>Remark</label>' +
-                            '<textarea name="remark" class="form-control no-resize"></textarea>' +
+                                '<label>Remark</label>' +
+                                '<textarea name="remark" class="form-control no-resize"></textarea>' +
                             '</div>' +
                             '');
 
@@ -206,6 +220,8 @@
                         invDetails.push(modal.find('select[name=quality]').val());
                         invDetails.push(modal.find('select[name=unit]').val());
                         invDetails.push(modal.find('input[name=quantity]').val());
+                        invDetails.push(modal.find('input[name=price]').val());
+                        invDetails.push(modal.find('input[name=total]').val());
                         invDetails.push(modal.find('textarea[name=remark]').val());
 
                         console.log(invDetails);
@@ -260,6 +276,19 @@
                     }
                 });
                 modal.find('select[name=unit]').empty().append(lists);
+            });
+
+            $(document).on('keyup change', '.amount-input', function(){
+
+                // console.log('price: '+ modal.find('input[name=price]').val());
+                // console.log('quantity: '+ modal.find('input[name=quantity]').val());
+
+                var amount = 0,
+                    price = parseFloat(modal.find('input[name=price]').val()),
+                    quantity = parseInt(modal.find('input[name=quantity]').val()),
+                    total = modal.find('input[name=total]');
+                amount = quantity * price;
+                total.val(amount);
             });
 
 

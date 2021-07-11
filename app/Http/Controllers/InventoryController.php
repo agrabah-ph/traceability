@@ -150,13 +150,15 @@ class InventoryController extends Controller
     {
         $details = $request->input('details');
         $inventory = new Inventory();
-        $inventory->master_id = Auth::user()->leader->id;
+        $inventory->leader_id = Auth::user()->leader->id;
         $inventory->farmer_id = $details[1];
         $inventory->product_id = $details[2];
         $inventory->quality = $details[3];
         $inventory->unit = $details[4];
         $inventory->quantity = $details[5];
-        $inventory->remark = $details[6];
+        $inventory->price = $details[6];
+        $inventory->total = $details[7];
+        $inventory->remark = $details[8];
         $inventory->status = 'Accepted';
         if($inventory->save()){
             $inventory = Inventory::with('product')->find($inventory->id);

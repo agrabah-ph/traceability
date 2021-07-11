@@ -304,8 +304,22 @@ body {
           align-items: center;
   font-size: 1.2rem;
   padding: 7rem 8%;
+  background-size: cover;
+  background-position: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   background-color: #084d91;
   color: #fff;
+}
+.page-forms .sign-in .left:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
 }
 @media (max-width: 1650px) {
   .page-forms .sign-in .left {
@@ -321,7 +335,10 @@ body {
   background-color: #9ed35a;
 }
 .page-forms .sign-in .left .logo {
-  margin-bottom: 5rem;
+  max-width: 55%;
+  -webkit-filter: brightness(0) invert(1);
+          filter: brightness(0) invert(1);
+  position: relative;
 }
 .page-forms .sign-in .left ul {
   padding: 0;
@@ -342,6 +359,214 @@ body {
   .page-forms .sign-in .right {
     padding: 1rem 5%;
   }
+}
+
+.page-register .sign-in .left {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.page-register .sign-in .left:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+}
+.page-register .sign-in .left .text {
+  position: relative;
+  font-size: 2.5rem;
+}
+.page-register .sign-in .right {
+  padding: 2rem;
+}
+.page-register .sign-in .right small {
+  display: block;
+  text-align: center;
+  font-size: 1rem;
+  color: #948b96;
+}
+.page-register .sign-in .right .steps ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  margin-bottom: 2rem;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+.page-register .sign-in .right .steps ul li {
+  width: calc(100%/4);
+  position: relative;
+  text-align: center;
+}
+@media (max-width: 500px) {
+  .page-register .sign-in .right .steps ul li {
+    width: calc(100%/2);
+    margin-bottom: 1rem;
+  }
+}
+.page-register .sign-in .right .steps ul li:before, .page-register .sign-in .right .steps ul li:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  border-top: 1px solid #dadada;
+  border-bottom: 1px solid #dadada;
+}
+.page-register .sign-in .right .steps ul li:before {
+  background-color: #eee;
+}
+.page-register .sign-in .right .steps ul li:after {
+  width: 0%;
+  background-color: #9ed35a;
+  border-top: 1px solid #9ed35a;
+  border-bottom: 1px solid #9ed35a;
+}
+.page-register .sign-in .right .steps ul li a {
+  margin: auto;
+  display: inline-block;
+  background-color: #eee;
+}
+@media (max-width: 500px) {
+  .page-register .sign-in .right .steps ul li a {
+    width: 90%;
+  }
+}
+.page-register .sign-in .right .steps ul li:first-child:before, .page-register .sign-in .right .steps ul li:last-child:before {
+  width: 60%;
+}
+.page-register .sign-in .right .steps ul li:first-child:before, .page-register .sign-in .right .steps ul li:first-child:after {
+  right: 0;
+  left: auto;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+.page-register .sign-in .right .steps ul li:last-child:before, .page-register .sign-in .right .steps ul li:last-child:after {
+  right: auto;
+  left: 0;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+.page-register .sign-in .right .steps ul li.current:after, .page-register .sign-in .right .steps ul li.done:after {
+  width: 100%;
+}
+.page-register .sign-in .right .steps ul li.current.first:after, .page-register .sign-in .right .steps ul li.current.last:after, .page-register .sign-in .right .steps ul li.done.first:after, .page-register .sign-in .right .steps ul li.done.last:after {
+  width: 60% !important;
+}
+.page-register .sign-in .right .steps ul li.current a, .page-register .sign-in .right .steps ul li.done a {
+  background-color: #9ed35a;
+}
+.page-register .sign-in .right .wizard-big.wizard > .content {
+  min-height: 500px;
+  background-color: transparent;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+@media (max-width: 500px) {
+  .page-register .sign-in .right .wizard-big.wizard > .content {
+    min-height: 350px;
+  }
+}
+.page-register .sign-in .right .wizard-big.wizard > .content h2 {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #948b96;
+}
+.page-register .sign-in .right .wizard-big.wizard > .content .form-group {
+  position: relative;
+  margin-bottom: 2rem;
+}
+.page-register .sign-in .right .wizard-big.wizard > .content .form-group label:not(.check-labels) {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  color: #948b96;
+}
+.page-register .sign-in .right .wizard-big.wizard > .content .form-group label:not(.check-labels).error {
+  color: #e3342f;
+}
+.page-register .sign-in .right .wizard-big.wizard > .content .form-group input, .page-register .sign-in .right .wizard-big.wizard > .content .form-group textarea {
+  background-color: #eee;
+  border: 1px solid #eee !important;
+  border-bottom: 2px solid #e3342f !important;
+  border-radius: 0;
+  font-size: 1rem;
+  padding: 1.5rem 1rem;
+  font-weight: bold;
+}
+.page-register .sign-in .right .wizard-big.wizard > .content .form-group input:focus + label, .page-register .sign-in .right .wizard-big.wizard > .content .form-group input.error + label, .page-register .sign-in .right .wizard-big.wizard > .content .form-group input.valid + label, .page-register .sign-in .right .wizard-big.wizard > .content .form-group textarea:focus + label, .page-register .sign-in .right .wizard-big.wizard > .content .form-group textarea.error + label, .page-register .sign-in .right .wizard-big.wizard > .content .form-group textarea.valid + label {
+  font-size: 13px;
+  top: -10px;
+  color: #e3342f;
+}
+.page-register .sign-in .right .wizard-big.wizard > .content .form-group textarea + label {
+  top: 20%;
+}
+.page-register .sign-in .right .wizard-big.wizard > .actions {
+  width: 90%;
+  margin: auto;
+}
+.page-register .sign-in .right .wizard-big.wizard > .actions ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+}
+.page-register .sign-in .right .wizard-big.wizard > .actions ul li a {
+  background: #9ed35a;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+.page-register .sign-in .right .wizard-big.wizard > .actions ul li a:hover {
+  opacity: 0.7;
+}
+.page-register .sign-in .right .wizard-big.wizard > .actions ul li.disabled a {
+  background: #eee;
+}
+.page-register.page-loan-provider .sign-in .right .steps ul li:after {
+  width: 0%;
+  background-color: #3a8cdd;
+  border-top: 1px solid #3a8cdd;
+  border-bottom: 1px solid #3a8cdd;
+}
+.page-register.page-loan-provider .sign-in .right .steps ul li.current a, .page-register.page-loan-provider .sign-in .right .steps ul li.done a {
+  background-color: #3a8cdd;
+}
+.page-register.page-loan-provider .sign-in .right .wizard-big.wizard > .actions ul li a {
+  background: #3a8cdd;
+}
+.page-register.page-loan-provider .sign-in .right .wizard-big.wizard > .actions ul li.disabled a {
+  background: #eee;
 }
 
 body {

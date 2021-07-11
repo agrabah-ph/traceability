@@ -13,7 +13,7 @@
     </ul>
 </li>
 
-<li class="{{ (request()->is('loan')) ? 'active' : '' }}">
+<li class="{{ (request()->is('loan/applicants')) ? 'active' : '' }}">
     <a href="{!! route('loan-applicant') !!}"><i class="fa fa-money"></i> <span class="nav-label">Loan Application</span></a>
 </li>
 
@@ -26,7 +26,7 @@
         <a href="{!! route('loan-product-list') !!}"><i class="fa fa-list"></i> <span class="nav-label">Loan Products</span></a>
     </li>
 
-    <li class="{{ (request()->is('loan')) ? 'active' : '' }}">
+    <li class="{{ (request()->is('my-loans')) ? 'active' : '' }}">
         <a href="{!! route('my-loans') !!}"><i class="fa fa-money"></i> <span class="nav-label">My Loans</span></a>
     </li>
 

@@ -1,4 +1,4 @@
-@extends(subdomain_name().'.master')
+@extends('admin.master')
 
 @section('title', 'Loan Applications')
 
@@ -214,7 +214,7 @@
                             id: id,
                             status: 'Active'
                         }, function(data){
-                            // location.reload();
+                            location.reload();
                         });
                         break;
                 }

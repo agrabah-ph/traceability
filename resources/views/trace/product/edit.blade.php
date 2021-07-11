@@ -1,4 +1,4 @@
-@extends('admin.master')
+@extends(subdomain_name().'.master')
 
 @section('title', 'Product Create')
 
@@ -124,35 +124,30 @@
                     case 'add-unit':
                         box.append('' +
                             '<div class="row">' +
-                                '<div class="col-sm-7">' +
-                                    '<div class="form-group">' +
-                                        '<input type="text" name="unit-name" class="form-control">' +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="col-sm-5">' +
-                                    '<div class="form-group">' +
-                                        '<div class="input-group">' +
-                                            '<input type="text" name="unit-abbr" class="form-control">' +
-                                            '<span class="input-group-append">' +
-                                                '<button type="button" class="btn btn-white btn-action" data-action="remove-unit"><i class="fa fa-minus-circle text-danger"></i></button>' +
-                                            '</span>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
+                            '<div class="col-sm-7">' +
+                            '<div class="form-group">' +
+                            '<input type="text" name="unit-name" class="form-control">' +
                             '</div>' +
-                        '');
+                            '</div>' +
+                            '<div class="col-sm-5">' +
+                            '<div class="form-group">' +
+                            '<div class="input-group">' +
+                            '<input type="text" name="unit-abbr" class="form-control">' +
+                            '<span class="input-group-append">' +
+                            '<button type="button" class="btn btn-white btn-action" data-action="remove-unit"><i class="fa fa-minus-circle text-danger"></i></button>' +
+                            '</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '');
                         break;
                     case 'store':
                         var product = new Array();
                         var unit = new Array();
-                        console.log(validateForms());
-                        if(validateForms() > 0){
-                            return false;
-                        }
                         $('#product-info').find('.form-control').each(function(){
                             product.push($(this).val());
                         });
-                        product.push('store');
                         $('#unit-info').find('.row').each(function(){
                             var unitList = new Array();
                             unitList.push($(this).find('input[name=unit-name]').val());
@@ -172,18 +167,6 @@
                     case 'remove-unit':
                         $(this).closest('.row').remove();
                         break;
-                }
-
-                function validateForms(){
-                    var error = 0;
-                    $('.form-group').removeClass('has-error');
-                    $('.form-control').each(function(){
-                        if($(this).val().length < 1){
-                            error += 1;
-                            $(this).closest('.form-group').addClass('has-error');
-                        }
-                    });
-                    return error;
                 }
             });
         });

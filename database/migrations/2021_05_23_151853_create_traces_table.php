@@ -21,6 +21,7 @@ class CreateTracesTable extends Migration
             $table->string('image')->nullable();
             $table->string('image_path')->nullable();
             $table->boolean('active')->default(1);
+            $table->boolean('delivered')->default(0);
             $table->integer('user_id');
             $table->timestamps();
         });

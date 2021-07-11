@@ -161,8 +161,18 @@
                                     // '<input type="text" name="unit" class="form-control">' +
                                 '</div>' +
                                 '<div class="col form-group">' +
+                                    '<label>Price/Unit <small class="text-danger">*</small></label>' +
+                                    '<input type="text" name="price" class="form-control numonly">' +
+                                '</div>' +
+                            '</div>' +
+                            '<div class="row">' +
+                                '<div class="col form-group">' +
                                     '<label>Qty <small class="text-danger">*</small></label>' +
                                     '<input type="text" name="quantity" class="form-control numonly">' +
+                                '</div>' +
+                                '<div class="col form-group">' +
+                                    '<label>Total <small class="text-danger">*</small></label>' +
+                                    '<input type="text" name="total" class="form-control numonly">' +
                                 '</div>' +
                             '</div>' +
                             '<div class="form-group">' +

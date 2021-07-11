@@ -79,10 +79,20 @@
                                                 <td class="text-center text-danger">{{$loan->status}}</td>
                                             @endif
                                             <td class="project-actions">
-                                                <a href="#" class="btn btn-white btn-sm sched_modal_trigger"
+                                                <a href="#" class="btn btn-success btn-sm sched_modal_trigger"
                                                    data-schedule="{{$loan->payment_schedules}}"><i
                                                             class="fa fa-calendar"></i> Schedules </a>
-                                                {{--                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>--}}
+                                                <a href="#" class="btn btn-primary btn-sm payment_modal_trigger"
+                                                   data-amount_monthly="{{currency_format(computeAmortization($loan->product->amount, $loan->product->duration, $loan->product->interest_rate, 2))}}"
+                                                   data-amount_max="{{currency_format(computeAmortization($loan->product->amount, $loan->product->duration, $loan->product->interest_rate, 2) * $loan->product->duration)}}"
+                                                   data-id="{{$loan->id}}"
+                                                   data-status="{{$loan->status}}"
+                                                ><i class="fa fa-money"></i> Pay </a>
+                                                <a href="#" class="btn btn-warning btn-sm payment_history_modal_trigger"
+                                                   data-payments="{{$loan->payments}}"
+                                                   data-status="{{$loan->status}}"
+                                                ><i
+                                                            class="fa fa-list"></i> Payments </a>
                                             </td>
                                         </tr>
                                     @empty
@@ -120,38 +130,9 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="sched_modal" data-type="" tabindex="-1" role="dialog" aria-hidden="true"
-         data-category="" data-variant="" data-bal="">
-        <div id="modal-size" class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="padding: 15px;">
-                    <h3 class="modal-title">Payment Schedules</h3>
-                    <button type="button" class="close" data-dismiss="modal"><span
-                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Due Date</th>
-                            <th class="text-right">Amount</th>
-                            <th>Status</th>
-                        </tr>
-                        </thead>
-                        <tbody id="schedules_tbody">
-
-                        </tbody>
-
-                    </table>
-                </div>
-                <div class="modal-footer">
-{{--                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>--}}
-{{--                    <button type="button" class="btn btn-primary" id="modal-save-btn">Save changes</button>--}}
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('loan.farmer.loans.modals.payment_schedules')
+    @include('loan.farmer.loans.modals.payment_verification')
+    @include('loan.farmer.loans.modals.payment_history')
 
 @endsection
 
@@ -161,6 +142,13 @@
     {{--    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">--}}
     {{--    {!! Html::style('/css/template/plugins/sweetalert/sweetalert.css') !!}--}}
     {!! Html::style('/css/template/plugins/sweetalert/sweetalert.css') !!}
+    {!! Html::style('/css/template/plugins/datapicker/datepicker3.css') !!}
+
+    <style>
+        #verify_payment{
+            display: none;
+        }
+    </style>
 @endsection
 
 @section('scripts')
@@ -169,6 +157,10 @@
     {!! Html::script('/js/template/moment.js') !!}
     {!! Html::script('/js/template/numeral.js') !!}
     {!! Html::script('/js/template/plugins/sweetalert/sweetalert.min.js') !!}
+    {!! Html::script('/js/template/plugins/jqueryMask/jquery.mask.min.js') !!}
+    {!! Html::script('/js/template/plugins/datapicker/bootstrap-datepicker.js') !!}
+
+
     {{--    {!! Html::script(asset('vendor/datatables/buttons.server-side.js')) !!}--}}
     {{--    {!! $dataTable->scripts() !!}--}}
     {{--    {!! Html::script('/js/template/plugins/sweetalert/sweetalert.min.js') !!}--}}
@@ -179,13 +171,79 @@
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
+        $(document).on('click', '.payment_history_modal_trigger', function () {
+            $('#payment_history_modal').modal('show');
+            var data_payments = $(this).data('payments');
+            var data_status = $(this).data('status');
+
+            $('#payment_history_tbody').empty();
+
+            if (data_status != 'Active') {
+                let setRows = '<tr>';
+                setRows += '<td colspan="99" class="text-center">';
+                setRows += "Loan Not Approved yet";
+                setRows += '</td>';
+                setRows += '</tr>';
+                $('#payment_history_tbody').append(setRows);
+            }
+
+            if (data_status == 'Active') {
+                for (let i = 0; i < data_payments.length; i++) {
+                    const dataPayment = data_payments[i];
+                    console.log(dataPayment)
+                    let setRows = '<tr>';
+                    setRows += '<td>';
+                    setRows += dataPayment.paid_date_formatted;
+                    setRows += '</td>';
+                    setRows += '<td>';
+                    setRows += dataPayment.payment_method;
+                    setRows += '</td>';
+                    setRows += '<td class="text-right">';
+                    setRows += numberWithCommas(dataPayment.paid_amount);
+                    setRows += '</td>';
+                    setRows += '<td>';
+                    setRows += dataPayment.reference_number;
+                    setRows += '</td>';
+                    setRows += '<td>';
+                    setRows += '<a target="_blank" href="'+dataPayment.proof_of_payment+'?type=view">View</a> | ';
+                    setRows += '<a href="'+dataPayment.proof_of_payment+'?type=download">Download</a>';
+                    setRows += '</td>';
+                    setRows += '</tr>';
+                    $('#payment_history_tbody').append(setRows);
+                }
+            }
+        });
+        $(document).on('click', '.payment_modal_trigger', function () {
+            var verify_payment_modal = $('#verify_payment_modal');
+            verify_payment_modal.modal('show');
+            var data_monthly = $(this).data('amount_monthly');
+            var data_max = $(this).data('amount_max');
+            var data_id = $(this).data('id');
+            var data_status = $(this).data('status');
+            $('#verify_payment_show').hide();
+            if(data_status == 'Active'){
+                $('#verify_payment_show').show();
+            }
+            $('.verify_amount_fast_monthly').attr('data-amount', data_monthly);
+            $('.verify_amount_fast_max').attr('data-amount', data_max);
+            $('#verify_loan_id').val(data_id);
+        });
+        $(document).on('click', '#verify_payment_show', function () {
+            $('#verify_payment').show();
+            $(this).hide();
+
+        });
+        $(document).on('click', '.verify_amount_fast_btn', function () {
+            var data_amount = $(this).data('amount');
+             $('#verify_amount').val(data_amount);
+        });
         $(document).on('click', '.sched_modal_trigger', function () {
             var sched_modal = $('#sched_modal');
             sched_modal.modal('show');
             $('#schedules_tbody').empty();
             var data_schedules = $(this).data('schedule')
 
-            if(data_schedules.length < 1){
+            if (data_schedules.length < 1) {
                 let setRows = '<tr>';
                 setRows += '<td colspan="99" class="text-center">';
                 setRows += "Loan Not Approved yet";
@@ -203,6 +261,11 @@
                 setRows += '<td class="text-right">';
                 setRows += numberWithCommas(dataSchedule.payable_amount);
                 setRows += '</td>';
+                setRows += '<td class="text-right">';
+                if(dataSchedule.paid_amount > 0){
+                    setRows += numberWithCommas(dataSchedule.paid_amount);
+                }
+                setRows += '</td>';
                 setRows += '<td>';
                 setRows += dataSchedule.status_display;
                 setRows += '</td>';
@@ -211,6 +274,38 @@
             }
         });
         $(document).ready(function () {
+
+
+            var mem = $('.datepicker').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true,
+                format: 'yyyy-mm-dd',
+                placement: 'bottom'
+            });
+
+
+            var myInput = document.getElementById('myFileInput');
+
+            function sendPic() {
+                var file = myInput.files[0];
+
+                // Send file here either by adding it to a `FormData` object
+                // and sending that via XHR, or by simply passing the file into
+                // the `send` method of an XHR instance.
+            }
+
+            myInput.addEventListener('change', sendPic, false);
+
+            $('.money').mask("#,##0.00", {reverse: true});
+
+            var verify_payment_modal = $('#verify_payment_modal');
+            verify_payment_modal.on('hidden.bs.modal', function () {
+                $('#verify_payment').hide();
+                $('#verify_payment_show').show();
+            });
             // var modal = $('#modal');
             {{--$(document).on('click', '', function(){--}}
             {{--    modal.modal({backdrop: 'static', keyboard: false});--}}

@@ -4,21 +4,23 @@
 
     <main class="page-forms">
         <div class="row no-gutters sign-in">
-            <div class="col-12 col-lg-4 left d-none d-lg-block">
+            <div class="col-12 col-lg-4 left d-none d-lg-flex" style="background-image: url({{ asset('images/loan/bg-img.jpg') }})">
                 <div>
-                    <img src="{{ asset('images/logo-2.png') }}" alt="logo" class="img-fluid d-block mx-auto logo">
-                    <div class="content">
-                        <h2>{{ config('app.name', 'Laravel') }}</h2>
+                    <a href="{{ asset('/') }}">
+                        <img src="{{ asset('images/agrabah-logo.png') }}" alt="logo" class="img-fluid d-block mx-auto logo">
+                    </a>
+                    {{--<div class="content">--}}
+                    {{--<h2>{{ config('app.name', 'Laravel') }}</h2>--}}
 
-                        <ul>
-                            <li>Easy To Use</li>
-                            <li>Report Generator</li>
-                            <li>Join us now</li>
-                        </ul>
-                    </div>
+                    {{--<ul>--}}
+                    {{--<li>Easy To Use</li>--}}
+                    {{--<li>Report Generator</li>--}}
+                    {{--<li>Join us now</li>--}}
+                    {{--</ul>--}}
+                    {{--</div>--}}
                 </div>
 
-                <a href="{{ asset('/') }}" class="link">Back to homepage</a>
+                {{--                <a href="{{ asset('/') }}" class="link">Back to homepage</a>--}}
 
             </div>
             <div class="col-12 col-lg-8 right d-flex align-items-center justify-content-center">
@@ -43,8 +45,8 @@
                             <input type="password" name="password" placeholder="*****" class=" @error('password') is-invalid @enderror" required autocomplete="current-password">
                             @error('password')
                             <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         </div>
 
@@ -76,7 +78,7 @@
 
                         {{--<a href="" class="link d-flex justify-content-center">Forgot password?</a>--}}
 
-                        <div class="register-text text-center">Not registered yet? <a href="{{ route('register-loan-provider') }}">Sign up</a> now!</div>
+{{--                        <div class="register-text text-center">Not registered yet? <a href="/registration">Sign up</a> now!</div>--}}
                     </form>
                 </div>
             </div>

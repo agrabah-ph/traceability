@@ -264,7 +264,24 @@ class FarmerController extends Controller
         $term = $request->input('term');
         $amount = $request->input('amount');
 
+
+        $is_farmer = Auth::user()->farmer;
+        $removeProductWithActiveLoan = [];
+        if($is_farmer){
+            $removeProductWithActiveLoan = $is_farmer->loans->where(function($q){
+                $q->where('status','Active')->orWhere('status','Pending');
+            })->pluck('loan_product_id')->toArray();
+        }else{
+            $is_leader = Auth::user()->leader;
+            $removeProductWithActiveLoan = $is_leader->loans->where(function($q){
+                $q->where('status','Active')->orWhere('status','Pending');
+            })->pluck('loan_product_id')->toArray();
+//            $removeProductWithActiveLoan = $is_leader->activeLoans->pluck('loan_product_id')->toArray();
+        }
+
+
         $loanProducts = LoanProduct::with('provider', 'type')
+            ->whereNotIn('id', $removeProductWithActiveLoan)
             ->when($type, function ($query, $type) {
                 return $query->where('loan_type_id', $type);
             })
@@ -272,7 +289,7 @@ class FarmerController extends Controller
                 return $query->where('duration', '<=', $term);
             })
             ->when($amount, function ($query, $amount) {
-                return $query->where('amount', '<=', $amount);
+                return $query->whereBetween('amount', $amount);
             })
             ->get();
         return response()->json($loanProducts);

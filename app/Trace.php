@@ -6,6 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Trace extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'reference',
+        'code',
+        'url',
+        'image',
+        'image_path',
+        'active',
+        'delivered',
+        'user_id'
+    ];
+
     protected $appends = [
         'trace',
         'status',

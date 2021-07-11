@@ -33,7 +33,7 @@ class CommunityLeaderCreateTraceTest extends TestCase
         $user = factory(User::class)->create([
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
-        $user->assignRole(stringSlug('master-farmer'));
+        $user->assignRole(stringSlug('community-leader'));
         $user->markEmailAsVerified();
 
         $masterFarmer = new CommunityLeader();

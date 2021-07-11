@@ -20,8 +20,11 @@ class CreateLoanProductsTable extends Migration
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->double('amount');
-            $table->integer('duration')->comment('days');
+            $table->integer('duration');
             $table->double('interest_rate');
+            $table->string('timing')->default('monthly')->nullable();
+            $table->integer('allowance')->default(1);
+            $table->integer('first_allowance')->default(0);
             $table->timestamps();
         });
     }

@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ subdomain_title(null) }} | @yield('title')</title>
-    <title>Trace | @yield('title')</title>
+    <title>Loan | @yield('title')</title>
 
     {{--    <link rel="apple-touch-icon" sizes="180x180" href="{{ URL::to('/favicon_io/apple-touch-icon.png') }}">--}}
     {{--    <link rel="icon" type="image/png" sizes="32x32" href="{{ URL::to('/favicon_io/favicon-32x32.png') }}">--}}
@@ -43,7 +43,9 @@
                             {{--                            <span class="block m-t-xs font-bold">{!! Auth::user()->name !!}</span>--}}
                             {{--                            <span class="text-muted text-xs block">{{ getRoleName('display_name') }} <b class="caret"></b></span>--}}
                             {{--<span class="text-muted text-xs block"> {{ getRoleName('display_name') }} <b class="caret"></b></span>--}}
-                            <span class="text-muted text-xs block"> {!! Auth::user()->name !!} <b class="caret"></b></span>
+{{--                            <span class="text-muted text-xs block"> {!! Auth::user()->name !!} <b class="caret"></b></span>--}}
+                            <span class="block m-t-xs font-bold">{!! Auth::user()->name !!}</span>
+                            <small class="text-xs block">{{ getRoleName('display_name') }} <b class="caret"></b></small>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a class="dropdown-item" href="#">Profile</a></li>
@@ -54,7 +56,7 @@
                         </ul>
                     </div>
                     <div class="logo-element">
-                        Trace
+                        Loan
                     </div>
                 </li>
 

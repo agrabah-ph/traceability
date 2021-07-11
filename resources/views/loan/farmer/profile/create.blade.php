@@ -5,102 +5,108 @@
 
 @section('content')
 
-    <div class="wrapper wrapper-content">
-        <div class="row">
-            <div class="col-sm-6"></div>
-            <div class="col-sm-6">
+    <main class="page-forms page-register page-farmers">
+        <div class="row no-gutters sign-in">
+            <div class="col-12 col-lg-6 left d-none d-lg-flex" style="background-image: url({{ asset('images/loan/bg-img.jpg') }})">
+                <div class="text">Setup Your Account</div>
+            </div>
+            <div class="col-12 col-lg-6 right d-flex align-items-center justify-content-center">
+                <div class="content w-100">
+                    <h1 class="d-block d-lg-none text-center">Setup Your Account</h1>
+                    <small>Fill all form field to go next step</small>
 
-                <form id="form" action="{{ route('farmer-profile-store') }}" method="post" class="wizard-big">
-                    @csrf
-                    <h1>Profile</h1>
-                    <fieldset>
-                        <h2>Personal Information</h2>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>First name *</label>
-                                    <input name="first_name" type="text" class="form-control required">
-                                </div>
-                                <div class="form-group">
-                                    <label>Middle name *</label>
-                                    <input name="middle_name" type="text" class="form-control required">
-                                </div>
-                                <div class="form-group">
-                                    <label>Last name *</label>
-                                    <input name="last_name" type="text" class="form-control required">
-                                </div>
-                            </div>
-                        </div>
-
-                    </fieldset>
-                    <h1>Background</h1>
-                    <fieldset>
-                        <h2>Secondary Information</h2>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>mobile *</label>
-                                    <input name="mobile" type="text" class="form-control required">
-                                </div>
-                                <div class="form-group">
-                                    <label>Address *</label>
-                                    <textarea name="address" class="form-control no-resize" required></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Education *</label>
-                                    <input name="education" type="text" class="form-control required">
-                                </div>
-                                <div class="form-group">
-                                    <label>Farm Lot *</label>
-                                    <input name="farm_lot" type="text" class="form-control required">
-                                </div>
-                                <div class="form-group">
-                                    <label>Farming since *</label>
-                                    <input name="farming_since" type="text" class="form-control required">
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <h1>Affiliation</h1>
-                    <fieldset>
-                        <h2>Membership / Group</h2>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <div class="i-checks">
-                                        <label>{{ Form::checkbox('four_ps', 1) }}<i></i> 4P's</label>
+                    <form id="form" action="{{ route('farmer-profile-store') }}" method="post" class="wizard-big">
+                        @csrf
+                        <h1>Profile</h1>
+                        <fieldset>
+                            <h2>Personal Information</h2>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <input name="first_name" type="text" class="form-control required" id="first_name">
+                                        <label for="first_name">First name *</label>
                                     </div>
-                                    <div class="i-checks">
-                                        <label>{{ Form::checkbox('pwd', 1) }}<i></i> PWD</label>
+                                    <div class="form-group">
+                                        <input name="middle_name" type="text" class="form-control required" id="middle_name">
+                                        <label for="middle_name">Middle name *</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="last_name" type="text" class="form-control required" id="last_name">
+                                        <label for="last_name">Last name *</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <div class="i-checks">
-                                        <label>{{ Form::checkbox('indigenous', 1) }}<i></i> Indigenous</label>
+
+                        </fieldset>
+                        <h1>Background</h1>
+                        <fieldset>
+                            <h2>Secondary Information</h2>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <input name="mobile" type="text" class="form-control required" id="mobile">
+                                        <label for="">Mobile *</label>
                                     </div>
-                                    <div class="i-checks">
-                                        <label>{{ Form::checkbox('livelihood', 1) }}<i></i> Livelihood</label>
+                                    <div class="form-group">
+                                        <textarea name="address" class="form-control no-resize" required id="address"></textarea>
+                                        <label id="address">Address *</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <input name="education" type="text" class="form-control required" id="education">
+                                        <label for="education">Education *</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="farm_lot" type="text" class="form-control required" id="farm_lot">
+                                        <label for="farm_lot">Farm Lot *</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="farming_since" type="text" class="form-control required" id="farming_since">
+                                        <label for="farming_since">Farming since *</label>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
 
-                    <h1>Finish</h1>
-                    <fieldset>
-                        <h2>Terms and Conditions</h2>
-                        <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required i-checks"> <label for="acceptTerms">I agree with the Terms and Conditions.</label>
-                    </fieldset>
-                </form>
+                        <h1>Affiliation</h1>
+                        <fieldset>
+                            <h2>Membership / Group</h2>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="i-checks">
+                                            <label class="check-labels">{{ Form::checkbox('four_ps', 1) }}<i></i> 4P's</label>
+                                        </div>
+                                        <div class="i-checks">
+                                            <label class="check-labels">{{ Form::checkbox('pwd', 1) }}<i></i> PWD</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="i-checks">
+                                            <label class="check-labels">{{ Form::checkbox('indigenous', 1) }}<i></i> Indigenous</label>
+                                        </div>
+                                        <div class="i-checks">
+                                            <label class="check-labels">{{ Form::checkbox('livelihood', 1) }}<i></i> Livelihood</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
 
+                        <h1>Finish</h1>
+                        <fieldset>
+                            <h2>Terms and Conditions</h2>
+                            <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required i-checks"> <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                        </fieldset>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
+
 
 @endsection
 

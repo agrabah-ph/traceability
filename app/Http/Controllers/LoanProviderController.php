@@ -6,13 +6,25 @@ use App\Loan;
 use App\LoanPaymentSchedule;
 use App\LoanProvider;
 use App\Profile;
+use App\Services\LoanService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LoanProviderController extends Controller
 {
+    /**
+     * @var LoanService
+     */
+    private $loanService;
+
+    public function __construct(LoanService $loanService)
+    {
+        $this->loanService = $loanService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -124,14 +136,26 @@ class LoanProviderController extends Controller
     public function loanApplicant()
     {
 
-        $loans = Loan::with('product', 'provider')->where('loan_provider_id', Auth::user()->loan_provider->id)->get();
+        if(Auth::user()->loan_provider){
+            $loans = Loan::with('product', 'provider')
+            ->where('loan_provider_id', Auth::user()->loan_provider->id)
+                ->get();
 //        return $loans;
 
-        return view(subDomainPath('loan-provider.loans.index'), compact('loans'));
+            return view(subDomainPath('loan-provider.loans.index'), compact('loans'));
+        }
+
+        $loans = Loan::with('product', 'provider')
+//            ->where('loan_provider_id', Auth::user()->loan_provider->id)
+            ->get();
+//        return $loans;
+
+        return view(subDomainPath('loans.index'), compact('loans'));
     }
 
     public function loanUpdateStatus(Request $request)
     {
+        DB::beginTransaction();
         $data = Loan::find($request->input('id'));
         if($data->status == 'Active'){
             return null;
@@ -141,14 +165,12 @@ class LoanProviderController extends Controller
         $endDate = null;
         if($data->save()){
             $products = $data->product;
-            $amortization = computeAmortization($products->amount, $products->duration, $products->interest_rate, 2);
-            $paymentDate = Carbon::now();
-            foreach(range(1, $products->duration) as $index){
-                $month = $paymentDate->addMonth();
+            $paymentSchedules =  $this->loanService->generateSchedule($products);
+            foreach($paymentSchedules as $paymentSchedule){
                 $loanPaymentSchedules = new LoanPaymentSchedule();
                 $loanPaymentSchedules->loan_id = $data->id;
-                $loanPaymentSchedules->due_date = $month->toDateString();
-                $loanPaymentSchedules->payable_amount = $amortization;
+                $loanPaymentSchedules->due_date = Carbon::createFromFormat('M j, Y', $paymentSchedule['date'])->toDateString();
+                $loanPaymentSchedules->payable_amount = $paymentSchedule['amount'];
                 $loanPaymentSchedules->status = 'unpaid';
                 $loanPaymentSchedules->save();
                 $endDate = $loanPaymentSchedules->due_date;
@@ -156,6 +178,7 @@ class LoanProviderController extends Controller
         }
         $data->end_date = $endDate;
         $data->save();
+        DB::commit();
 
     }
 }

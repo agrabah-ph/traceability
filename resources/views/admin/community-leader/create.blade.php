@@ -34,11 +34,11 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="email" name="email" class="form-control">
+                                <input type="email" name="email" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="password" name="password" class="form-control">
+                                <input type="password" name="password" class="form-control" required>
                             </div>
 {{--                            <div class="form-group">--}}
 {{--                                <label>Retype Password</label>--}}
@@ -56,15 +56,15 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label>First name</label>
-                                <input type="text" name="first-name" class="form-control">
+                                <input type="text" name="first-name" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Middle name</label>
-                                <input type="text" name="middle-name" class="form-control">
+                                <input type="text" name="middle-name" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Last name</label>
-                                <input type="text" name="last-name" class="form-control">
+                                <input type="text" name="last-name" class="form-control" required>
                             </div>
                         </div>
                     </div>
@@ -112,10 +112,26 @@
             $(document).on('click', '.btn-action', function(){
                 switch ($(this).data('action')) {
                     case 'store':
+                        console.log(validateForms());
+                        if(validateForms() > 0){
+                            return false;
+                        }
                         $('#form').submit();
                         break;
                 }
             });
+
+            function validateForms(){
+                var error = 0;
+                $('.form-group').removeClass('has-error');
+                $('.form-control').each(function(){
+                    if($(this).val().length < 1){
+                        error += 1;
+                        $(this).closest('.form-group').addClass('has-error');
+                    }
+                });
+                return error;
+            }
 
             {{--var modal = $('#modal');--}}
             {{--$(document).on('click', '', function(){--}}

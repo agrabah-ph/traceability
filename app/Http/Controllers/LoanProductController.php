@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Loan;
 use App\LoanProduct;
 use App\LoanType;
 use Illuminate\Http\Request;
@@ -44,7 +45,7 @@ class LoanProductController extends Controller
         $loanProviderId = auth()->user()->loan_provider->id;
         $array = $request->all();
         $array['loan_provider_id'] = $loanProviderId;
-        $array['loan_type'] = $array['type'];
+        $array['loan_type_id'] = $array['type'];
         $array['amount'] = floatval(preg_replace('/,/','', $array['amount']));
         unset($array['token']);
         unset($array['type']);
@@ -60,9 +61,11 @@ class LoanProductController extends Controller
      * @param  \App\Loan  $loan
      * @return \Illuminate\Http\Response
      */
-    public function show(Loan $loan)
+    public function show($id)
     {
-        //
+        $loanProduct = LoanProduct::find($id);
+        $types = LoanType::pluck('display_name','id');
+        return response()->view(subDomainPath('product.edit'), compact( 'loanProduct', 'types'));
     }
 
     /**
@@ -71,9 +74,8 @@ class LoanProductController extends Controller
      * @param  \App\Loan  $loan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Loan $loan)
+    public function edit(LoanProduct $loan)
     {
-        //
     }
 
     /**
@@ -83,9 +85,18 @@ class LoanProductController extends Controller
      * @param  \App\Loan  $loan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Loan $loan)
+    public function update(Request $request, $id)
     {
-        //
+        $loanProduct = LoanProduct::find($id);
+
+        $array = $request->all();
+        $array['loan_type_id'] = $array['type'];
+        $array['amount'] = floatval(preg_replace('/,/','', $array['amount']));
+        unset($array['token']);
+        unset($array['type']);
+        $loanProduct->update($array);
+
+        return redirect()->back();
     }
 
     /**

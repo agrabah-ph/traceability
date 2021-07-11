@@ -18,7 +18,7 @@
         </div>
         <div class="col-sm-8">
             <div class="title-action">
-                <button type="button" class="btn btn-primary btn-action" data-action="store">Store</button>
+                <a href="{!! route('product.edit', array('product'=>$data)) !!}" class="btn btn-primary">Edit</a>
             </div>
         </div>
     </div>

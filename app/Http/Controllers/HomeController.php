@@ -36,6 +36,11 @@ class HomeController extends Controller
             $inventory = Inventory::count();
             $trace = Trace::count();
             $farmer = Inventory::distinct('farmer_id')->count('farmer_id');
+
+
+
+
+
             return view('admin.dashboard', compact( 'inventory', 'trace', 'farmer'));
         }
 
@@ -52,7 +57,11 @@ class HomeController extends Controller
         }
 
         if(auth()->user()->hasRole('farmer')){
-            return view(subDomainPath('farmer.dashboard'));
+            $farmer = Farmer::find(Auth::user()->farmer->id);
+            $loans = $farmer->loans;
+
+//            return $loans;
+            return view(subDomainPath('farmer.dashboard'), compact('loans'));
         }
 
     }

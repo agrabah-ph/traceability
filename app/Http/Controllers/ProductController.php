@@ -70,7 +70,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+//        return $product->units;
+        return view(subDomainPath('product.edit'), compact('product'));
     }
 
     /**
@@ -113,7 +114,14 @@ class ProductController extends Controller
         $product = $request->input('product');
         $units = $request->input('unit');
 
-        $data = new Product();
+        if($product[2] === 'store'){
+            $data = new Product();
+        }
+        if($product[2] === 'update'){
+            $data = Product::find($product[3]);
+            $data->units()->delete();
+        }
+
         $data->name = stringSlug($product[0]);
         $data->display_name = $product[0];
         $data->description = $product[1];

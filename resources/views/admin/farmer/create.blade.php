@@ -171,6 +171,11 @@
             $(document).on('click', '.btn-action', function(){
                 switch ($(this).data('action')) {
                     case 'store':
+                        console.log(validateForms());
+                        if(validateForms() > 0){
+                            return false;
+                        }
+
                         $('#form').submit();
 
                         // console.log($('input[name=four_ps]').val());
@@ -185,6 +190,18 @@
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
+
+            function validateForms(){
+                var error = 0;
+                $('.form-group').removeClass('has-error');
+                $('.form-control').each(function(){
+                    if($(this).val().length < 1){
+                        error += 1;
+                        $(this).closest('.form-group').addClass('has-error');
+                    }
+                });
+                return error;
+            }
 
 
             {{--var modal = $('#modal');--}}

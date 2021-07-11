@@ -6,11 +6,11 @@
 @section('content')
 
     <section class="container animated fadeInRight">
-        @if (is_null(Auth::user()->provider))
-            <h1>none</h1>
-            @else
-            <h1>done</h1>
-        @endif
+{{--        @if (is_null(Auth::user()->provider))--}}
+{{--            <h1>none</h1>--}}
+{{--            @else--}}
+{{--            <h1>done</h1>--}}
+{{--        @endif--}}
     </section>
 
     <div class="wrapper wrapper-content">

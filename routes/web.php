@@ -51,6 +51,16 @@ Route::middleware(['auth', 'verified', 'has_profile'])->group(function () {
 
     Route::resource('settings', 'SettingController');
 
+    Route::get('trace-report', 'ReportController@traceReport')->name('trace-report');
+    Route::get('trace-table-report', 'ReportController@traceTableReport')->name('trace-table-report');
+
+    Route::post('print-report', 'ReportController@printReport')->name('print-report');
+    Route::post('print-report-data', 'ReportController@printReportData')->name('print-report-data');
+
+    Route::get('loan/proof/{id}/{filename}', 'LoanController@proofPhoto')->name('loan-proof');
+    Route::get('loan/applicants', 'LoanProviderController@loanApplicant')->name('loan-applicant');
+
+
 });
 // GLOBAL ROUTES END
 
@@ -79,23 +89,26 @@ Route::domain('loan.'.config('dev.domain_ext'))->group(function () {
 
         Route::resource('products', 'LoanProductController');
 
+//        Route::get('loan/product/show', 'FarmerController@loanProductShow')->name('loan-product-show');
         Route::get('loan/product/list', 'FarmerController@loanProductList')->name('loan-product-list');
         Route::get('loan-product-list-get', 'FarmerController@loanProductListGet')->name('loan-product-list-get');
         Route::get('loan-apply', 'FarmerController@loanApply')->name('loan-apply');
 
         Route::get('my-loans/', 'LoanController@index')->name('my-loans');
+        Route::post('verify-loan', 'LoanController@verify')->name('verify-loan');
+        Route::get('generateSchedule', 'LoanController@getPaymentSchedule')->name('generate-schedule');
 
-        Route::get('loan/applicants', 'LoanProviderController@loanApplicant')->name('loan-applicant');
+//        Route::get('loan/applicants', 'LoanProviderController@loanApplicant')->name('loan-applicant');
         Route::get('loan-update-status', 'LoanProviderController@loanUpdateStatus')->name('loan-update-status');
 
     });
-
-
 
 });
 
 // ROUTES FOR TRACE
 Route::domain('trace.'.config('dev.domain_ext'))->group(function () {
+    Route::get('trace-registration', 'PublicController@traceRegistration')->name('trace-registration');
+    Route::post('trace-user-registration-store', 'PublicController@traceUserRegistrationStore')->name('trace-user-registration-store');
 
     Route::get('farmer-qr', 'PublicController@farmerQr')->name('farmer-qr');
     Route::get('trace-shipped', 'PublicController@traceShipped')->name('trace-shipped');

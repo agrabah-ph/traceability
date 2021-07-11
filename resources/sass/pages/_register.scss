@@ -1,0 +1,284 @@
+
+
+.page-register {
+  .sign-in {
+    .left {
+      background-size: cover;
+      background-position: center;
+      position: relative;
+
+      align-items: center;
+      justify-content: center;
+
+      &:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: radial-gradient(rgba($black, 30%), rgba($black, 50%));
+      }
+
+      .text {
+        position: relative;
+        font-size: 2.5rem;
+      }
+    }
+
+    .right {
+      padding: 2rem;
+
+      small {
+        display: block;
+        text-align: center;
+        font-size: 1rem;
+        color: $default;
+      }
+
+      .steps {
+        ul {
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          margin-bottom: 2rem;
+          flex-wrap: wrap;
+
+          li {
+            width: calc(100%/4);
+            position: relative;
+            text-align: center;
+
+            @media (max-width: 500px) {
+              width: calc(100%/2);
+              margin-bottom: 1rem;
+            }
+
+            &:before, &:after {
+              content: '';
+              position: absolute;
+              width: 100%;
+              height: 4px;
+              z-index:-1;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              border-top: 1px solid $gray-2;
+              border-bottom: 1px solid $gray-2;
+            }
+
+            &:before {
+              background-color: $gray;
+            }
+
+            &:after {
+              width: 0%;
+              background-color: $primary-1;
+              border-top: 1px solid $primary-1;
+              border-bottom: 1px solid $primary-1;
+            }
+
+            a {
+              //width: 50%;
+              margin: auto;
+              display: inline-block;
+              background-color: $gray;
+
+              @media (max-width: 500px) {
+                width: 90%;
+              }
+            }
+
+            &:first-child, &:last-child {
+              &:before {
+                width: 60%;
+              }
+            }
+
+            &:first-child {
+              &:before, &:after {
+                right: 0;
+                left: auto;
+                transform: translateY(-50%);
+              }
+            }
+
+            &:last-child {
+              &:before, &:after {
+                right: auto;
+                left: 0;
+                transform: translateY(-50%);
+              }
+            }
+
+
+            &.current, &.done {
+              &:after {
+                width: 100%;
+              }
+
+              &.first, &.last {
+                &:after {
+                  width: 60% !important;
+                }
+              }
+
+              a {
+                background-color: $primary-1;
+              }
+
+            }
+          }
+        }
+      }
+
+
+      .wizard-big.wizard > .content {
+        min-height: 500px;
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+
+        @media (max-width: 500px) {
+          min-height: 350px;
+        }
+
+        h2 {
+          font-size: 1rem;
+          font-weight: 400;
+          color: $default;
+        }
+
+        .form-group {
+          position: relative;
+          margin-bottom: 2rem;
+
+          label:not(.check-labels) {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            transition: .3s;
+            color: $default;
+
+            &.error {
+              color: $red;
+            }
+          }
+
+          input, textarea {
+            background-color: $gray;
+            border: 1px solid $gray !important;
+            border-bottom: 2px solid $red !important;
+            border-radius: 0;
+            font-size: 1rem;
+            padding: 1.5rem 1rem;
+            font-weight: bold;
+
+            &:focus, &.error, &.valid {
+              & + label {
+                font-size: 13px;
+                top: -10px;
+                color: $red;
+              }
+            }
+          }
+
+          textarea {
+            & + label {
+              top: 20%;
+            }
+          }
+
+        }
+      }
+
+      .wizard-big.wizard > .actions {
+        width: 90%;
+        margin: auto;
+
+        ul {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+
+          li {
+            a {
+              background: $primary-1;
+              transition: .5s;
+
+              &:hover {
+                opacity: .7;
+              }
+            }
+
+            &.disabled {
+              a {
+                background: $gray;
+              }
+            }
+          }
+
+        }
+      }
+
+
+    }
+  }
+
+  &.page-loan-provider {
+
+
+    .sign-in {
+
+      .right {
+
+        .steps {
+          ul {
+
+            li {
+
+              &:after {
+                width: 0%;
+                background-color: $primary-3;
+                border-top: 1px solid $primary-3;
+                border-bottom: 1px solid $primary-3;
+              }
+
+
+              &.current, &.done {
+
+                a {
+                  background-color: $primary-3;
+                }
+
+              }
+            }
+          }
+        }
+
+
+        .wizard-big.wizard > .actions {
+
+          ul {
+            li {
+              a {
+                background: $primary-3;
+              }
+
+              &.disabled {
+                a {
+                  background: $gray;
+                }
+              }
+            }
+
+          }
+        }
+
+
+      }
+    }
+
+  }
+}

@@ -25,7 +25,7 @@
                     @if($errors->has('farmer'))
                         <span class="text-danger">{{$errors->first('farmer')}}</span>
                     @endif
-                    {{Form::text('farmer',null, array('class'=>'form-control numonly'))}}
+                    {{Form::text('farmer',null, array('class'=>'form-control numonly', 'autofocus'))}}
                     <label><strong class="text-uppercase">Farmer ID</strong></label>
                 </div>
                 <button type="submit" class="btn btn-block btn-xl btn-success p-3">PROCEED</button>

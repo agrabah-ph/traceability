@@ -30,6 +30,9 @@ class PublicController extends Controller
             $modelInfo->value_0 = 'Delivered';
             $modelInfo->value_1 = 'Delivered to Client';
             $trace->info()->save($modelInfo);
+            $trace->active = 0;
+            $trace->delivered = 1;
+            $trace->save();
             Trace::find($trace->id)->inventories()->update(array(
                 'status'=>'Delivered'
             ));
@@ -69,13 +72,17 @@ class PublicController extends Controller
                 $update = $action;
                 $modelInfo->value_0 = $action;
                 $modelInfo->value_1 = 'Delivered to Client';
+                $trace->active = 0;
+                $trace->delivered = 1;
                 break;
             case 'Undeliverable':
                 $update = $action;
                 $modelInfo->value_0 = $action;
                 $modelInfo->value_1 = 'Unable to Deliver';
+                $trace->active = 0;
                 break;
         }
+        $trace->save();
         $trace->info()->save($modelInfo);
 
         Trace::find($trace->id)->inventories()->update(array(
@@ -162,5 +169,51 @@ class PublicController extends Controller
     public function farmerProfileCreate()
     {
         return view(subDomainPath('farmer.profile.create'));
+    }
+
+    public function traceRegistration()
+    {
+        return view('trace.auth.register');
+    }
+
+    public function traceUserRegistrationStore(Request $request)
+    {
+        $rules = array(
+            'email' => 'required|email|unique:users,email|max:255',
+            'password' => 'required|max:255',
+            'repeat-password' => 'required|same:password',
+        );
+        $messages = [
+            'same'    => 'Password not match.',
+            'repeat-password'    => 'This field is required..',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $data = new User();
+        $data->email = $request->input('email');
+        $data->password = bcrypt($request->input('password'));
+        $data->passkey = $request->input('password');
+        if($data->save()){
+
+            $data->assignRole(stringSlug('Farmer'));
+            $number = Farmer::count() + 1;
+            $farmer = new Farmer();
+            $farmer->account_id = $number;
+            $farmer->user_id = $data->id;
+            $farmer->save();
+
+            $data->sendEmailVerificationNotification();
+            Auth::loginUsingId($data->id);
+            return redirect()->route('home');
+        }
+
     }
 }

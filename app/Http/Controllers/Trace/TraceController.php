@@ -8,6 +8,7 @@ use App\Inventory;
 use App\Mail\TraceShipped;
 use App\Trace;
 use App\ModelInfo;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
