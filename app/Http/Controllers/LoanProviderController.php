@@ -32,7 +32,9 @@ class LoanProviderController extends Controller
      */
     public function index()
     {
-        //
+        $data = LoanProvider::get();
+
+        return response()->json($data);
     }
 
     /**

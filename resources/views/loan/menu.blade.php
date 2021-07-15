@@ -17,10 +17,20 @@
     <a href="{!! route('loan-applicant') !!}"><i class="fa fa-money"></i> <span class="nav-label">Loan Application</span></a>
 </li>
 
+<li class="{{ (request()->is('role*')) ? 'active' : '' }}">
+    <a href="#"><i class="fa fa-cubes"></i> <span class="nav-label">Settings</span><span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level collapse">
+        <li class="{{ (request()->is('role*')) ? 'active' : '' }}"><a href="{!! route('role') !!}">Role</a></li>
+    </ul>
+    <ul class="nav nav-second-level collapse">
+        <li class="{{ (request()->is('settings*')) ? 'active' : '' }}"><a href="{!! route('settings.index') !!}">Settings</a></li>
+    </ul>
+</li>
+
 
 @endif
 
-@if(auth()->user()->hasRole('farmer'))
+@if((auth()->user()->hasRole('farmer')) || (auth()->user()->hasRole('community-leader')))
 
     <li class="{{ (request()->is('loan/product/list')) ? 'active' : '' }}">
         <a href="{!! route('loan-product-list') !!}"><i class="fa fa-list"></i> <span class="nav-label">Loan Products</span></a>

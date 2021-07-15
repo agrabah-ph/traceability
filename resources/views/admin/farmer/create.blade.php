@@ -36,9 +36,17 @@
                             Primary Info
                         </div>
                         <div class="panel-body">
+{{--                            <div class="form-group">--}}
+{{--                                <label>Account ID</label>--}}
+{{--                                {{ Form::text('account_id', $number, array('class'=>'form-control', 'readonly')) }}--}}
+{{--                            </div>--}}
                             <div class="form-group">
-                                <label>Account ID</label>
-                                {{ Form::text('account_id', $number, array('class'=>'form-control', 'readonly')) }}
+                                <label>Email</label>
+                                {{ Form::text('email', null, array('class'=>'form-control')) }}
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                {{ Form::password('password', array('class'=>'form-control')) }}
                             </div>
                             <div class="form-group">
                                 <label>First name</label>
