@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Unit;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -15,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         $datas = Product::get();
-        return response()->view('user.product.index', compact('datas'));
+        return response()->view(subDomainPath('product.index'), compact('datas'));
     }
 
     /**
@@ -25,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return response()->view('user.product.create');
+        return response()->view(subDomainPath('product.create'));
     }
 
     /**
@@ -53,8 +54,12 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $data = Product::find($product->id);
-        return response()->view('user.product.show', compact('data'));
+        $data = Product::with('units')->find($product->id);
+//        return $data;
+        if(auth()->user()->hasRole('super-admin')){
+            return response()->view(subDomainPath('product.show'), compact('data'));
+        }
+        return response()->view(subDomainPath('product.show'), compact('data'));
     }
 
     /**
@@ -65,7 +70,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+//        return $product->units;
+        return view(subDomainPath('product.edit'), compact('product'));
     }
 
     /**
@@ -89,5 +95,47 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+    public function productList()
+    {
+        $data = Product::with('units')->get();
+        return response()->json($data);
+    }
+
+    public function productUnitList(Request $request)
+    {
+        $data = Product::with('units')->find($request->input('id'));
+        return response()->json($data->units);
+    }
+
+    public function productStore(Request $request)
+    {
+        $product = $request->input('product');
+        $units = $request->input('unit');
+
+        if($product[2] === 'store'){
+            $data = new Product();
+        }
+        if($product[2] === 'update'){
+            $data = Product::find($product[3]);
+            $data->units()->delete();
+        }
+
+        $data->name = stringSlug($product[0]);
+        $data->display_name = $product[0];
+        $data->description = $product[1];
+        if($data->save()){
+            foreach ($units as $unitData){
+                $unit = new Unit();
+                $unit->name = $unitData[0];
+                $unit->abbr = $unitData[1];
+                $data->units()->save($unit);
+            }
+
+            $url = route('product.show', array('product'=>$data));
+            return response()->json($url);
+
+        }
     }
 }

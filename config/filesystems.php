@@ -48,6 +48,12 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'payment_proof' => [
+            'driver' => 'local',
+            'root' => storage_path('app/payment_proof'),
+            'url' => env('LOAN_APP_URL').'loan/proof',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

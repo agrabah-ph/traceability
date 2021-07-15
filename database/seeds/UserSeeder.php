@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use App\User;
 use App\Profile;
+use App\MasterFarmer;
 use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
@@ -56,37 +57,52 @@ class UserSeeder extends Seeder
             }
         }
 
-        $user = new User();
-        $user->name = 'Super Admin';
-        $user->email = 'agravah@gmail.com';
-        $user->password = bcrypt('grassfruitrabbitengine');
-        $user->passkey = 'grassfruitrabbitengine';
-        $user->active = 1;
-        if($user->save()) {
-            $role = 'Super Admin';
+        $roles = array(
+            'Super Admin',
+            'Community Leader',
+            'Farmer',
+            'Loan Provider'
+        );
+
+        foreach($roles as $role) {
             Role::create(array(
                 'name' => stringSlug($role),
                 'display_name' => $role
             ));
-            $user->assignRole(stringSlug($role));
-            $profile = new Profile();
-            $profile->user_id = $user->id;
-            $profile->first_name = 'Agravah';
-            $profile->last_name = 'Trace';
-            $profile->save();
-            $user->markEmailAsVerified();
-
-            $mFarmer = 'Master Farmer';
-            Role::create(array(
-                'name' => stringSlug($mFarmer),
-                'display_name' => $mFarmer
-            ));
-            $farmer = 'Farmer';
-            Role::create(array(
-                'name' => stringSlug($farmer),
-                'display_name' => $farmer
-            ));
         }
+
+        $user = new User();
+        $user->name = 'Administrator';
+        $user->email = 'superadmin@agrabah.com';
+        $user->password = bcrypt('agrabah');
+        $user->passkey = 'agrabah';
+        $user->active = 1;
+        if($user->save()) {
+            $user->assignRole(stringSlug('Super Admin'));
+            $user->markEmailAsVerified();
+        }
+
+//        $user = new User();
+//        $user->name = 'Master Farmer';
+//        $user->email = 'masterfarmer@gmail.com';
+//        $user->password = bcrypt('agrabah');
+//        $user->passkey = 'agrabah';
+//        $user->active = 1;
+//        if($user->save()) {
+//            $profile = new Profile();
+//            $profile->first_name = 'Master';
+//            $profile->last_name = 'Farmer';
+//            if($profile->save()){
+//                $number = str_pad(MasterFarmer::count() + 1, 5, 0, STR_PAD_LEFT);
+//                $master = new MasterFarmer();
+//                $master->account_id = $number;
+//                $master->user_id = $user->id;
+//                $master->profile_id = $profile->id;
+//                $master->save();
+//            }
+//            $user->assignRole(stringSlug('Master Farmer'));
+//            $user->markEmailAsVerified();
+//        }
 
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Farmer;
 use App\Inventory;
+use App\ModelInfo;
 use App\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -18,9 +20,15 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        $datas = Inventory::with('product')->get();
+        if(auth()->user()->hasRole('super-admin')){
+            $datas = Inventory::with('product')->get();
+        }else{
+            $datas = Inventory::with('product')
+                ->where('leader_id', Auth::user()->leader->id)
+                ->get();
+        }
 //        return $datas;
-        return view('user.inventory.index', compact('datas'));
+        return view(subDomainPath('inventory.index'), compact('datas'));
     }
 
     /**
@@ -30,10 +38,10 @@ class InventoryController extends Controller
      */
     public function create()
     {
-        $datas = Product::get();
-        $random = Str::random(10);
-
-        return response()->view('user.inventory.create', compact('datas', 'random'));
+        $datas = Farmer::with('profile')
+            ->get();
+//        return $datas;
+        return response()->view(subDomainPath('inventory.create'), compact('datas'));
     }
 
     /**
@@ -45,16 +53,22 @@ class InventoryController extends Controller
     public function store(Request $request)
     {
         $data = new Inventory();
-        $data->user_id = Auth::user()->id;
-        $data->product_id = $request->input('product-id');
-        $data->reference = $request->input('reference');
-        $data->unit = $request->input('unit');
-        $data->quantity = $request->input('quantity');
-        $data->quality = $request->input('quality');
-        $data->cost = $request->input('cost');
-        $data->retail = $request->input('retail');
+        $data->leader_id = Auth::user()->leader->id;
+        $data->farmer_id = $request->input('farmer_id');
+        $data->name = $request->input('name');
+        $data->details = $request->input('details');
+        $data->status = 'Accepted';
+        $data->remark = 'Warehouse';
+        $data->user_id = Auth::user()->leader->id;
         if($data->save()){
-            return response()->view('user.inventory.index');
+
+            $modelInfo = new ModelInfo();
+            $modelInfo->type = 'status';
+            $modelInfo->value_0 = $data->status;
+            $modelInfo->value_1 = $data->remark;
+            $data->info()->save($modelInfo);
+
+            return redirect()->route('inventory.index');
         }
     }
 
@@ -66,7 +80,8 @@ class InventoryController extends Controller
      */
     public function show(Inventory $inventory)
     {
-        //
+        $inventory = Inventory::find($inventory->id);
+        return view(subDomainPath('inventory.show'), compact('inventory'));
     }
 
     /**
@@ -101,5 +116,64 @@ class InventoryController extends Controller
     public function destroy(Inventory $inventory)
     {
         //
+    }
+
+    public function farmerInventoryList(Request $request)
+    {
+//        $ids = array();
+        $data = Inventory::whereNotIn('id', $request->input('ids'))
+            ->where('leader_id', Auth::user()->leader->id)
+            ->with('farmer', 'product')
+            ->where('status', 'Accepted')
+            ->get();
+
+        return response()->json($data);
+    }
+
+    public function farmerInventoryListItem(Request $request)
+    {
+        $data = Inventory::whereIn('id', $request->input('ids'))
+            ->with('farmer', 'product')
+            ->get();
+
+        return response()->json($data);
+    }
+
+    public function farmerInventoryListing($account)
+    {
+        $data = Farmer::with('listing')->where('account_id', $account)->first();
+
+        return view(subDomainPath('inventory-listing'), compact('data'));
+    }
+
+    public function inventoryListingStore(Request $request)
+    {
+        $details = $request->input('details');
+        $inventory = new Inventory();
+        $inventory->leader_id = Auth::user()->leader->id;
+        $inventory->farmer_id = $details[1];
+        $inventory->product_id = $details[2];
+        $inventory->quality = $details[3];
+        $inventory->unit = $details[4];
+        $inventory->quantity = $details[5];
+        $inventory->price = $details[6];
+        $inventory->total = $details[7];
+        $inventory->remark = $details[8];
+        $inventory->status = 'Accepted';
+        if($inventory->save()){
+            $inventory = Inventory::with('product')->find($inventory->id);
+//            $modelInfo = new ModelInfo();
+//            $modelInfo->type = 'status';
+//            $modelInfo->value_0 = 'Loaded';
+//            $modelInfo->value_1 = 'Waiting to travel';
+//            $inventory->info()->save($modelInfo);
+            return response()->json($inventory);
+        }
+
+    }
+
+    public function inventoryListingDelete(Request $request)
+    {
+        Inventory::where('id', $request->input('id'))->delete();
     }
 }
