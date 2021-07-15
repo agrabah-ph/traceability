@@ -14,6 +14,7 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -89,7 +90,19 @@ class FarmerController extends Controller
             $profile->qr_image = $farmer->account_id.'.png';
             $profile->qr_image_path = '/images/farmer/'.$farmer->account_id.'.png';
             if($farmer->profile()->save($profile)){
-                return redirect()->route('farmer.index');
+                $user = new User();
+                $user->name = ucwords($profile->first_name).' '.ucwords($profile->last_name);
+                $user->email = $request->input('email');
+                $user->password = bcrypt($request->input('password'));
+                $user->passkey = $request->input('password');
+                $user->active = 1;
+                if($user->save()) {
+                    $user->assignRole(stringSlug('Farmer'));
+                    $user->markEmailAsVerified();
+                    $farmer->user_id = $user->id;
+                    $farmer->save();
+                    return redirect()->route('farmer.index');
+                }
             }
         }
         return redirect()->back();
@@ -255,7 +268,8 @@ class FarmerController extends Controller
     public function loanProductList()
     {
         $loanTypes = LoanType::get();
-        return view(subDomainPath('farmer.loan-product-list'), compact('loanTypes'));
+        $farmer = Farmer::with('profile')->find(Auth::user()->farmer->id);
+        return view(subDomainPath('farmer.loan-product-list'), compact('loanTypes', 'farmer'));
     }
 
     public function loanProductListGet(Request $request)
@@ -268,14 +282,10 @@ class FarmerController extends Controller
         $is_farmer = Auth::user()->farmer;
         $removeProductWithActiveLoan = [];
         if($is_farmer){
-            $removeProductWithActiveLoan = $is_farmer->loans->where(function($q){
-                $q->where('status','Active')->orWhere('status','Pending');
-            })->pluck('loan_product_id')->toArray();
+            $removeProductWithActiveLoan = $is_farmer->activeLoans->pluck('loan_product_id')->toArray();
         }else{
             $is_leader = Auth::user()->leader;
-            $removeProductWithActiveLoan = $is_leader->loans->where(function($q){
-                $q->where('status','Active')->orWhere('status','Pending');
-            })->pluck('loan_product_id')->toArray();
+            $removeProductWithActiveLoan = $is_leader->activeLoans->pluck('loan_product_id')->toArray();
 //            $removeProductWithActiveLoan = $is_leader->activeLoans->pluck('loan_product_id')->toArray();
         }
 
@@ -305,6 +315,39 @@ class FarmerController extends Controller
         $loan->status = 'Pending';
         if($farmer->loans()->save($loan)){
             return response()->json($loan);
+        }
+    }
+
+    public function submitLoanApplication(Request $request)
+    {
+
+        $farmer = Farmer::find(Auth::user()->farmer->id);
+        $profile = $farmer->profile;
+        $profile->first_name = $request->input('first_name');
+        $profile->middle_name = $request->input('middle_name');
+        $profile->last_name = $request->input('last_name');
+        $profile->mobile = $request->input('mobile');
+        $profile->address = $request->input('address');
+        $profile->dob = $request->input('dob');
+        $profile->pob = $request->input('pob');
+        $profile->gender = $request->input('gender');
+        $profile->civil_status = $request->input('civil_status');
+        $profile->citizenship = $request->input('citizenship');
+        $profile->gross_monthly_income = $request->input('gross_monthly_income');
+        $profile->monthly_expenses = $request->input('monthly_expenses');
+        if($profile->save()){
+            $user = User::find(Auth::user()->id);
+            $user->name = ucwords($profile->first_name).' '.ucwords($profile->last_name);
+            $user->save();
+        }
+
+        $loanProduct = LoanProduct::find($request->input('id'));
+        $loan = new Loan();
+        $loan->loan_provider_id = $loanProduct->loan_provider_id;
+        $loan->loan_product_id = $loanProduct->id;
+        $loan->status = 'Pending';
+        if($farmer->loans()->save($loan)){
+            return redirect()->back();
         }
     }
 }

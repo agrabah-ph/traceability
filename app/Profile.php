@@ -27,7 +27,14 @@ class Profile extends Model
         'farm_lot',
         'farming_since',
         'organization',
-        'status'
+        'status',
+        'dob',
+        'pob',
+        'gender',
+        'civil_status',
+        'citizenship',
+        'gross_monthly_income',
+        'monthly_expenses',
     ];
 
     public function info()

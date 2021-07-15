@@ -18,9 +18,9 @@
         </div>
         <div class="col-sm-8">
             <div class="title-action">
-                @if(auth()->user()->hasRole('community-leader'))
-                    <a href="{!! route('farmer.create') !!}" class="btn btn-primary">Create</a>
-                @endif
+{{--                @if(auth()->user()->hasRole('community-leader'))--}}
+{{--                    <a href="{!! route('farmer.create') !!}" class="btn btn-primary">Create</a>--}}
+{{--                @endif--}}
             </div>
         </div>
     </div>
