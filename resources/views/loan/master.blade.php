@@ -21,11 +21,29 @@
     @yield('styles')
     {!! Html::style('/css/template/animate.css') !!}
     {!! Html::style('/css/template/style.css') !!}
+    <style>
+        @media screen {
+            #printable {
+                display: none;
+            }
+            #wrapper {
+                display: flex;
+            }
+        }
+        @media print {
+            #printable {
+                display: block;
+            }
+            #wrapper {
+                display: none;
+            }
+        }
 
+    </style>
 
 </head>
 
-<body class="pace-done">
+<body class="pace-done template-loan">
 
 <div id="wrapper">
 
@@ -48,9 +66,9 @@
                             <small class="text-xs block">{{ getRoleName('display_name') }} <b class="caret"></b></small>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Contacts</a></li>
-                            <li><a class="dropdown-item" href="#">Mailbox</a></li>
+                            <li><a class="dropdown-item" href="{{ route('my-profile') }}">Profile</a></li>
+{{--                            <li><a class="dropdown-item" href="#">Contacts</a></li>--}}
+{{--                            <li><a class="dropdown-item" href="#">Mailbox</a></li>--}}
                             <li class="dropdown-divider"></li>
                             <li><a class="dropdown-item btn-logout" href="#" id="">Logout</a></li>
                         </ul>
@@ -116,8 +134,13 @@
     {{ Form::close() }}
 </div>
 
+
+<div id="printable">
+
+</div>
+
 <!-- Mainly scripts -->
-{!! Html::script('/js/template/plugins/fullcalendar/moment.min.js') !!}
+{{--{!! Html::script('/js/template/plugins/fullcalendar/moment.min.js') !!}--}}
 
 {!! Html::script('/js/app.js') !!}
 {{--{!! Html::script('/js/template/jquery-3.1.1.min.js') !!}--}}
@@ -131,6 +154,22 @@
 {!! Html::script('/js/template/plugins/pace/pace.min.js') !!}
 
 @yield('scripts')
+
+<script>
+
+    $(document).on('click', '.print_trigger',function (){
+        $("#printable").empty();
+        var printable = $(this).data("print_target");
+        printElem($(printable).clone())
+    });
+    // print_trigger
+    // print_target
+    // paymentSchedules
+    function printElem(data){
+        $('#printable').html(data);
+        window.print();
+    }
+</script>
 
 
 </body>

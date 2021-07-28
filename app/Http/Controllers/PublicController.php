@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\CommunityLeader;
 use App\Farmer;
 use App\Inventory;
+use App\LoanProvider;
 use App\Trace;
 use App\ModelInfo;
 use App\User;
@@ -145,10 +147,18 @@ class PublicController extends Controller
                     $farmer->user_id = $data->id;
                     $farmer->save();
                     break;
+                case 'community-leader':
+                    $data->assignRole(stringSlug('Community Leader'));
+                    $number = CommunityLeader::count() + 1;
+                    $loanProvider = new CommunityLeader();
+                    $loanProvider->account_id = $number;
+                    $loanProvider->user_id = $data->id;
+                    $loanProvider->save();
+                    break;
                 case 'loan-provider':
                     $data->assignRole(stringSlug('Loan Provider'));
-                    $number = Farmer::count() + 1;
-                    $loanProvider = new Farmer();
+                    $number = LoanProvider::count() + 1;
+                    $loanProvider = new LoanProvider();
                     $loanProvider->account_id = $number;
                     $loanProvider->user_id = $data->id;
                     $loanProvider->save();

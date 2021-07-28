@@ -18,7 +18,7 @@ class LoanProductController extends Controller
     {
         $datas = LoanProduct::where('loan_provider_id', auth()->user()->loan_provider->id)->get();
 
-        return view('Loan.product.index', compact('datas'));
+        return view('loan.product.index', compact('datas'));
     }
 
     /**
@@ -30,7 +30,7 @@ class LoanProductController extends Controller
     {
         $types = LoanType::pluck('display_name','id');
 
-        return view('Loan.product.create', compact('types'));
+        return view('loan.product.create', compact('types'));
     }
 
     /**

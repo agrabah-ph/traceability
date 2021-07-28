@@ -63,14 +63,14 @@
                                                             class="">{{ $loan->provider->profile->address_line }}</span></small><br/>
                                             </td>
                                             <td class="project-title">
-                                                {{$loan->product->name}}
+                                                {{$loan->name}}
                                             </td>
-                                            <td class="text-right">{{currency_format($loan->product->amount)}}</td>
-                                            <td>{{$loan->product->interest_rate}}%</td>
-                                            <td>{{$loan->product->duration}} Months</td>
-                                            <td class="text-right">{{currency_format(computeAmortization($loan->product->amount, $loan->product->duration, $loan->product->interest_rate, 2) * $loan->product->duration)}}</td>
+                                            <td class="text-right">{{currency_format($loan->amount)}}</td>
+                                            <td>{{$loan->interest_rate}}%</td>
+                                            <td>{{$loan->duration}} Months</td>
+                                            <td class="text-right">{{currency_format(computeAmortization($loan->amount, $loan->duration, $loan->interest_rate, 2) * $loan->duration)}}</td>
 
-                                            <td class="text-right">{{currency_format(computeAmortization($loan->product->amount, $loan->product->duration, $loan->product->interest_rate, 2))}}</td>
+                                            <td class="text-right">{{currency_format(computeAmortization($loan->amount, $loan->duration, $loan->interest_rate, 2))}}</td>
                                             @if($loan->status == 'Active')
                                                 <td class=" text-center text-green">{{$loan->status}}</td>
                                             @elseif($loan->status == 'Pending')
@@ -79,20 +79,27 @@
                                                 <td class="text-center text-danger">{{$loan->status}}</td>
                                             @endif
                                             <td class="project-actions">
-                                                <a href="#" class="btn btn-success btn-sm sched_modal_trigger"
-                                                   data-schedule="{{$loan->payment_schedules}}"><i
-                                                            class="fa fa-calendar"></i> Schedules </a>
-                                                <a href="#" class="btn btn-primary btn-sm payment_modal_trigger"
-                                                   data-amount_monthly="{{currency_format(computeAmortization($loan->product->amount, $loan->product->duration, $loan->product->interest_rate, 2))}}"
-                                                   data-amount_max="{{currency_format(computeAmortization($loan->product->amount, $loan->product->duration, $loan->product->interest_rate, 2) * $loan->product->duration)}}"
-                                                   data-id="{{$loan->id}}"
-                                                   data-status="{{$loan->status}}"
-                                                ><i class="fa fa-money"></i> Pay </a>
-                                                <a href="#" class="btn btn-warning btn-sm payment_history_modal_trigger"
-                                                   data-payments="{{$loan->payments}}"
-                                                   data-status="{{$loan->status}}"
-                                                ><i
-                                                            class="fa fa-list"></i> Payments </a>
+                                                <div class="btn-group">
+                                                    @if($loan->status != 'Declined')
+                                                    <a href="#" class="btn btn-success btn-sm sched_modal_trigger"
+                                                       data-schedule="{{$loan->payment_schedules}}"><i
+                                                                class="fa fa-calendar"></i> Schedules </a>
+                                                    <a href="#" class="btn btn-primary btn-sm payment_modal_trigger"
+                                                       data-amount_monthly="{{currency_format(computeAmortization($loan->amount, $loan->duration, $loan->interest_rate, 2))}}"
+                                                       data-amount_max="{{currency_format(computeAmortization($loan->amount, $loan->duration, $loan->interest_rate, 2) * $loan->duration)}}"
+                                                       data-id="{{$loan->id}}"
+                                                       data-status="{{$loan->status}}"
+                                                    ><i class="fa fa-money"></i> Pay </a>
+                                                    <a href="#" class="btn btn-warning btn-sm payment_history_modal_trigger"
+                                                       data-payments="{{$loan->payments}}"
+                                                       data-status="{{$loan->status}}"
+                                                    ><i
+                                                                class="fa fa-list"></i> Payments </a>
+                                                    @endif
+                                                    @if($loan->status == 'Pending')
+                                                        <button type="button" class="btn btn-sm btn-danger">Cancel</button>
+                                                    @endif
+                                                </div>
                                             </td>
                                         </tr>
                                     @empty
@@ -178,38 +185,39 @@
 
             $('#payment_history_tbody').empty();
 
-            if (data_status != 'Active') {
-                let setRows = '<tr>';
-                setRows += '<td colspan="99" class="text-center">';
-                setRows += "Loan Not Approved yet";
-                setRows += '</td>';
-                setRows += '</tr>';
-                $('#payment_history_tbody').append(setRows);
-            }
+            let setRows = '<tr>';
+            setRows += '<td colspan="99" class="text-center">';
+            setRows += "Loan Not Approved yet";
+            setRows += '</td>';
+            setRows += '</tr>';
+            $('#payment_history_tbody').append(setRows);
 
-            if (data_status == 'Active') {
-                for (let i = 0; i < data_payments.length; i++) {
-                    const dataPayment = data_payments[i];
-                    console.log(dataPayment)
-                    let setRows = '<tr>';
-                    setRows += '<td>';
-                    setRows += dataPayment.paid_date_formatted;
-                    setRows += '</td>';
-                    setRows += '<td>';
-                    setRows += dataPayment.payment_method;
-                    setRows += '</td>';
-                    setRows += '<td class="text-right">';
-                    setRows += numberWithCommas(dataPayment.paid_amount);
-                    setRows += '</td>';
-                    setRows += '<td>';
-                    setRows += dataPayment.reference_number;
-                    setRows += '</td>';
-                    setRows += '<td>';
-                    setRows += '<a target="_blank" href="'+dataPayment.proof_of_payment+'?type=view">View</a> | ';
-                    setRows += '<a href="'+dataPayment.proof_of_payment+'?type=download">Download</a>';
-                    setRows += '</td>';
-                    setRows += '</tr>';
-                    $('#payment_history_tbody').append(setRows);
+            if (data_status == 'Active' || data_status == 'Completed') {
+                if(data_payments.length > 0){
+                    $('#payment_history_tbody').empty();
+                    for (let i = 0; i < data_payments.length; i++) {
+                        const dataPayment = data_payments[i];
+                        console.log(dataPayment)
+                        let setRows = '<tr>';
+                        setRows += '<td>';
+                        setRows += dataPayment.paid_date_formatted;
+                        setRows += '</td>';
+                        setRows += '<td>';
+                        setRows += dataPayment.payment_method;
+                        setRows += '</td>';
+                        setRows += '<td class="text-right">';
+                        setRows += numberWithCommas(dataPayment.paid_amount);
+                        setRows += '</td>';
+                        setRows += '<td>';
+                        setRows += dataPayment.reference_number;
+                        setRows += '</td>';
+                        setRows += '<td>';
+                        setRows += '<a target="_blank" href="'+dataPayment.proof_of_payment+'?type=view">View</a> | ';
+                        setRows += '<a href="'+dataPayment.proof_of_payment+'?type=download">Download</a>';
+                        setRows += '</td>';
+                        setRows += '</tr>';
+                        $('#payment_history_tbody').append(setRows);
+                    }
                 }
             }
         });

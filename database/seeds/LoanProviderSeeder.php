@@ -37,7 +37,7 @@ class LoanProviderSeeder extends Seeder
                 if($loanProvider->profile()->save($profile)){
                     $user = new User();
                     $user->name = ucwords($profile->first_name).' '.ucwords($profile->last_name);
-                    $user->email = 'lp_'.($a+1).'@agrabah.com';
+                    $user->email = 'lp_'.($a+1).'@agrabah.ph';
                     $user->password = bcrypt('agrabah');
                     $user->passkey = 'agrabah';
                     $user->active = 1;

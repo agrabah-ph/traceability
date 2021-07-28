@@ -46,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function leader()
     {
-        return $this->hasOne(CommunityLeader::class, 'user_id', 'id')->with('profile');
+        return $this->hasOne(Farmer::class, 'user_id', 'id')->with('profile');
     }
 
     public function loan_provider()

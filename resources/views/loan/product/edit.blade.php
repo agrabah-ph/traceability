@@ -90,7 +90,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="schedule_inputs">
+                            <div class="row schedule_inputs">
                                 <div class="col">
                                     <table class="table table-bordered">
                                         <tbody>
@@ -120,6 +120,15 @@
                                 </tr>
                                 </tbody>
                             </table>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Disclosure</label>
+                                        <textarea name="disclosure" id="disclosure" cols="30" rows="10"  class="form-control">{{$loanProduct->disclosure}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

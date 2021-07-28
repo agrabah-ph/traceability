@@ -4,9 +4,9 @@
 
     <main class="page-forms">
         <div class="row no-gutters sign-in">
-            <div class="col-12 col-lg-4 left d-none d-lg-block">
-                <div>
-                    <img src="{{ asset('images/logo-2.png') }}" alt="logo" class="img-fluid d-block mx-auto logo">
+            <div class="col-12 col-lg-4 left d-none d-lg-block no-overlay">
+                <div class="position-relative">
+                    <img src="{{ asset('images/agrabah-logo.png') }}" alt="logo" class="img-fluid d-block mx-auto logo mb-5">
                     <div class="content">
                         <h2>{{ config('app.name', 'Laravel') }}</h2>
 
@@ -18,7 +18,7 @@
                     </div>
                 </div>
 
-                <a href="{{ asset('/') }}" class="link">Back to homepage</a>
+                <a href="{{ asset('/') }}" class="link position-relative">Back to homepage</a>
 
             </div>
             <div class="col-12 col-lg-8 right d-flex align-items-center justify-content-center">
@@ -41,22 +41,22 @@
 {{--                        @endif--}}
 {{--                    </div>--}}
                     <div class="form-group">
-                        <label>Please type your email address</label>
-                        {{Form::email('email',null, array('class'=>'form-control', 'placeholder'=>'yourname@domain.com', 'autocomplete'=>'off', 'required', 'autofocus'))}}
+                        <label>Please type your email address asdfas</label>
+                        {{Form::email('email',null, array('class'=>'form-control', 'placeholder'=>'yourname@domain.com', 'autocomplete'=>'off', 'autofocus'))}}
                         @if($errors->has('email'))
                             <span class="text-danger">{{$errors->first('email')}}</span>
                         @endif
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        {{Form::password('password', array('class'=>'form-control', 'placeholder'=>'*****'))}}
+                        {{Form::password('password', array('class'=>'form-control password-field', 'placeholder'=>'*****'))}}
                         @if($errors->has('password'))
                             <span class="text-danger">{{$errors->first('password')}}</span>
                         @endif
                     </div>
                     <div class="form-group">
                         <label>Repeat Password</label>
-                        {{Form::password('repeat-password', array('class'=>'form-control', 'placeholder'=>'*****'))}}
+                        {{Form::password('repeat-password', array('class'=>'form-control password-field', 'placeholder'=>'*****'))}}
                         @if($errors->has('repeat-password'))
                             <span class="text-danger">{{$errors->first('repeat-password')}}</span>
                         @endif

@@ -24,6 +24,7 @@ Route::get('/registration', function () {
 
 //Auth::routes();
 Auth::routes(['verify' => true]);
+Route::get('logout', 'UserController@logout')->name('logout');
 
 Route::middleware(['auth', 'verified', 'has_profile'])->group(function () {
 
@@ -32,6 +33,11 @@ Route::middleware(['auth', 'verified', 'has_profile'])->group(function () {
     Route::resource('farmer', 'FarmerController');
 
     Route::resource('community-leader', 'CommunityLeaderController');
+
+    Route::resource('profile', 'ProfileController');
+    Route::get('my-profile', 'ProfileController@myProfile')->name('my-profile');
+    Route::get('select-profile', 'ProfileController@selectProfile')->name('select-profile');
+    Route::get('get-my-profile', 'ProfileController@getMyProfile')->name('get-my-profile');
 
     Route::resource('product', 'ProductController');
     Route::get('product-list', 'ProductController@productList')->name('product-list');
@@ -50,6 +56,8 @@ Route::middleware(['auth', 'verified', 'has_profile'])->group(function () {
     Route::post('add-role', 'RoleController@addRole')->name('add-role');
 
     Route::resource('settings', 'SettingController');
+
+//    Route::get('trace-report', 'ReportController@traceReport')->name('trace-report');
 
     Route::get('trace-report', 'ReportController@traceReport')->name('trace-report');
     Route::get('trace-table-report', 'ReportController@traceTableReport')->name('trace-table-report');
@@ -79,13 +87,20 @@ Route::domain('loan.'.config('dev.domain_ext'))->group(function () {
     Route::get('loan-registration', 'PublicController@loanRegistration')->name('loan-registration');
     Route::post('loan-user-registration-store', 'PublicController@loanUserRegistrationStore')->name('loan-user-registration-store');
 
-    Route::middleware(['auth', 'verified', 'has_profile'])->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('loan-provider/profile/create', 'PublicController@loneProviderProfileCreate')->name('loan-provider-profile-create');
         Route::post('loan-provider/profile/store', 'LoanProviderController@profileStore')->name('loan-provider-profile-store');
 
         Route::get('farmer/profile/create', 'PublicController@farmerProfileCreate')->name('farmer-profile-create');
         Route::post('farmer/profile/store', 'FarmerController@profileStore')->name('farmer-profile-store');
+
+
+        Route::post('user-profile-store', 'ProfileController@profileStore')->name('user-profile-store');
+
+    });
+
+    Route::middleware(['auth', 'verified', 'has_profile'])->group(function () {
 
         Route::resource('products', 'LoanProductController');
 
@@ -102,12 +117,20 @@ Route::domain('loan.'.config('dev.domain_ext'))->group(function () {
 //        Route::get('loan/applicants', 'LoanProviderController@loanApplicant')->name('loan-applicant');
         Route::get('loan-update-status', 'LoanProviderController@loanUpdateStatus')->name('loan-update-status');
 
+        Route::get('custom-forms', 'LoanProviderController@customForms')->name('custom-forms');
+
+        Route::get('check-disbursement', 'LoanDisbursementController@getList')->name('check-disbursement');
+        Route::post('store-disbursement', 'LoanDisbursementController@storeDisbursement')->name('store-disbursement');
+
     });
 
 });
 
 // ROUTES FOR TRACE
 Route::domain('trace.'.config('dev.domain_ext'))->group(function () {
+
+    Route::get('farmer-check', 'FarmerController@farmerCheck')->name('farmer-check');
+
     Route::get('trace-registration', 'PublicController@traceRegistration')->name('trace-registration');
     Route::post('trace-user-registration-store', 'PublicController@traceUserRegistrationStore')->name('trace-user-registration-store');
 

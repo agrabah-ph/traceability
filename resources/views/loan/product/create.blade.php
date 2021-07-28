@@ -98,7 +98,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="schedule_inputs">
+                        <div class="row schedule_inputs">
                             <div class="col">
                                 <table class="table table-bordered">
                                     <tbody>
@@ -128,6 +128,21 @@
                                 </tr>
                             </tbody>
                         </table>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Disclosure</label>
+                                    <textarea name="disclosure" id="disclosure" cols="30" rows="10"  class="form-control">Naiintindihan ng humihiram na eto ay market testing sa pakikipag ugnayan ng Agrabah at CARD BDSFI na kung saan:
+
+1. Eto ay pilot testing/market testing na kung saan maaring one time lang ang pag hiram at ang mga susunod na pag hiram ay sa CARD BANK or ibang insitutition na ng CARD MRI pwedeng gawin
+
+2. Ang hinihiram ay babayaran sa loob ng tatlong (3) buwan na may voluntary contribution na 2.5% ng prinsipal kada buwan, Kaugnay nito kung may pambayad na ang humihiram bago sumapit ang ikatlong buwan, maari nila itong bayaran ng buo or "partial"
+
+3. Pumapayag at naiintindihan ng humihiram na ang disbursement at collection ay via Agrabah collection or GCASH. Ang ACCOUNT Number na kung saan maari itong bayaran ay ibibigay sa humhiram matapos "madisburse" and pera."</textarea>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

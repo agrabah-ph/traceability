@@ -104,3 +104,68 @@
     filter: brightness(0) invert(1);
   }
 }
+
+
+//LOAN
+
+.template-loan {
+  .nav-header {
+    background-color: $primary-2 !important;
+  }
+
+  .navbar-default {
+    background-color: $primary-2 !important;
+  }
+
+  .navbar-minimalize {
+    background: $primary-2 !important;
+    border-color: $primary-2 !important;
+
+    &:hover {
+      background: darken($primary-2, 5%) !important;
+    }
+  }
+
+  .nav {
+    li {
+      a {
+        &:hover, &:focus {
+          background: darken($primary-2, 5%) !important;
+        }
+      }
+    }
+  }
+
+}
+
+//TRACE
+
+.template-trace {
+  .nav-header {
+    background-color: $lighten-blue !important;
+  }
+
+  .navbar-default {
+    background-color: $lighten-blue !important;
+  }
+
+  .navbar-minimalize {
+    background: $lighten-blue !important;
+    border-color: $lighten-blue !important;
+
+    &:hover {
+      background: darken($lighten-blue, 5%) !important;
+    }
+  }
+
+  .nav {
+    li {
+      a {
+        &:hover, &:focus {
+          background: darken($lighten-blue, 5%) !important;
+        }
+      }
+    }
+  }
+
+}

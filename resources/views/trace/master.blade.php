@@ -24,7 +24,7 @@
 
 </head>
 
-<body class="pace-done">
+<body class="pace-done template-trace">
 
 <div id="wrapper">
 
@@ -39,8 +39,8 @@
                         {{--<img alt="image" class="rounded-circle profile-pic" src="/img/blank-profile.jpg"/>--}}
                         <img alt="image" class="img-fluid" src="{{ asset('images/logo.png') }}"/>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            {{--                            <span class="block m-t-xs font-bold">{!! Auth::user()->name !!}</span>--}}
-                            {{--                            <span class="text-muted text-xs block">{{ getRoleName('display_name') }} <b class="caret"></b></span>--}}
+                                                        <span class="block m-t-xs font-bold">{!! Auth::user()->name !!}</span>
+{{--                                                        <span class="text-muted text-xs block">{{ getRoleName('display_name') }} <b class="caret"></b></span>--}}
                             {{--<span class="text-muted text-xs block"> {{ getRoleName('display_name') }} <b class="caret"></b></span>--}}
                             <span class="text-muted text-xs block"> {!! Auth::user()->name !!} <b class="caret"></b></span>
                         </a>

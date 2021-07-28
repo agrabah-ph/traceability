@@ -27,6 +27,11 @@ class EnsureProviderInfo
                 return redirect()->route('farmer-profile-create');
             }
         }
+        if(auth()->user()->hasRole('community-leader')){
+            if(is_null(Auth::user()->leader->profile)){
+                return redirect()->route('community-leader-profile-create');
+            }
+        }
 
         return $next($request);
     }

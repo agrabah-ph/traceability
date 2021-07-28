@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFarmersTable extends Migration
+class CreateLoanApplicationDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateFarmersTable extends Migration
      */
     public function up()
     {
-        Schema::create('farmers', function (Blueprint $table) {
+        Schema::create('loan_application_details', function (Blueprint $table) {
             $table->id();
-            $table->string('account_id')->unique();
-            $table->string('url')->nullable();
-            $table->integer('user_id')->nullable();
-            $table->boolean('community_leader')->default(0);
+            $table->integer('loan_id')->nullable();
+            $table->text('info_loan_detail')->nullable();
+            $table->text('credit_financial_info')->nullable();
+            $table->text('trade_reference_info')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateFarmersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('farmers');
+        Schema::dropIfExists('loan_application_details');
     }
 }

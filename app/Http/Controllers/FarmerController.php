@@ -6,6 +6,7 @@ use App\Farmer;
 use App\Inventory;
 use App\CommunityLeader;
 use App\Loan;
+use App\LoanApplicationDetail;
 use App\LoanProduct;
 use App\LoanType;
 use App\Product;
@@ -209,20 +210,35 @@ class FarmerController extends Controller
 
     public function farmerLoginForm(Request $request)
     {
-        $rules = array(
-            'farmer' => 'required|exists:farmers,account_id'
-        );
-        $messages = [
-            'farmer'    => 'Farmer does not exists.',
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
+//        $id = $request->input('farmer');
+//        $farmer = Farmer::where('community_leader', 0)->find($id);
+//
+//        $rules = array(
+//            'farmer' => 'required|exists:farmers,account_id'
+//        );
+//        $messages = [
+//            'farmer'    => 'Farmer does not exists.',
+//        ];
+//        $validator = Validator::make($request->all(), $rules, $messages);
+//        if ($validator->fails()) {
+//            return redirect()
+//                ->back()
+//                ->withErrors($validator)
+//                ->withInput();
+//        }
+
         return redirect()->route('farmers-info', array('account'=>$request->input('farmer')));
+    }
+
+    public function farmerCheck(Request $request)
+    {
+        $id = $request->input('id');
+        $farmer = Farmer::with('profile')
+            ->where('community_leader', 0)
+            ->where('account_id', $id)
+            ->first();
+
+        return $farmer;
     }
 
     public function farmerInfo($account)
@@ -321,33 +337,56 @@ class FarmerController extends Controller
     public function submitLoanApplication(Request $request)
     {
 
-        $farmer = Farmer::find(Auth::user()->farmer->id);
-        $profile = $farmer->profile;
-        $profile->first_name = $request->input('first_name');
-        $profile->middle_name = $request->input('middle_name');
-        $profile->last_name = $request->input('last_name');
-        $profile->mobile = $request->input('mobile');
-        $profile->address = $request->input('address');
-        $profile->dob = $request->input('dob');
-        $profile->pob = $request->input('pob');
-        $profile->gender = $request->input('gender');
-        $profile->civil_status = $request->input('civil_status');
-        $profile->citizenship = $request->input('citizenship');
-        $profile->gross_monthly_income = $request->input('gross_monthly_income');
-        $profile->monthly_expenses = $request->input('monthly_expenses');
-        if($profile->save()){
-            $user = User::find(Auth::user()->id);
-            $user->name = ucwords($profile->first_name).' '.ucwords($profile->last_name);
-            $user->save();
-        }
+//        $farmer = Farmer::find(Auth::user()->farmer->id);
+//        $profile = $farmer->profile;
+//        $profile->first_name = $request->input('first_name');
+//        $profile->middle_name = $request->input('middle_name');
+//        $profile->last_name = $request->input('last_name');
+//        $profile->mobile = $request->input('mobile');
+//        $profile->address = $request->input('address');
+//        $profile->dob = $request->input('dob');
+//        $profile->pob = $request->input('pob');
+//        $profile->gender = $request->input('gender');
+//        $profile->civil_status = $request->input('civil_status');
+//        $profile->citizenship = $request->input('citizenship');
+//        $profile->gross_monthly_income = $request->input('gross_monthly_income');
+//        $profile->monthly_expenses = $request->input('monthly_expenses');
+//        if($profile->save()){
+//            $user = User::find(Auth::user()->id);
+//            $user->name = ucwords($profile->first_name).' '.ucwords($profile->last_name);
+//            $user->save();
+//        }
 
-        $loanProduct = LoanProduct::find($request->input('id'));
+//        return response()->json($request->input('inputs'));
+
+        $inputs = $request->input('inputs');
+
+        $farmer = Farmer::find(Auth::user()->farmer->id);
+
+
+        $loanProduct = LoanProduct::find($inputs[0]);
         $loan = new Loan();
         $loan->loan_provider_id = $loanProduct->loan_provider_id;
         $loan->loan_product_id = $loanProduct->id;
         $loan->status = 'Pending';
+
+        $loan->amount = $loanProduct->amount;
+        $loan->duration = $loanProduct->duration;
+        $loan->interest_rate = $loanProduct->interest_rate;
+        $loan->timing = $loanProduct->timing;
+        $loan->allowance = $loanProduct->allowance;
+        $loan->first_allowance = $loanProduct->first_allowance;
+
         if($farmer->loans()->save($loan)){
-            return redirect()->back();
+            $details = new LoanApplicationDetail();
+            $details->loan_id = $loan->id;
+            $details->info_loan_detail = serialize($inputs[1]);
+            $details->credit_financial_info = serialize($inputs[2]);
+            $details->trade_reference_info = serialize($inputs[3]);
+            $details->save();
+
+            $url = route('my-loans');
+            return response()->json($url);
         }
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.login')
 
-@section('title', 'Blank')
+@section('title', 'Add Inventory')
 
 @section('content')
     <div class="ibox-content">
@@ -23,6 +23,7 @@
     <section class="container mt-2">
 
         <div class="row">
+
 {{--            <div class="col-sm-3">--}}
 {{--                <div class="ibox float-e-margins">--}}
 {{--                    <div class="ibox-title">--}}
@@ -233,14 +234,14 @@
                             console.log(data);
                             $('#inv-list').append('' +
                                 '<tr>' +
-                                '<td>'+ data.product.display_name +'</td>' +
-                                '<td>'+ data.quality +'</td>' +
-                                '<td class="text-right">'+ data.quantity +' '+ data.unit +'</td>' +
-                                '<td class="text-right">' +
-                                '<div class="btn-group text-right">' +
-                                '<button class="btn btn-white btn-xs btn-action" data-action="remove-item" data-id="'+ data.id +'"><i class="fa fa-times text-danger"></i></button>' +
-                                '</div>' +
-                                '</td>' +
+                                    '<td>'+ data.product.display_name +'</td>' +
+                                    '<td>'+ data.quality +'</td>' +
+                                    '<td class="text-right">'+ data.quantity +' '+ data.unit +'</td>' +
+                                    '<td class="text-right">' +
+                                        '<div class="btn-group text-right">' +
+                                            '<button class="btn btn-white btn-xs btn-action" data-action="remove-item" data-id="'+ data.id +'"><i class="fa fa-times text-danger"></i></button>' +
+                                        '</div>' +
+                                    '</td>' +
                                 '</tr>' +
                                 '');
                             modal.modal('toggle');
