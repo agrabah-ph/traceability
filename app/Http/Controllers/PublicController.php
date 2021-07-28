@@ -141,23 +141,17 @@ class PublicController extends Controller
             switch ($request->input('type')){
                 case 'farmer':
                     $data->assignRole(stringSlug('Farmer'));
-                    $number = Farmer::count() + 1;
+//                    $number = Farmer::count() + 1;
+                    $number = str_pad(Farmer::count() + 1, 5, 0, STR_PAD_LEFT);
                     $farmer = new Farmer();
                     $farmer->account_id = $number;
                     $farmer->user_id = $data->id;
                     $farmer->save();
                     break;
-                case 'community-leader':
-                    $data->assignRole(stringSlug('Community Leader'));
-                    $number = CommunityLeader::count() + 1;
-                    $loanProvider = new CommunityLeader();
-                    $loanProvider->account_id = $number;
-                    $loanProvider->user_id = $data->id;
-                    $loanProvider->save();
-                    break;
                 case 'loan-provider':
                     $data->assignRole(stringSlug('Loan Provider'));
-                    $number = LoanProvider::count() + 1;
+//                    $number = LoanProvider::count() + 1;
+                    $number = str_pad(LoanProvider::count() + 1, 5, 0, STR_PAD_LEFT);
                     $loanProvider = new LoanProvider();
                     $loanProvider->account_id = $number;
                     $loanProvider->user_id = $data->id;

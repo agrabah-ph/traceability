@@ -277,6 +277,9 @@ class FarmerController extends Controller
         $profile->qr_image = $farmer->account_id.'.png';
         $profile->qr_image_path = '/images/farmer/'.$farmer->account_id.'.png';
         if($farmer->profile()->save($profile)){
+            $user = User::find($farmer->user_id);
+            $user->name = $profile->first_name.' '.$profile->last_name;
+            $user->save();
             return redirect()->route('home');
         }
     }
@@ -361,6 +364,8 @@ class FarmerController extends Controller
 
         $inputs = $request->input('inputs');
 
+//        return response()->json($inputs);
+
         $farmer = Farmer::find(Auth::user()->farmer->id);
 
 
@@ -383,6 +388,7 @@ class FarmerController extends Controller
             $details->info_loan_detail = serialize($inputs[1]);
             $details->credit_financial_info = serialize($inputs[2]);
             $details->trade_reference_info = serialize($inputs[3]);
+            $details->reference_id = serialize($inputs[4]);
             $details->save();
 
             $url = route('my-loans');

@@ -88,10 +88,10 @@ class CommunityLeaderController extends Controller
      */
     public function show($id)
     {
-        $data = CommunityLeader::find($communityLeader->id);
-
-//        return $data;
-        return response()->view(subDomainPath('community-leader.show'), compact('data'));
+//        $data = CommunityLeader::find($communityLeader->id);
+//
+////        return $data;
+//        return response()->view(subDomainPath('community-leader.show'), compact('data'));
     }
 
     /**

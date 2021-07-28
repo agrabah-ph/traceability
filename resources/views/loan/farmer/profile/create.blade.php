@@ -154,7 +154,7 @@
                                     <div class="repeater-container">
                                         <div class="row header d-none d-lg-flex">
                                             <div class="col-8"><div class="box">Name</div></div>
-                                            <div class="col-4"><div class="box">Age</div></div>
+                                            <div class="col-4"><div class="box">Birthday</div></div>
                                         </div>
                                         <div class="secondary_info repeater-lists" name="dependents" data-title="Dependents" id="dependent-box"></div>
                                         <div class="actions text-right">
@@ -173,7 +173,7 @@
 
                         </fieldset>
 
-                        <h1>More Information</h1>
+                        <h1>More Info</h1>
                         <fieldset>
                             <h2>Spouse/Co-maker Info</h2>
                             <div class="row">
@@ -278,13 +278,17 @@
                                 <div class="col-12 col-lg-6">
                                     <h2>Farming Info</h2>
                                     <div class="form-group">
-                                        <input name="farm_lot" type="text" data-title="Farm Lot" class="farming_info form-control required" id="farm_lot">
-                                        <label for="farm_lot">Farm Lot *</label>
+                                        <textarea name="farming_description" data-title="Farming Description" class="farming_info form-control required" id="farming_description"></textarea>
+                                        <label for="farming_description">Farming Description *</label>
                                     </div>
-                                    <div class="form-group">
-                                        <input name="farming_since" type="text" data-title="Farming since" class="farming_info form-control required" id="farming_since">
-                                        <label for="farming_since">Farming since *</label>
-                                    </div>
+{{--                                    <div class="form-group">--}}
+{{--                                        <input name="farm_lot" type="text" data-title="Farm Lot" class="farming_info form-control required" id="farm_lot">--}}
+{{--                                        <label for="farm_lot">Farm Lot *</label>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <input name="farming_since" type="text" data-title="Farming since" class="farming_info form-control required" id="farming_since">--}}
+{{--                                        <label for="farming_since">Farming since *</label>--}}
+{{--                                    </div>--}}
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <h2>Membership / Group</h2>
@@ -499,12 +503,9 @@
                         <fieldset>
                             <div class="terms-conditions-content">
                                 <h2>Terms and Conditions</h2>
-                                <div class="content">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nec nam aliquam sem et tortor consequat. Tempus quam pellentesque nec nam aliquam sem et tortor. Sem nulla pharetra diam sit. Pellentesque pulvinar pellentesque habitant morbi tristique. Gravida arcu ac tortor dignissim convallis aenean et. Nec feugiat nisl pretium fusce id. Curabitur gravida arcu ac tortor dignissim convallis aenean. Neque egestas congue quisque egestas diam in arcu cursus euismod. Tellus molestie nunc non blandit massa enim.</p>
-                                    <p>Cursus turpis massa tincidunt dui ut ornare lectus sit amet. Egestas tellus rutrum tellus pellentesque eu tincidunt. Rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt. Turpis massa sed elementum tempus egestas. Diam ut venenatis tellus in. Risus sed vulputate odio ut enim blandit. Lobortis scelerisque fermentum dui faucibus in ornare. Imperdiet massa tincidunt nunc pulvinar. Eu volutpat odio facilisis mauris. Enim eu turpis egestas pretium. Elementum tempus egestas sed sed.</p>
-                                    <p>Nisl pretium fusce id velit ut tortor pretium viverra suspendisse. Id faucibus nisl tincidunt eget. Viverra nam libero justo laoreet sit. Quis vel eros donec ac odio tempor orci dapibus ultrices. Risus viverra adipiscing at in tellus integer feugiat scelerisque. Suscipit adipiscing bibendum est ultricies integer quis auctor elit. In aliquam sem fringilla ut. Sagittis purus sit amet volutpat consequat mauris nunc. Enim nec dui nunc mattis. Massa vitae tortor condimentum lacinia quis vel eros donec ac. Bibendum neque egestas congue quisque egestas. Purus in mollis nunc sed id semper risus.</p>
-                                    <p>Ullamcorper morbi tincidunt ornare massa eget egestas purus viverra. Congue eu consequat ac felis donec et. In tellus integer feugiat scelerisque varius morbi enim nunc faucibus. Amet porttitor eget dolor morbi non arcu. Risus quis varius quam quisque id. Nunc sed blandit libero volutpat sed cras ornare arcu dui. Vitae tempus quam pellentesque nec nam aliquam. Sodales neque sodales ut etiam sit amet nisl. Sit amet risus nullam eget. Sit amet consectetur adipiscing elit ut. Aliquam vestibulum morbi blandit cursus risus at. Pellentesque habitant morbi tristique senectus et netus. Scelerisque purus semper eget duis. Sapien et ligula ullamcorper malesuada proin libero nunc consequat. At urna condimentum mattis pellentesque. Orci a scelerisque purus semper eget duis at. At ultrices mi tempus imperdiet nulla malesuada pellentesque elit eget. Purus non enim praesent elementum. Nec sagittis aliquam malesuada bibendum arcu vitae. Adipiscing bibendum est ultricies integer quis auctor elit.</p>
-                                </div>
+{{--                                <div class="content">--}}
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I hereby authorize Agrabah Ventures to collect and process my personal information I understand that my personal data is protected by the Data Privacy Act of 2012 (R.A. 10173)</p>
+{{--                                </div>--}}
                             </div>
                             <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required i-checks"> <label for="acceptTerms">I agree with the Terms and Conditions.</label>
                         </fieldset>
@@ -721,18 +722,27 @@
                 var action = $(this).data('action'), dependentBox = $('#dependent-box'), assetsBox = $('#assets-box');
                 switch(action){
                     case 'add-dependent':
+                        var dependentCount = dependentBox.children().length;
                         dependentBox.append('' +
                             '<div class="repeater-item">' +
                                 '<div class="row">' +
-                                    '<div class="col-12 col-lg-8">' +
-                                        '<input type="text" name="dependent-name" class="form-control required" placeholder="Name" required>' +
+                                    '<div class="col-12 col-lg-7">' +
+                                        '<input type="text" name="dependent-name-'+ dependentCount +'" class="form-control required" id="name-'+ dependentCount +'" placeholder="Name" required>' +
                                     '</div>' +
-                                    '<div class="col-12 col-lg-4">' +
-                                        '<input type="text" name="dependent-age" class="form-control required" placeholder="Age" required>' +
+                                    '<div class="col-12 col-lg-5">' +
+                                        '<input type="text" name="dependent-dob-'+ dependentCount +'" class="form-control required dob-input" id="dob-'+ dependentCount +'" placeholder="Date of Birth" required>' +
                                     '</div>' +
                                 '</div>' +
                             '</div>' +
                         '');
+                        $('.dob-input').datepicker({
+                            startView: 1,
+                            todayBtn: "linked",
+                            keyboardNavigation: false,
+                            forceParse: false,
+                            autoclose: true,
+                            format: "mm/dd/yyyy"
+                        });
                         break;
                     case 'remove-dependent':
                         dependentBox.find('.repeater-item').last().remove();
@@ -840,7 +850,7 @@
                 $('.profile_info').each(function(){
                     var name = $(this).attr('name');
                     var title = $(this).data('title');
-                    var value = $(this).val();
+                    var value = ($(this).val().length < 1) ? 'N/A': $(this).val();
                     var values = new Array();
 
                     values.push(name);
@@ -863,8 +873,10 @@
                             var dependent = new Array();
                             $(this).find('.repeater-item').each(function(){
                                 var item = new Array();
-                                item.push($(this).find('input[name=dependent-name]').val());
-                                item.push($(this).find('input[name=dependent-age]').val());
+                                item.push($(this).find('input[type=text]').first().val());
+                                item.push($(this).find('input[type=text]').last().val());
+                                // item.push($(this).find('input[name=dependent-name]').val());
+                                // item.push($(this).find('input[name=dependent-dob]').val());
                                 dependent.push(item);
                             });
                             value = dependent;
@@ -889,7 +901,7 @@
                 $('.spouse_comaker_info').each(function(){
                     var name = $(this).attr('name');
                     var title = $(this).data('title');
-                    var value = $(this).val();
+                    var value = ($(this).val().length < 1) ? 'N/A': $(this).val();
                     var values = new Array();
                     values.push(name);
                     values.push(title);
@@ -903,7 +915,7 @@
                 $('.farming_info').each(function(){
                     var name = $(this).attr('name');
                     var title = $(this).data('title');
-                    var value = $(this).val();
+                    var value = ($(this).val().length < 1) ? 'N/A': $(this).val();
                     var values = new Array();
                     if($(this).is('input[type=checkbox]')){
                         value = ($(this).is(':checked')) ? 1 : 0;
@@ -920,7 +932,7 @@
                 $('.employment_info').each(function(){
                     var name = $(this).attr('name');
                     var title = $(this).data('title');
-                    var value = $(this).val();
+                    var value = ($(this).val().length < 1) ? 'N/A': $(this).val();
                     var values = new Array();
 
                     if($(this).is('input[type=radio]')){

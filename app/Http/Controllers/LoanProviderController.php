@@ -32,9 +32,13 @@ class LoanProviderController extends Controller
      */
     public function index()
     {
-        $data = LoanProvider::get();
+        $datas = LoanProvider::has('profile')->get();
 
-        return response()->json($data);
+//        return $datas;
+        return response()->view(subDomainPath('loan-provider.index'), compact('datas'));
+
+//        $data = LoanProvider::get();
+//        return response()->json($data);
     }
 
     /**
@@ -110,16 +114,20 @@ class LoanProviderController extends Controller
         $profile->first_name = $request->input('first_name');
         $profile->middle_name = $request->input('middle_name');
         $profile->last_name = $request->input('last_name');
+        $profile->designation = $request->input('designation');
+        $profile->mobile = $request->input('mobile');
+        $profile->landline = $request->input('landline');
         $profile->bank_name = $request->input('bank_name');
         $profile->branch_name = $request->input('branch_name');
-        $profile->address_line = $request->input('address_line');
-        $profile->account_name = $request->input('account_name');
-        $profile->account_number = $request->input('account_number');
-        $profile->tin = $request->input('tin');
+        $profile->branch_code = $request->input('branch_code');
+        $profile->branch_address = $request->input('branch_address');
         $profile->contact_person = $request->input('contact_person');
+        $profile->contact_designation = $request->input('contact_designation');
         $profile->contact_number = $request->input('contact_number');
-        $profile->designation = $request->input('designation');
         if($provider->profile()->save($profile)){
+            $user = User::find($provider->user_id);
+            $user->name = $profile->first_name.' '.$profile->last_name;
+            $user->save();
             return redirect()->route('home');
         }
 

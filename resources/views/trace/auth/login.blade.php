@@ -4,7 +4,7 @@
 
     <main class="page-forms">
         <div class="row no-gutters sign-in">
-            <div class="col-12 col-lg-4 left d-none d-lg-flex" style="background-image: url({{ asset('images/loan/bg-img.jpg') }})">
+            <div class="col-12 col-lg-4 left d-none d-lg-flex" style="background-image: url({{ asset('images/loan/bg-img-3.png') }})">
                 <div>
                     <a href="{{ asset('/') }}">
                         <img src="{{ asset('images/agrabah-logo.png') }}" alt="logo" class="img-fluid d-block mx-auto logo">
@@ -21,6 +21,7 @@
                 </div>
 
                 {{--                <a href="{{ asset('/') }}" class="link">Back to homepage</a>--}}
+                <div class="copyright">Powered by Agrabah Ventures</div>
 
             </div>
             <div class="col-12 col-lg-8 right d-flex align-items-center justify-content-center">

@@ -18,4 +18,8 @@ class LoanApplicationDetail extends Model
     {
         return unserialize($value);
     }
+    public function getReferenceIdAttribute($value)
+    {
+        return unserialize($value);
+    }
 }

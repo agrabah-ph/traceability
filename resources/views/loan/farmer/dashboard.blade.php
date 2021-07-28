@@ -12,8 +12,8 @@
     <div class="wrapper wrapper-content">
         <div class="row">
 
-            <div class="col-lg-8">
-                <div class="ibox ">
+            <div class="col">
+                <div class="ibox">
                     <div class="ibox-content">
                         <h3>Active Loans</h3>
                         <div class="project-list">

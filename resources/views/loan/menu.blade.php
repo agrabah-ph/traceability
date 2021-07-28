@@ -6,7 +6,7 @@
 
 
 <li class="{{ (request()->is('products*')) ? 'active' : '' }}">
-    <a href="#"><i class="fa fa-bank"></i> <span class="nav-label">Loan Products</span><span class="fa arrow"></span></a>
+    <a href="#"><i class="fa fa-list-alt"></i> <span class="nav-label">Loan Products</span><span class="fa arrow"></span></a>
     <ul class="nav nav-second-level collapse">
         <li class="{{ (request()->is('products')) ? 'active' : '' }}"><a href="{!! route('products.index') !!}">List</a></li>
         <li class="{{ (request()->is('products/create')) ? 'active' : '' }}"><a href="{!! route('products.create') !!}">Create</a></li>
@@ -14,15 +14,15 @@
 </li>
 
 <li class="{{ (request()->is('loan/applicants')) ? 'active' : '' }}">
-    <a href="{!! route('loan-applicant') !!}"><i class="fa fa-money"></i> <span class="nav-label">Loan Application</span></a>
+    <a href="{!! route('loan-applicant') !!}"><i class="fa fa-pencil-square-o"></i> <span class="nav-label">Loan Application</span></a>
 </li>
 
-<li class="{{ (request()->is('loan-report')) ? 'active' : '' }}">
-    <a href="#"><i class="fa fa-cubes"></i> <span class="nav-label">Reports</span><span class="fa arrow"></span></a>
-    <ul class="nav nav-second-level collapse">
+{{--<li class="{{ (request()->is('loan-report')) ? 'active' : '' }}">--}}
+{{--    <a href="#"><i class="fa fa-cubes"></i> <span class="nav-label">Reports</span><span class="fa arrow"></span></a>--}}
+{{--    <ul class="nav nav-second-level collapse">--}}
 {{--        <li class="{{ (request()->is('custom-forms')) ? 'active' : '' }}"><a href="{!! route('custom-forms') !!}">Custom Forms</a></li>--}}
-    </ul>
-</li>
+{{--    </ul>--}}
+{{--</li>--}}
 
 
 @endif
@@ -30,11 +30,11 @@
 @if((auth()->user()->hasRole('farmer')) || (auth()->user()->hasRole('community-leader')))
 
     <li class="{{ (request()->is('loan/product/list')) ? 'active' : '' }}">
-        <a href="{!! route('loan-product-list') !!}"><i class="fa fa-list"></i> <span class="nav-label">Loan Products</span></a>
+        <a href="{!! route('loan-product-list') !!}"><i class="fa fa-list-alt"></i> <span class="nav-label">Loan Products</span></a>
     </li>
 
     <li class="{{ (request()->is('my-loans')) ? 'active' : '' }}">
-        <a href="{!! route('my-loans') !!}"><i class="fa fa-money"></i> <span class="nav-label">My Loans</span></a>
+        <a href="{!! route('my-loans') !!}"><i class="fa fa-tasks"></i> <span class="nav-label">My Loans</span></a>
     </li>
 
 {{--    <li class="{{ (request()->is('products*')) ? 'active' : '' }}">--}}

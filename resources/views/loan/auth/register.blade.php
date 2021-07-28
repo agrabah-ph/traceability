@@ -4,21 +4,25 @@
 
     <main class="page-forms">
         <div class="row no-gutters sign-in">
-            <div class="col-12 col-lg-4 left d-none d-lg-block no-overlay">
-                <div class="position-relative">
-                    <img src="{{ asset('images/agrabah-logo.png') }}" alt="logo" class="img-fluid d-block mx-auto logo mb-5">
-                    <div class="content">
-                        <h2>{{ config('app.name', 'Laravel') }}</h2>
+            <div class="col-12 col-lg-4 left d-none d-lg-flex" style="background-image: url({{ asset('images/loan/bg-img-5.png') }})">
+                <div>
+                    <a href="{{ asset('/') }}">
+                        <img src="{{ asset('images/agrabah-logo.png') }}" alt="logo" class="img-fluid d-block mx-auto logo">
+                    </a>
+                    {{--<div class="content">--}}
+                    {{--<h2>{{ config('app.name', 'Laravel') }}</h2>--}}
 
-                        <ul>
-                            <li>Easy To Use</li>
-                            <li>Report Generator</li>
-                            <li>Join us now</li>
-                        </ul>
-                    </div>
+                    {{--<ul>--}}
+                    {{--<li>Easy To Use</li>--}}
+                    {{--<li>Report Generator</li>--}}
+                    {{--<li>Join us now</li>--}}
+                    {{--</ul>--}}
+                    {{--</div>--}}
+
+                    <div class="copyright">Powered by Agrabah Ventures</div>
                 </div>
 
-                <a href="{{ asset('/') }}" class="link position-relative">Back to homepage</a>
+                {{--                <a href="{{ asset('/') }}" class="link">Back to homepage</a>--}}
 
             </div>
             <div class="col-12 col-lg-8 right d-flex align-items-center justify-content-center">

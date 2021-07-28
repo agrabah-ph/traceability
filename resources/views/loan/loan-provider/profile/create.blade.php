@@ -22,18 +22,32 @@
                         <fieldset>
                             <h2>Personal Information</h2>
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col">
                                     <div class="form-group">
-                                        <input name="first_name" type="text" class="form-control required" id="fname">
-                                        <label for="fname">First name *</label>
+                                        <input name="first_name" type="text" class="form-control required" id="first_name">
+                                        <label for="first_name">First name *</label>
                                     </div>
                                     <div class="form-group">
-                                        <input name="middle_name" type="text" class="form-control required" id="mname">
-                                        <label for="mname">Middle name *</label>
+                                        <input name="middle_name" type="text" class="form-control required" id="middle_name">
+                                        <label for="middle_name">Middle name *</label>
                                     </div>
                                     <div class="form-group">
-                                        <input name="last_name" type="text" class="form-control required" id="lname">
-                                        <label for="lname">Last name *</label>
+                                        <input name="last_name" type="text" class="form-control required" id="last_name">
+                                        <label for="last_name">Last name *</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <input name="designation" type="text" class="form-control required" id="designation">
+                                        <label for="designation">Designation *</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="mobile" type="text" class="form-control required" id="mobile">
+                                        <label for="mobile">Mobile no. *</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="landline" type="text" class="form-control required" id="landline">
+                                        <label for="landline">Landline no. *</label>
                                     </div>
                                 </div>
                             </div>
@@ -43,44 +57,33 @@
                         <fieldset>
                             <h2>Bank Information</h2>
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col">
                                     <div class="form-group">
                                         <input name="bank_name" type="text" class="form-control required" id="bank_name">
                                         <label for="bank_name">Bank name *</label>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                            </div>
+                            <div class="row">
+                                <div class="col">
                                     <div class="form-group">
                                         <input name="branch_name" type="text" class="form-control required" id="branch_name">
                                         <label for="branch_name">Branch name *</label>
                                     </div>
                                 </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <input name="branch_code" type="text" class="form-control required" id="branch_code">
+                                        <label for="branch_code">Branch code</label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col">
                                     <div class="form-group">
-                                        <input name="address_line" type="text" class="form-control required" id="address_line">
+                                        <textarea name="address_line" class="form-control required" id="address_line"></textarea>
+{{--                                        <input name="address_line" type="text" class="form-control required" id="address_line">--}}
                                         <label for="address_line">Address line *</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <input name="account_name" type="text" class="form-control required" id="account_name">
-                                        <label for="account_name">Account name *</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <input name="account_number" type="text" class="form-control required" id="account_number">
-                                        <label for="">Account number *</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <input name="tin" type="text" class="form-control required" id="tin">
-                                        <label for="tin">TIN no. *</label>
                                     </div>
                                 </div>
                             </div>
@@ -96,12 +99,12 @@
                                         <label for="contact_person">Contact person *</label>
                                     </div>
                                     <div class="form-group">
-                                        <input name="contact_number" type="text" class="form-control required" id="contact_number">
-                                        <label for="contact_number">Contact number *</label>
+                                        <input name="contact_designation" type="text" class="form-control required" id="contact_designation">
+                                        <label for="contact_designation">Contact designation *</label>
                                     </div>
                                     <div class="form-group">
-                                        <input name="designation" type="text" class="form-control required" id="designation">
-                                        <label for="designation">Designation *</label>
+                                        <input name="contact_number" type="text" class="form-control required" id="contact_number">
+                                        <label for="contact_number">Contact number *</label>
                                     </div>
                                 </div>
                             </div>
@@ -110,6 +113,7 @@
                         <h1>Finish</h1>
                         <fieldset>
                             <h2>Terms and Conditions</h2>
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I hereby authorize Agrabah Ventures to collect and process my personal information I understand that my personal data is protected by the Data Privacy Act of 2012 (R.A. 10173).</p>
                             <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms">I agree with the Terms and Conditions.</label>
                         </fieldset>
                     </form>

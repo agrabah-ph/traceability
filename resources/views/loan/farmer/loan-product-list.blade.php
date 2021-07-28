@@ -139,6 +139,21 @@
                                     </div>
                                 </div>
                             </div>
+                            <h3>Reference ID's</h3>
+                            <div class="row info-loan-detail" data-title="Reference ID's">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>ID #1 <span class="text-danger">*</span></label>
+                                        <input type="file" name="reference_id_a" class="form-control required" required>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>ID #2 <span class="text-danger">*</span></label>
+                                        <input type="file" name="reference_id_b" class="form-control required" required>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -339,7 +354,7 @@
                     </dl>
                     <dl class="row mb-0">
                         <div class="col-sm-6 text-sm-right">
-                            <dt>Monthly Rate:</dt>
+                            <dt>Amortization Rate:</dt>
                         </div>
                         <div class="col-sm-6 text-sm-left">
                             <dd class="mb-1 loan-amor"></dd>
@@ -539,7 +554,7 @@
             });
 
             function numberWithCommas(x) {
-                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return x.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             }
 
             $(document).on('click', '.show_loan', function () {
@@ -573,7 +588,7 @@
                 lvl_terms.text(duration);
                 lvl_type.text(type);
                 lvl_interest.text(interest_rate);
-                var loan_amor = (amount / interest_rate) * duration;
+                var loan_amor = (amount + (interest_rate/100) * amount) / duration;
                 lvl_amor.text(numberWithCommas(loan_amor));
                 /**
                  * amount: 30000
@@ -708,10 +723,10 @@
                                     }
                                     break;
                                 case 'Primary User':
-                                    value.push($(this).val());
+                                    value.push(($(this).val().length < 1) ? 'N/A': $(this).val());
                                     break;
                                 case 'Relationship to Applicant':
-                                    value.push($(this).val());
+                                    value.push(($(this).val().length < 1) ? 'N/A': $(this).val());
                                     break;
                                 case 'Place of use':
                                     $(this).find('input[type=checkbox]:checked').each(function(){
@@ -733,7 +748,8 @@
                                     }
                                     if($(this).find('input[type=radio]:checked').val() === 'Motor Vehicle'){
                                         innerValue.push(box.find('input[type=radio]:checked').val());
-                                        innerValue.push(box.find('input[type=text]').val());
+                                        // innerValue.push(box.find('input[type=text]').val());
+                                        innerValue.push((box.find('input[type=text]').val().length < 1) ? 'N/A': box.find('input[type=text]').val());
                                         if(box.find('input[type=text]').val().length < 1){
                                             box.find('input[type=text]').closest('.form-group').addClass('has-error');
                                             error += 1;
@@ -795,6 +811,25 @@
                         });
                         inputs.push(trade_reference_info);
 
+                        var reference_ids = new Array();
+                        $('.reference-ids').each(function(){
+                            var forms = new Array();
+                            var title = $(this).data('title');
+                            var value = new Array();
+
+                            $(this).find('.form-control').each(function(){
+                                var innestValue = new Array();
+                                innestValue.push($(this).data('title'), $(this).data('base'), $(this).val());
+                                // innestValue.push($(this).data('title'), $(this).val(), $(this).val());
+                                value.push(innestValue);
+                            });
+
+                            forms.push(title);
+                            forms.push(value);
+                            reference_ids.push(forms);
+                        });
+                        inputs.push(reference_ids);
+
                         console.log(inputs);
                         console.log('error: '+ error);
                         if(error > 0){
@@ -846,6 +881,7 @@
                             modal.modal('toggle');
                             swal("Success!", "You may proceed to Loan Application.", "success");
                         });
+
                         break;
                 }
             });
@@ -861,6 +897,11 @@
                         modal.data('type', 'loan-application-detail');
                         modal.data('id', loanProductID);
 
+                        // modal.find('.modal-title').text('Loan Application Details');
+                        // modal.find('#modal-size').removeClass().addClass('modal-dialog modal-lg');
+                        // modal.modal({backdrop: 'static', keyboard: false});
+                        // return false;
+
                         modal.find('.modal-body').empty().append('' +
                             '<div class="panel panel-default" id="loan-details">' +
                                 '<div class="panel-body">' +
@@ -869,7 +910,7 @@
                                     '<div class="row">' +
                                         '<div class="col">' +
                                             '<div class="form-group row info-loan-detail" data-title="Purpose of Loan">' +
-                                                '<div class="ctextol">' +
+                                                '<div class="col">' +
                                                     '<div class="i-checks">' +
                                                         '<label class="check-labels"><input type="checkbox" value="Auto Financing"><i></i> Auto Financing</label>' +
                                                     '</div>' +
@@ -892,20 +933,20 @@
                                             '</div>' +
                                         '</div>' +
                                     '</div>' +
-                                    '<div class="row">' +
-                                        '<div class="col-lg-6">' +
-                                            '<div class="form-group">' +
-                                                '<h3>Primary User</h3>' +
-                                                '<input type="text" name="primary-user" class="form-control info-loan-detail" data-title="Primary User">' +
-                                            '</div>' +
-                                        '</div>' +
-                                        '<div class="col-lg-6">' +
-                                            '<div class="form-group">' +
-                                                '<h3>Relationship to Applicant</h3>' +
-                                                '<input type="text" name="relationship" class="form-control info-loan-detail" data-title="Relationship to Applicant">' +
-                                            '</div>' +
-                                        '</div>' +
-                                    '</div>' +
+                                    // '<div class="row">' +
+                                    //     '<div class="col-lg-6">' +
+                                    //         '<div class="form-group">' +
+                                    //             '<h3>Primary User</h3>' +
+                                    //             '<input type="text" name="primary-user" class="form-control info-loan-detail" data-title="Primary User">' +
+                                    //         '</div>' +
+                                    //     '</div>' +
+                                    //     '<div class="col-lg-6">' +
+                                    //         '<div class="form-group">' +
+                                    //             '<h3>Relationship to Applicant</h3>' +
+                                    //             '<input type="text" name="relationship" class="form-control info-loan-detail" data-title="Relationship to Applicant">' +
+                                    //         '</div>' +
+                                    //     '</div>' +
+                                    // '</div>' +
                                     '<h3>Place of use</h3>' +
                                     '<div class="row info-loan-detail" data-title="Place of use">' +
                                         '<div class="col">' +
@@ -970,12 +1011,13 @@
                                                 '<div class="row form-repeater">' +
                                                     '<div class="col">' +
                                                         '<div class="form-group">' +
-                                                            '<select name="" class="form-control" data-title="Account type">' +
-                                                                '<option value="">Account type</option>' +
-                                                                '<option value="Savings">Savings</option>' +
-                                                                '<option value="Checking">Checking</option>' +
-                                                                '<option value="Time Deposit">Time Deposit</option>' +
-                                                            '</select>' +
+                                                            '<input type="text" name="bank-name" class="form-control" data-title="Bank name" placeholder="Bank name">' +
+                                                            // '<select name="" class="form-control" data-title="Account type">' +
+                                                            //     '<option value="">Account type</option>' +
+                                                            //     '<option value="Savings">Savings</option>' +
+                                                            //     '<option value="Checking">Checking</option>' +
+                                                            //     '<option value="Time Deposit">Time Deposit</option>' +
+                                                            // '</select>' +
                                                         '</div>' +
                                                     '</div>' +
                                                     '<div class="col">' +
@@ -1011,7 +1053,13 @@
                                                 '<button type="button" class="btn btn-xs btn-white btn-action" data-action="repeater-remove"><i class="text-danger fa fa-minus"></i></button>' +
                                             '</div>' +
                                         '</div>' +
+
+
                                     '</div>' +
+
+
+
+
                                 '</div>' +
                             '</div>' +
 
@@ -1043,8 +1091,33 @@
                                             '<button type="button" class="btn btn-xs btn-white btn-action" data-action="repeater-remove"><i class="text-danger fa fa-minus"></i></button>' +
                                         '</div>' +
                                     '</div>' +
+
                                 '</div>' +
                             '</div>' +
+
+                            '<div class="panel panel-default">' +
+                                '<div class="panel-body">' +
+                                    '<strong><h2 class="text-success">REFERENCE ID\'s</h2></strong>' +
+                                    '<div class="row reference-ids" data-title="Reference ID\'s">' +
+                                        '<div class="col-lg-6 img-box">' +
+                                            '<div class="form-group">' +
+                                                '<label>ID #1 <span class="text-danger">*</span></label>' +
+                                                '<input type="file" name="reference_id_a" data-title="ID #1" data-base="" class="form-control required image-upload" accept="image/*" required>' +
+                                            '</div>' +
+                                            '<img class="img-input img-fluid">' +
+                                        '</div>' +
+                                        '<div class="col-lg-6 img-box">' +
+                                            '<div class="form-group">' +
+                                                '<label>ID #2 <span class="text-danger">*</span></label>' +
+                                                '<input type="file" name="reference_id_b" data-title="ID #2" data-base="" class="form-control required image-upload" accept="image/*" required>' +
+                                            '</div>' +
+                                            '<img class="img-input img-fluid">' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+
+
 
                             '<div class="panel panel-default">' +
                                 '<div class="panel-body">' +
@@ -1110,12 +1183,13 @@
                             '<div class="row form-repeater">' +
                                 '<div class="col">' +
                                     '<div class="form-group">' +
-                                        '<select name="" class="form-control" data-title="Account type">' +
-                                            '<option value="">Account type</option>' +
-                                            '<option value="Savings">Savings</option>' +
-                                            '<option value="Checking">Checking</option>' +
-                                            '<option value="Time Deposit">Time Deposit</option>' +
-                                        '</select>' +
+                                        '<input type="text" name="bank-name" class="form-control" data-title="Bank name" placeholder="Bank name">' +
+                                        // '<select name="" class="form-control" data-title="Account type">' +
+                                        //     '<option value="">Account type</option>' +
+                                        //     '<option value="Savings">Savings</option>' +
+                                        //     '<option value="Checking">Checking</option>' +
+                                        //     '<option value="Time Deposit">Time Deposit</option>' +
+                                        // '</select>' +
                                     '</div>' +
                                 '</div>' +
                                 '<div class="col">' +
@@ -1171,6 +1245,22 @@
                             repeater.last().remove();
                         }
                         break;
+                }
+            });
+
+            $(document).on('change', '.image-upload', function(){
+                var preview = $(this).closest('.img-box').find('.img-input');
+                var input = $(this);
+                var file = this.files[0];
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    preview.attr('src', reader.result);
+                    input.data('base', reader.result);
+                }, false);
+
+                if (file) {
+                    reader.readAsDataURL(file);
                 }
             });
 

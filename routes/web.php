@@ -31,8 +31,8 @@ Route::middleware(['auth', 'verified', 'has_profile'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::resource('farmer', 'FarmerController');
-
     Route::resource('community-leader', 'CommunityLeaderController');
+    Route::resource('loan-provider', 'LoanProviderController');
 
     Route::resource('profile', 'ProfileController');
     Route::get('my-profile', 'ProfileController@myProfile')->name('my-profile');

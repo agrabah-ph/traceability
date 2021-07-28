@@ -112,7 +112,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body">
-
+                    <img src="" class="img-fluid" alt="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
@@ -142,7 +142,7 @@
     <script>
 
         function numberWithCommas(x) {
-            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return x.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
         $(document).on('click', '.payment_history_modal_trigger', function () {
@@ -236,7 +236,7 @@
                             id: id,
                             action: action
                         }, function(data){
-                            // console.log(data);
+                            console.log(data);
                             modal.data('type', 'show-loan-details');
                             modal.find('.modal-title').text('Loan Application Details');
                             modal.find('#modal-size').removeClass().addClass('modal-dialog modal-xl');

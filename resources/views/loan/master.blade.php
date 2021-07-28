@@ -83,6 +83,7 @@
             </ul>
 
         </div>
+        <div class="version"><div class="long">Agrabah Finance v.01</div><div class="short">v.01</div></div>
     </nav>
 
     <div id="page-wrapper" class="gray-bg">
@@ -93,6 +94,9 @@
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
 
                     {{-- slot for search bar --}}
+                    <div class="mobile-logo">
+                        <img alt="image" class="img-fluid" src="{{ asset('images/logo.png') }}"/>
+                    </div>
 
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
@@ -105,7 +109,7 @@
                     {{-- slot for general notification --}}
 
                     <li>
-                        <a href="#" class="btn-logout"> <i class="fa fa-sign-out"></i> Log out </a>
+                        <a href="#" class="btn-logout"> <i class="fa fa-sign-out"></i> <span>Log out</span> </a>
                     </li>
                 </ul>
 
@@ -119,12 +123,9 @@
         </div>
 
         <div class="footer">
-            <div class="float-right">
-                <strong></strong>
-            </div>
-            <div>
-                <strong>Copyright</strong> {{ subdomain_title('ucwords') }}
-                <strong></strong>
+            <div class="copyright">
+                <p>Powered by Agrabah Ventures</p>
+                <p>Powered by Agrabah Loan</p>
             </div>
         </div>
 

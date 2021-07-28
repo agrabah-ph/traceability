@@ -45,9 +45,9 @@
                             <span class="text-muted text-xs block"> {!! Auth::user()->name !!} <b class="caret"></b></span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Contacts</a></li>
-                            <li><a class="dropdown-item" href="#">Mailbox</a></li>
+{{--                            <li><a class="dropdown-item" href="#">Profile</a></li>--}}
+{{--                            <li><a class="dropdown-item" href="#">Contacts</a></li>--}}
+{{--                            <li><a class="dropdown-item" href="#">Mailbox</a></li>--}}
                             <li class="dropdown-divider"></li>
                             <li><a class="dropdown-item btn-logout" href="#" id="">Logout</a></li>
                         </ul>

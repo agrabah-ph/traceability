@@ -25,15 +25,16 @@ class LoanProviderSeeder extends Seeder
                 $profile->first_name = $faker->firstName;
                 $profile->middle_name = $faker->lastName;
                 $profile->last_name = $faker->lastName;
+                $profile->designation = $faker->jobTitle;
+                $profile->mobile = $faker->phoneNumber;
+                $profile->landline = $faker->phoneNumber;
                 $profile->bank_name = $faker->company;
                 $profile->branch_name = $faker->country;
-                $profile->address_line = $faker->address;
-                $profile->account_name = $faker->name;
-                $profile->account_number = $faker->phoneNumber;
-                $profile->tin = $faker->uuid;
+                $profile->branch_code = $faker->uuid;
+                $profile->branch_address = $faker->address;
                 $profile->contact_person = $faker->name;
                 $profile->contact_number = $faker->phoneNumber;
-                $profile->designation = $faker->jobTitle;
+                $profile->contact_designation = $faker->jobTitle;
                 if($loanProvider->profile()->save($profile)){
                     $user = new User();
                     $user->name = ucwords($profile->first_name).' '.ucwords($profile->last_name);

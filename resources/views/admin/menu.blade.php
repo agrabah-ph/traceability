@@ -29,26 +29,42 @@
 {{--    </ul>--}}
 {{--</li>--}}
 
+<li class="{{ (request()->is('farmer*')) ? 'active' : '' }}">
+    <a href="{!! route('farmer.index') !!}"><i class="fa fa-user-circle"></i> <span class="nav-label">Farmer</span></a>
+</li>
+
+<li class="{{ (request()->is('loan-provider*')) ? 'active' : '' }}">
+    <a href="{!! route('loan-provider.index') !!}"><i class="fa fa-address-card-o"></i> <span class="nav-label">Loan Provider</span></a>
+</li>
 
 <li class="{{ (request()->is('community-leader*')) ? 'active' : '' }}">
-    <a href="#"><i class="fa fa-users"></i> <span class="nav-label">Community Leader</span><span class="fa arrow"></span></a>
-    <ul class="nav nav-second-level collapse">
-        <li class="{{ (request()->is('master-farmer')) ? 'active' : '' }}"><a href="{!! route('community-leader.index') !!}">List</a></li>
-        <li class="{{ (request()->is('master-farmer/create')) ? 'active' : '' }}"><a href="{!! route('community-leader.create') !!}">Create</a></li>
-    </ul>
+    <a href="{!! route('community-leader.index') !!}"><i class="fa fa-money"></i> <span class="nav-label">Community Leader</span></a>
 </li>
 
-{{--<li class="{{ (request()->is('farmer*')) ? 'active' : '' }}">--}}
-{{--    <a href="{!! route('farmer.index') !!}"><i class="fa fa-user-circle"></i> <span class="nav-label">Farmer</span></a>--}}
+
+{{--<li class="{{ (request()->is('community-leader*')) ? 'active' : '' }}">--}}
+{{--    <a href="#"><i class="fa fa-users"></i> <span class="nav-label">Community Leader</span><span class="fa arrow"></span></a>--}}
+{{--    <ul class="nav nav-second-level collapse">--}}
+{{--        <li class="{{ (request()->is('master-farmer')) ? 'active' : '' }}"><a href="{!! route('community-leader.index') !!}">List</a></li>--}}
+{{--        <li class="{{ (request()->is('master-farmer/create')) ? 'active' : '' }}"><a href="{!! route('community-leader.create') !!}">Create</a></li>--}}
+{{--    </ul>--}}
 {{--</li>--}}
 
-<li class="{{ (request()->is('farmer*')) ? 'active' : '' }}">
-    <a href="#"><i class="fa fa-user-circle"></i> <span class="nav-label">Farmers</span><span class="fa arrow"></span></a>
-    <ul class="nav nav-second-level collapse">
-        <li class="{{ (request()->is('farmer')) ? 'active' : '' }}"><a href="{!! route('farmer.index') !!}">List</a></li>
-        <li class="{{ (request()->is('farmer/create')) ? 'active' : '' }}"><a href="{!! route('farmer.create') !!}">Create</a></li>
-    </ul>
-</li>
+{{--<li class="{{ (request()->is('farmer*')) ? 'active' : '' }}">--}}
+{{--    <a href="#"><i class="fa fa-user-circle"></i> <span class="nav-label">Farmers</span><span class="fa arrow"></span></a>--}}
+{{--    <ul class="nav nav-second-level collapse">--}}
+{{--        <li class="{{ (request()->is('farmer')) ? 'active' : '' }}"><a href="{!! route('farmer.index') !!}">List</a></li>--}}
+{{--        <li class="{{ (request()->is('farmer/create')) ? 'active' : '' }}"><a href="{!! route('farmer.create') !!}">Create</a></li>--}}
+{{--    </ul>--}}
+{{--</li>--}}
+
+{{--<li class="{{ (request()->is('loan-provider*')) ? 'active' : '' }}">--}}
+{{--    <a href="#"><i class="fa fa-address-card-o"></i> <span class="nav-label">Loan Provider</span><span class="fa arrow"></span></a>--}}
+{{--    <ul class="nav nav-second-level collapse">--}}
+{{--        <li class="{{ (request()->is('loan-provider')) ? 'active' : '' }}"><a href="{!! route('loan-provider.index') !!}">List</a></li>--}}
+{{--        <li class="{{ (request()->is('loan-provider/create')) ? 'active' : '' }}"><a href="{!! route('loan-provider.create') !!}">Create</a></li>--}}
+{{--    </ul>--}}
+{{--</li>--}}
 
 <li class="{{ (request()->is('product*')) ? 'active' : '' }}">
     <a href="#"><i class="fa fa-cubes"></i> <span class="nav-label">Products</span><span class="fa arrow"></span></a>

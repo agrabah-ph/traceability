@@ -38,16 +38,16 @@ class CreateProfilesTable extends Migration
             $table->string('qr_image')->nullable();
             $table->string('qr_image_path')->nullable();
             $table->string('status')->nullable();
+            $table->string('designation')->nullable();
 
             // loan provider profile
             $table->string('bank_name')->nullable();
             $table->string('branch_name')->nullable();
-            $table->string('address_line')->nullable();
-            $table->string('account_name')->nullable();
-            $table->string('account_number')->nullable();
+            $table->string('branch_code')->nullable();
+            $table->text('branch_address')->nullable();
             $table->string('contact_person')->nullable();
+            $table->string('contact_designation')->nullable();
             $table->string('contact_number')->nullable();
-            $table->string('designation')->nullable();
 
 
             $table->timestamps();
