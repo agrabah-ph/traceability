@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\CommunityLeader;
 use App\Farmer;
 use App\Inventory;
+use App\LoanProvider;
 use App\Trace;
 use App\ModelInfo;
 use App\User;
@@ -139,7 +141,8 @@ class PublicController extends Controller
             switch ($request->input('type')){
                 case 'farmer':
                     $data->assignRole(stringSlug('Farmer'));
-                    $number = Farmer::count() + 1;
+//                    $number = Farmer::count() + 1;
+                    $number = str_pad(Farmer::count() + 1, 5, 0, STR_PAD_LEFT);
                     $farmer = new Farmer();
                     $farmer->account_id = $number;
                     $farmer->user_id = $data->id;
@@ -147,8 +150,9 @@ class PublicController extends Controller
                     break;
                 case 'loan-provider':
                     $data->assignRole(stringSlug('Loan Provider'));
-                    $number = Farmer::count() + 1;
-                    $loanProvider = new Farmer();
+//                    $number = LoanProvider::count() + 1;
+                    $number = str_pad(LoanProvider::count() + 1, 5, 0, STR_PAD_LEFT);
+                    $loanProvider = new LoanProvider();
                     $loanProvider->account_id = $number;
                     $loanProvider->user_id = $data->id;
                     $loanProvider->save();

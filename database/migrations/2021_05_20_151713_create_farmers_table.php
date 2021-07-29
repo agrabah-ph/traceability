@@ -18,6 +18,7 @@ class CreateFarmersTable extends Migration
             $table->string('account_id')->unique();
             $table->string('url')->nullable();
             $table->integer('user_id')->nullable();
+            $table->boolean('community_leader')->default(0);
             $table->timestamps();
         });
     }

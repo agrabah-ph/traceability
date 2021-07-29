@@ -9,7 +9,8 @@
                             aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <table class="table table-bordered">
+                <button type="button" class="btn btn-sm btn-white mb-2 print_trigger" data-print_target=".paymentSchedules"><i class="fa fa-print"></i></button>
+                <table class="table table-bordered paymentSchedules">
                     <thead>
                     <tr>
                         <th>Due Date</th>

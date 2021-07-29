@@ -61,7 +61,8 @@ class UserSeeder extends Seeder
             'Super Admin',
             'Community Leader',
             'Farmer',
-            'Loan Provider'
+            'Loan Provider',
+            'Borrower'
         );
 
         foreach($roles as $role) {

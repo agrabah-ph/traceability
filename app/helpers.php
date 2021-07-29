@@ -1,5 +1,6 @@
 <?php
 
+use App\LoanType;
 use App\Profile;
 use App\User;
 use App\Farmer;
@@ -219,4 +220,49 @@ if (!function_exists('settings')) {
     }
 }
 
+if (!function_exists('loanStatInfo')) {
+    function loanStatInfo($provider_id)
+    {
+        $data = array();
+        $loanType = LoanType::withCount([
+            'product as product_count' => function ($query) use ($provider_id) {
+                $query->where('loan_provider_id', $provider_id);
+            }])
+            ->with(array('product' => function($query) use ($provider_id) {
+                $query->where('loan_provider_id', $provider_id);
+            }))
+            ->get();
+        foreach ($loanType as $type){
+            $typeArray = array();
+            $pending = 0;
+            $active = 0;
+            $completed = 0;
+            $declined = 0;
+            foreach ($type->product as $product){
+                foreach ($product->loan as $loan){
+                    if($loan->accept === 1){
+                        switch ($loan->status) {
+                            case 'Pending':
+                                $pending += 1;
+                                break;
+                            case 'Active':
+                                $active += 1;
+                                break;
+                            case 'Completed':
+                                $completed += 1;
+                                break;
+                            case 'Declined':
+                                $declined += 1;
+                                break;
+                        }
+                    }
+                }
+            }
+            array_push($typeArray, array($type->display_name, $type->product_count), $pending, $active, $completed, $declined);
+            array_push($data, $typeArray);
+        }
+//        dd($data);
+        return $data;
+    }
+}
 

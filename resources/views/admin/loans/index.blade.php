@@ -48,11 +48,24 @@
                                     @forelse($loans as $loan)
                                         <tr data-id="{{ $loan->id }}">
                                             <td class="project-title">
-                                                <a href="project_detail.html">{{ $loan->product->name }}</a>
+                                                <a href="#">{{ $loan->product->name }}</a>
                                                 <br/>
-                                                <small>Type: <strong>{{ $loan->product->type->display_name }}</strong></small><br/>
-                                                <small>Amount: <span class="money">{{ currency_format($loan->product->amount) }}</span></small><br/>
-                                                <small>Term: {{ $loan->product->duration }}mos</small><br/>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <small>Provider: <strong>{{ $loan->provider->profile->bank_name }}</strong></small>
+                                                    </div>
+                                                    <div class="col">
+                                                        <small>Type: <strong>{{ $loan->product->type->display_name }}</strong></small>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <small>Amount: <span class="money">{{ currency_format($loan->product->amount) }}</span></small>
+                                                    </div>
+                                                    <div class="col">
+                                                        <small>Term: {{ $loan->product->duration }}mos</small>
+                                                    </div>
+                                                </div>
                                                 <small>Interest: {{ $loan->product->interest_rate }}%</small><br/>
                                             </td>
                                             <td class="project-title">
@@ -62,9 +75,10 @@
                                             </td>
                                             <td class="text-right">{{ $loan->status }}</td>
                                             <td class="project-actions">
-                                                @if($loan->status == 'Pending')
+                                                    <button type="button" class="btn btn-white btn-sm btn-action" data-action="show"><i class="fa fa-search text-info"></i> View </button>
+                                                @if($loan->accept == 0)
                                                     <button type="button" class="btn btn-white btn-sm btn-action" data-action="decline"><i class="fa fa-times text-danger"></i> Decline </button>
-                                                    <button type="button" class="btn btn-white btn-sm btn-action" data-action="approve"><i class="fa fa-thumbs-up text-success"></i> Approve </button>
+                                                    <button type="button" class="btn btn-white btn-sm btn-action" data-action="accept"><i class="fa fa-thumbs-up text-success"></i> Accept </button>
                                                 @endif
                                                 @if($loan->status == 'Active')
                                                     <button type="button" class="btn btn-white btn-sm payment_history_modal_trigger"
@@ -98,7 +112,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body">
-
+                    <img src="" class="img-fluid" alt="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
@@ -128,7 +142,7 @@
     <script>
 
         function numberWithCommas(x) {
-            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return x.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
         $(document).on('click', '.payment_history_modal_trigger', function () {
@@ -170,7 +184,7 @@
         });
 
         $(document).ready(function(){
-            {{--var modal = $('#modal');--}}
+            var modal = $('#modal');
             {{--$(document).on('click', '', function(){--}}
             {{--    modal.modal({backdrop: 'static', keyboard: false});--}}
             {{--    modal.modal('toggle');--}}
@@ -204,17 +218,31 @@
                     case 'decline':
                         $.get('{!! route('loan-update-status') !!}', {
                             id: id,
-                            status: 'Declined'
+                            action: action
                         }, function(data){
                             location.reload();
                         });
                         break;
-                    case 'approve':
+                    case 'accept':
                         $.get('{!! route('loan-update-status') !!}', {
                             id: id,
-                            status: 'Active'
+                            action: action
                         }, function(data){
                             location.reload();
+                        });
+                        break;
+                    case 'show':
+                        $.get('{!! route('loan-update-status') !!}', {
+                            id: id,
+                            action: action
+                        }, function(data){
+                            console.log(data);
+                            modal.data('type', 'show-loan-details');
+                            modal.find('.modal-title').text('Loan Application Details');
+                            modal.find('#modal-size').removeClass().addClass('modal-dialog modal-xl');
+                            modal.find('.modal-body').empty().append(displayLoanApplicationDetails(data.borrower.profile, data.details));
+                            modal.find('#modal-save-btn').hide();
+                            modal.modal({backdrop: 'static', keyboard: false});
                         });
                         break;
                 }

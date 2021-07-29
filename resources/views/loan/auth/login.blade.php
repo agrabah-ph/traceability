@@ -2,9 +2,10 @@
 
 @section('content')
 
-    <main class="page-forms">
+    <main class="page-forms page-loan">
         <div class="row no-gutters sign-in">
-            <div class="col-12 col-lg-4 left d-none d-lg-flex" style="background-image: url({{ asset('images/loan/bg-img.jpg') }})">
+
+            <div class="col-12 col-lg-4 left d-none d-lg-flex" style="background-image: url({{ asset('images/loan/bg-img-4.png') }})">
                 <div>
                     <a href="{{ asset('/') }}">
                         <img src="{{ asset('images/agrabah-logo.png') }}" alt="logo" class="img-fluid d-block mx-auto logo">
@@ -18,6 +19,8 @@
                     {{--<li>Join us now</li>--}}
                     {{--</ul>--}}
                     {{--</div>--}}
+
+                    <div class="copyright">Powered by Agrabah Ventures</div>
                 </div>
 
                 {{--                <a href="{{ asset('/') }}" class="link">Back to homepage</a>--}}
@@ -42,7 +45,10 @@
                         </div>
                         <div class="form-group">
                             <label for="">and your password</label>
-                            <input type="password" name="password" placeholder="*****" class=" @error('password') is-invalid @enderror" required autocomplete="current-password">
+                            <div class="group">
+                                <input id="password" type="password" name="password" placeholder="*****" class=" @error('password') is-invalid @enderror" required autocomplete="current-password">
+                                <i class="far fa-eye-slash eye"></i>
+                            </div>
                             @error('password')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

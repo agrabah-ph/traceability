@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Farmer;
 use App\Inventory;
+use App\LoanProvider;
+use App\LoanType;
 use App\Trace;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,6 +54,42 @@ class HomeController extends Controller
         }
 
         if(auth()->user()->hasRole('loan-provider')){
+
+//            $data = array();
+//            $loanType = LoanType::withCount([
+//                'product as product_count' => function ($query) {
+//                    $query->where('loan_provider_id', Auth::user()->loan_provider->id);
+//                }])
+//                ->with(array('product' => function($query) {
+//                    $query->where('loan_provider_id', Auth::user()->loan_provider->id);
+//                }))
+//                ->get();
+//            foreach ($loanType as $type){
+//                $pending = 0;
+//                $active = 0;
+//                $completed = 0;
+//                $declined = 0;
+//                foreach ($type->product as $product){
+//                    foreach ($product->loan as $loan){
+//                        switch ($loan->status) {
+//                            case 'Pending':
+//                                $pending += 1;
+//                                break;
+//                            case 'Active':
+//                                $active += 1;
+//                                break;
+//                            case 'Completed':
+//                                $completed += 1;
+//                                break;
+//                            case 'Declined':
+//                                $declined += 1;
+//                                break;
+//                        }
+//                    }
+//                }
+//                array_push($data, array($type->display_name, $type->product_count), $pending, $active, $completed, $declined);
+//            }
+//            return $data;
 
             return view(subDomainPath('loan-provider.dashboard'));
         }

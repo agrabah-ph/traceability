@@ -12,6 +12,11 @@ class Loan extends Model
         return $this->morphTo()->with('profile');
     }
 
+    public function details()
+    {
+        return $this->hasOne(LoanApplicationDetail::class, 'loan_id');
+    }
+
     public function product()
     {
         return $this->belongsTo(LoanProduct::class, 'loan_product_id')->with('type');

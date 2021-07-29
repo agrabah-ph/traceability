@@ -44,23 +44,29 @@
                         <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
                             <thead>
                             <tr>
-                                <th>Company</th>
+                                <th>Account ID</th>
+                                <th>Bank</th>
                                 <th>Contact Person</th>
+                                <th>Contact Number</th>
+                                <th>Email</th>
                                 <th class="text-right" data-sort-ignore="true"><i class="fa fa-cogs text-success"></i></th>
                             </tr>
                             </thead>
                             <tbody>
-                            {{--                            @foreach($datas as $data)--}}
-                            {{--                                <tr>--}}
-                            {{--                                    <td>{{ $data->name }}</td>--}}
-                            {{--                                    <td>{{ $data->display_name }}</td>--}}
-                            {{--                                    <td class="text-right">--}}
-                            {{--                                        <div class="btn-group text-right">--}}
-                            {{--                                            <a href="" class="action btn-white btn btn-xs"><i class="fa fa-search text-success"></i> Show</a>--}}
-                            {{--                                        </div>--}}
-                            {{--                                    </td>--}}
-                            {{--                                </tr>--}}
-                            {{--                            @endforeach--}}
+                            @foreach($datas as $data)
+                            <tr>
+                                <td>{{ $data->account_id }}</td>
+                                <td>{{ $data->profile->bank_name }}</td>
+                                <td>{{ $data->profile->first_name }} {{ $data->profile->last_name }}</td>
+                                <td><small>{{ $data->profile->mobile }}</small> <br> <small>{{ $data->profile->landline }}</small></td>
+                                <td>{{ $data->user->email }}</td>
+                                <td class="text-right">
+                                    <div class="btn-group text-right">
+                                        <a href="" class="action btn-white btn btn-xs"><i class="fa fa-search text-success"></i> Show</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
                             </tbody>
                             <tfoot>
                             <tr>

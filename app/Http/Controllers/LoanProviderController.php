@@ -32,9 +32,13 @@ class LoanProviderController extends Controller
      */
     public function index()
     {
-        $data = LoanProvider::get();
+        $datas = LoanProvider::has('profile')->get();
 
-        return response()->json($data);
+//        return $datas;
+        return response()->view(subDomainPath('loan-provider.index'), compact('datas'));
+
+//        $data = LoanProvider::get();
+//        return response()->json($data);
     }
 
     /**
@@ -105,31 +109,26 @@ class LoanProviderController extends Controller
 
     public function profileStore(Request $request)
     {
-        $number = LoanProvider::count() + 1;
-        $provider = new LoanProvider();
-        $provider->account_id = $number;
-        $provider->user_id = Auth::user()->id;
-        if($provider->save()){
-            $profile = new Profile();
-            $profile->first_name = $request->input('first_name');
-            $profile->middle_name = $request->input('middle_name');
-            $profile->last_name = $request->input('last_name');
-            $profile->bank_name = $request->input('bank_name');
-            $profile->branch_name = $request->input('branch_name');
-            $profile->address_line = $request->input('address_line');
-            $profile->account_name = $request->input('account_name');
-            $profile->account_number = $request->input('account_number');
-            $profile->tin = $request->input('tin');
-            $profile->contact_person = $request->input('contact_person');
-            $profile->contact_number = $request->input('contact_number');
-            $profile->designation = $request->input('designation');
-            if($provider->profile()->save($profile)){
-                $user = User::find($provider->user_id);
-                $user->name = $profile->first_name.' '.$profile->last_name;
-                if($user->save()){
-                    return redirect()->route('home');
-                }
-            }
+        $provider = LoanProvider::find(Auth::user()->loan_provider->id);
+        $profile = new Profile();
+        $profile->first_name = $request->input('first_name');
+        $profile->middle_name = $request->input('middle_name');
+        $profile->last_name = $request->input('last_name');
+        $profile->designation = $request->input('designation');
+        $profile->mobile = $request->input('mobile');
+        $profile->landline = $request->input('landline');
+        $profile->bank_name = $request->input('bank_name');
+        $profile->branch_name = $request->input('branch_name');
+        $profile->branch_code = $request->input('branch_code');
+        $profile->branch_address = $request->input('branch_address');
+        $profile->contact_person = $request->input('contact_person');
+        $profile->contact_designation = $request->input('contact_designation');
+        $profile->contact_number = $request->input('contact_number');
+        if($provider->profile()->save($profile)){
+            $user = User::find($provider->user_id);
+            $user->name = $profile->first_name.' '.$profile->last_name;
+            $user->save();
+            return redirect()->route('home');
         }
 
 
@@ -140,7 +139,8 @@ class LoanProviderController extends Controller
 
         if(Auth::user()->loan_provider){
             $loans = Loan::with('product', 'provider')
-            ->where('loan_provider_id', Auth::user()->loan_provider->id)
+                ->where('accept', 1)
+                ->where('loan_provider_id', Auth::user()->loan_provider->id)
                 ->get();
 //        return $loans;
 
@@ -157,30 +157,86 @@ class LoanProviderController extends Controller
 
     public function loanUpdateStatus(Request $request)
     {
-        DB::beginTransaction();
-        $data = Loan::find($request->input('id'));
-        if($data->status == 'Active'){
-            return null;
-        }
-        $data->status = $request->input('status');
-        $data->start_date = Carbon::now()->toDateString();
-        $endDate = null;
-        if($data->save()){
-            $products = $data->product;
-            $paymentSchedules =  $this->loanService->generateSchedule($products);
-            foreach($paymentSchedules as $paymentSchedule){
-                $loanPaymentSchedules = new LoanPaymentSchedule();
-                $loanPaymentSchedules->loan_id = $data->id;
-                $loanPaymentSchedules->due_date = Carbon::createFromFormat('M j, Y', $paymentSchedule['date'])->toDateString();
-                $loanPaymentSchedules->payable_amount = $paymentSchedule['amount'];
-                $loanPaymentSchedules->status = 'unpaid';
-                $loanPaymentSchedules->save();
-                $endDate = $loanPaymentSchedules->due_date;
-            }
-        }
-        $data->end_date = $endDate;
-        $data->save();
-        DB::commit();
+        $action = $request->input('action');
+        switch ($action){
+            case 'decline':
+                $data = Loan::find($request->input('id'));
+                $data->status = 'Declined';
+                $data->save();
+                break;
+            case 'accept':
+                $data = Loan::find($request->input('id'));
+                $data->accept = 1;
+                $data->save();
+                break;
+            case 'show':
+                $data = Loan::with('borrower', 'details')
+                    ->find($request->input('id'));
+                return response()->json($data);
+                break;
+            case 'pre-approve':
+                $data = Loan::with('product')->find($request->input('id'));
+                return response()->json($data);
+                break;
+            case 'approve':
+                DB::beginTransaction();
+                $data = Loan::find($request->input('id'));
+                if($data->status == 'Active'){
+                    return null;
+                }
+                $data->amount = floatval(preg_replace('/,/','', $request->input('amount')));
+                $data->duration = $request->input('duration');
+                $data->interest_rate = $request->input('interest_rate');
+                $data->timing = $request->input('timing');
+                $data->allowance = $request->input('allowance');
+                $data->first_allowance = $request->input('first_allowance');
+                $data->status = 'Active';
+                $data->start_date = Carbon::now()->toDateString();
+                $endDate = null;
+                if($data->save()){
+//                    $products = $data->product;
+                    if($data->timing == 'custom'){
+                        $paymentSchedules = $request->input('schedules');
+                        $amortization = computeAmortization($data->amount, $data->duration, $data->interest_rate);
+                        foreach($paymentSchedules as $paymentSchedule){
+                            $loanPaymentSchedules = new LoanPaymentSchedule();
+                            $loanPaymentSchedules->loan_id = $data->id;
+                            $loanPaymentSchedules->due_date = Carbon::createFromFormat('M j, Y', $paymentSchedule)->toDateString();
+                            $loanPaymentSchedules->payable_amount = $amortization;
+                            $loanPaymentSchedules->status = 'unpaid';
+                            $loanPaymentSchedules->save();
+                            $endDate = $loanPaymentSchedules->due_date;
+                        }
+                    }else{
+                        $paymentSchedules =  $this->loanService->generateSchedule($data);
+                        foreach($paymentSchedules as $paymentSchedule){
+                            $loanPaymentSchedules = new LoanPaymentSchedule();
+                            $loanPaymentSchedules->loan_id = $data->id;
+                            $loanPaymentSchedules->due_date = Carbon::createFromFormat('M j, Y', $paymentSchedule['date'])->toDateString();
+                            $loanPaymentSchedules->payable_amount = $paymentSchedule['amount'];
+                            $loanPaymentSchedules->status = 'unpaid';
+                            $loanPaymentSchedules->save();
+                            $endDate = $loanPaymentSchedules->due_date;
+                        }
 
+                    }
+                }
+                $data->end_date = $endDate;
+                $data->save();
+                DB::commit();
+                break;
+        }
+    }
+
+    public function customForms()
+    {
+
+        return view(subDomainPath('settings.forms.application-form'));
+    }
+
+    public function customFormStore(Request $request)
+    {
+        $loanProvider = LoanProvider::find(Auth::user()->loan_provider->user_id);
+        return '';
     }
 }

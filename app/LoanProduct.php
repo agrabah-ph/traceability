@@ -18,6 +18,7 @@ class LoanProduct extends Model
         "timing",
         "allowance",
         "first_allowance",
+        "disclosure",
     ];
 
     public function provider()
@@ -42,6 +43,12 @@ class LoanProduct extends Model
                 $timingName = 'Days';
         }
         $array['timing_name'] = $timingName;
+        $array['disclosure_html'] = nl2br($this->disclosure).'<br><br>';
         return $array;
+    }
+
+    public function loan()
+    {
+        return $this->hasMany(Loan::class, 'loan_product_id');
     }
 }

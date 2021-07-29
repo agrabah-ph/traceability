@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ subdomain_title(null) }}</title>
+        <title>{{ subdomain_title('ucwords') }}</title>
 
 
         <link href="{{ asset('images/favicon.png') }}" rel="shortcut icon">

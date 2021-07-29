@@ -5,30 +5,57 @@
 
 @section('content')
 
-    <section class="container animated fadeInRight">
-{{--        @if (is_null(Auth::user()->provider))--}}
-{{--            <h1>none</h1>--}}
-{{--            @else--}}
-{{--            <h1>done</h1>--}}
-{{--        @endif--}}
-    </section>
-
     <div class="wrapper wrapper-content">
+
         <div class="row">
-            <div class="col-lg-4">
-                {{--                <div class="panel panel-success">--}}
-                {{--                    <div class="panel-heading">--}}
-                {{--                        {{ $type }}--}}
-                {{--                    </div>--}}
-                {{--                    <div class="panel-body">--}}
-                {{--                        <h2>Head Office</h2>--}}
-                {{--                        <h4>subdomain: {{ $subdomain }}</h4>--}}
-                {{--                        <h4>domain: {{ $domain }}</h4>--}}
-                {{--                        <h4>domain ext: {{ config('dev.domain_ext') }}</h4>--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
+            <div class="col-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th colspan="4" class="text-center">Loan Applicants</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach(loanStatInfo(Auth::user()->loan_provider->id) as $info)
+                                    <tr>
+                                        <td>
+                                            <small><strong class="stats-label text-success">{{ $info[0][0] }} </strong></small>
+                                            <h4>{{ $info[0][1] }} <small>total products</small></h4>
+                                        </td>
+                                        <td class="text-right">
+                                            <small class="stats-label">Pending</small>
+                                            <h4>{{ $info[1] }}</h4>
+                                        </td>
+                                        <td class="text-right">
+                                            <small class="stats-label">Active</small>
+                                            <h4>{{ $info[2] }}</h4>
+                                        </td>
+                                        <td class="text-right">
+                                            <small class="stats-label">Completed</small>
+                                            <h4>{{ $info[3] }}</h4>
+                                        </td>
+                                        <td class="text-right">
+                                            <small class="stats-label">Declined</small>
+                                            <h4>{{ $info[4] }}</h4>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
 
 @endsection

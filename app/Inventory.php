@@ -23,6 +23,6 @@ class Inventory extends Model
 
     public function leader()
     {
-        return $this->belongsTo(CommunityLeader::class, 'leader_id')->with('profile');
+        return $this->belongsTo(Farmer::class, 'leader_id')->with('profile');
     }
 }

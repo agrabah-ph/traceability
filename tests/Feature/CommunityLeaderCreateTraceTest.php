@@ -33,12 +33,13 @@ class CommunityLeaderCreateTraceTest extends TestCase
         $user = factory(User::class)->create([
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
-        $user->assignRole(stringSlug('community-leader'));
+        $user->assignRole(stringSlug('farmer'));
         $user->markEmailAsVerified();
 
-        $masterFarmer = new CommunityLeader();
+        $masterFarmer = new Farmer();
         $masterFarmer->account_id = $masterFarmerAccountNumber = Str::random(6);
         $masterFarmer->user_id = $user->id;
+        $masterFarmer->community_leader = 1;
         $masterFarmer->save();
 
         /**
@@ -73,15 +74,13 @@ class CommunityLeaderCreateTraceTest extends TestCase
         $profile->last_name = $faker->lastName;
         $profile->middle_name = $faker->lastName;
         $profile->mobile = $faker->phoneNumber;
-        $profile->address = $faker->address;
         $profile->education = $faker->word(1);
-        $profile->four_ps = rand(0, 1);
-        $profile->pwd = rand(0, 1);
-        $profile->indigenous = rand(0, 1);
-        $profile->livelihood = rand(0, 1);
-        $profile->farm_lot = rand(100, 5000);
-        $profile->farming_since = rand(1980, 2019);
-        $profile->organization = $faker->word(2);
+        $profile->secondary_info = $faker->sentence;
+        $profile->spouse_comaker_info = $faker->sentence;
+        $profile->spouse_comaker_info = $faker->sentence;
+        $profile->farming_info = $faker->sentence;
+        $profile->employment_info = $faker->sentence;
+        $profile->income_asset_info = $faker->sentence;
         $profile->qr_image = $farmer->account_id . '.png';
         $profile->qr_image_path = '/images/farmer/' . $farmer->account_id . '.png';
         $farmer->profile()->save($profile);
@@ -111,10 +110,15 @@ class CommunityLeaderCreateTraceTest extends TestCase
                     3 => "High",
                     4 => "inch",
                     5 => rand(0, 199),
-                    6 => $faker->sentence,
+                    6 => rand(0, 199),
+                    7 => rand(0, 199),
+                    8 => $faker->sentence,
                 ]
             ];
             $response = $this->post(route('inv-listing-store'), $inventoryArray);
+            if($response->exception){
+                dd($response->exception) ;
+            }
             $responseArray = json_decode($response->getContent());
             $productIds[] = $responseArray->id;
             $response->assertStatus(200);
@@ -153,6 +157,9 @@ class CommunityLeaderCreateTraceTest extends TestCase
             ]
         ];
         $response = $this->post(route('trace-store'), $traceArray);
+        if($response->exception){
+            dd($response->exception);
+        }
         $response->assertStatus(200);
 
 

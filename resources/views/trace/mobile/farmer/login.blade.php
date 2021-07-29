@@ -18,17 +18,17 @@
 {{--        </div>--}}
 
         <div class="farmer-login mt-5">
-            <form action="{!! route('farmer-login-form') !!}" method="post"> @csrf
+            <form action="{!! route('farmer-login-form') !!}" method="post" id="form"> @csrf
                 <div class="form-group mb-5">
 {{--                    <input type="text" name="farmer-id" class="form-control text-center">--}}
-
+                    <div class="error-bag"></div>
                     @if($errors->has('farmer'))
                         <span class="text-danger">{{$errors->first('farmer')}}</span>
                     @endif
                     {{Form::text('farmer',null, array('class'=>'form-control numonly', 'autofocus'))}}
                     <label><strong class="text-uppercase">Farmer ID</strong></label>
                 </div>
-                <button type="submit" class="btn btn-block btn-xl btn-success p-3">PROCEED</button>
+                <button type="button" class="btn btn-block btn-xl btn-success p-3 btn-action">PROCEED</button>
 
                 <div class="mt-1">
                     <a href="{{ route('home') }}" class="btn btn-block btn-info p-3">DASHBOARD</a>
@@ -52,6 +52,36 @@
 {{--        {!! Html::script('/js/html5-qrcode.min.js') !!}--}}
     <script>
         $(document).ready(function(){
+
+            $(document).on('click', '.btn-action', function(){
+                console.log(validateFarmer());
+                if(validateFarmer()[0] > 0){
+                    $('.error-bag').empty().append('<span class="text-danger">'+ validateFarmer()[1] +'</span>');
+                    return false;
+                }
+                $('#form').submit();
+            });
+
+            function validateFarmer() {
+                var error = 0, errorMge = null, result = new Array();
+                jQuery.ajaxSetup({async: false});
+                $.get('{!! route('farmer-check') !!}', {
+                    id: $('input[name=farmer]').val()
+                }, function(data){
+                    if(data){
+                        if(data.profile === null){
+                            error += 1;
+                            errorMge = 'Farmer need Account setup first';
+                        }
+                    }else{
+                        error += 1;
+                        errorMge = 'Farmer not exists!';
+                    }
+                });
+                result.push(error, errorMge);
+                return result;
+            }
+
             // function onScanSuccess(qrCodeMessage) {
             //     console.log(qrCodeMessage);
             //     var farmerBarCode = document.getElementById('FarmerBarcode');

@@ -28,7 +28,7 @@
 @import "inc/variable";
 
 body {
-    font-size: 1rem !important;
+    font-size: 1.1rem !important;
     font-family: $font-family-secondary !important;
 }
 
@@ -45,3 +45,5 @@ body {
 @import "pages/login";
 @import "pages/register";
 @import "pages/welcome";
+
+@import "pages/loan";
