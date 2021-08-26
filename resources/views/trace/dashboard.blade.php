@@ -1,4 +1,4 @@
-@extends(subdomain_name().'.master')
+@extends('trace.master')
 
 {{--@section('title', 'Dashboard | '.getRoleName('display_name'))--}}
 @section('title', 'Dashboard')

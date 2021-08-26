@@ -33,7 +33,7 @@ class TraceController extends Controller
             $datas = Trace::where('user_id', Auth::user()->id)->get();
         }
 //        return $datas;
-        return response()->view(subDomainPath('trace.index'), compact('datas'));
+        return response()->view('trace.trace.index', compact('datas'));
     }
 
     /**
@@ -51,7 +51,7 @@ class TraceController extends Controller
 //        $url = $host_names[count($host_names)-2] . "." . $host_names[count($host_names)-1]."/".$random;
 
         $url = route('trace-info', array('code'=>$random));
-        return response()->view(subDomainPath('trace.create'), compact('datas', 'random', 'url'));
+        return response()->view('trace.trace.create', compact('datas', 'random', 'url'));
     }
 
     /**
@@ -76,7 +76,7 @@ class TraceController extends Controller
         $trace = Trace::with('inventories')->find($trace->id);
 //        $inventory = Inventory::with('farmer')->where('trace_id', $trace->id)->get();
 //        return $trace;
-        return view(subDomainPath('trace.show'), compact('trace'));
+        return view('trace.trace.show', compact('trace'));
     }
 
     /**
@@ -199,6 +199,6 @@ class TraceController extends Controller
     {
         $data = Trace::where('reference', $reference)->first();
 
-        return view(subDomainPath('mobile.trace-qr-print'), compact('data'));
+        return view('trace.mobile.trace-qr-print', compact('data'));
     }
 }

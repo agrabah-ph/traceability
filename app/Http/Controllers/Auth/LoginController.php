@@ -45,7 +45,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view(subDomainPath('auth.login'));
+        return view('trace.auth.login');
     }
 
     /**

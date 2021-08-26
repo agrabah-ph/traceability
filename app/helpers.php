@@ -110,52 +110,6 @@ if (!function_exists('mobileNumber')) {
     }
 }
 
-if (!function_exists('subdomain_title')) {
-    function subdomain_title($case)
-    {
-        $subdomain = join('.', explode('.', $_SERVER['HTTP_HOST'], -2));
-
-        switch($case){
-            case 'ucfirst':
-                $subdomain = ucfirst(config('app.name').' '.$subdomain);
-                break;
-            case 'ucwords':
-                $subdomain = ucwords(config('app.name').' '.$subdomain);
-                break;
-            default:
-                $subdomain = strtoupper(config('app.name').' '.$subdomain);
-                break;
-        }
-
-        return $subdomain;
-    }
-}
-
-if (!function_exists('subdomain_name')) {
-    function subdomain_name()
-    {
-        $subdomain = join('.', explode('.', $_SERVER['HTTP_HOST'], -2));
-
-        return $subdomain;
-    }
-}
-
-if (!function_exists('subDomainPath')) {
-    function subDomainPath($path)
-    {
-        $subdomain = join('.', explode('.', $_SERVER['HTTP_HOST'], -2));
-        if(is_null(Auth::user())){
-
-        }else{
-            if(auth()->user()->hasRole('super-admin')){
-                return 'admin.'.$path;
-            }
-        }
-
-        return $subdomain.'.'.$path;
-    }
-}
-
 if (!function_exists('farmerCount')) {
     function farmerCount($id)
     {

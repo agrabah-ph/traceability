@@ -27,7 +27,7 @@
             <div class="col-12 col-lg-8 right d-flex align-items-center justify-content-center">
                 <div class="content w-100">
                     <img src="{{ asset('images/logo.png') }}" alt="logo" class="img-fluid d-block mx-auto logo mb-5 d-block d-lg-none">
-                    <h1 class="title">Trace Login</h1>
+                    <h1 class="title">Agrabah Logistics Login</h1>
                     {{--<small>Log on using your login and password or use social media login to enter</small>--}}
                     <small>Log in with your email and password that you entered during your resignation.</small>
 
@@ -83,7 +83,7 @@
 
                         {{--<a href="" class="link d-flex justify-content-center">Forgot password?</a>--}}
 
-{{--                        <div class="register-text text-center">Not registered yet? <a href="/registration">Sign up</a> now!</div>--}}
+                        <div class="register-text text-center">Not registered yet? <a href="/registration">Sign up</a> now!</div>
                     </form>
                 </div>
             </div>

@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         $datas = Product::get();
-        return response()->view(subDomainPath('product.index'), compact('datas'));
+        return response()->view('trace.product.index', compact('datas'));
     }
 
     /**
@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return response()->view(subDomainPath('product.create'));
+        return response()->view('trace.product.create');
     }
 
     /**
@@ -57,9 +57,9 @@ class ProductController extends Controller
         $data = Product::with('units')->find($product->id);
 //        return $data;
         if(auth()->user()->hasRole('super-admin')){
-            return response()->view(subDomainPath('product.show'), compact('data'));
+            return response()->view('trace.product.show', compact('data'));
         }
-        return response()->view(subDomainPath('product.show'), compact('data'));
+        return response()->view('trace.product.show', compact('data'));
     }
 
     /**
@@ -71,7 +71,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
 //        return $product->units;
-        return view(subDomainPath('product.edit'), compact('product'));
+        return view('trace.product.edit', compact('product'));
     }
 
     /**

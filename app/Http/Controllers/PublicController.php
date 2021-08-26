@@ -27,7 +27,7 @@ class PublicController extends Controller
     {
         $trace = Trace::with('inventories')->where('reference', $code)->first();
 //        return $trace;
-        return view(subDomainPath('mobile.trace-tracking'), compact('trace'));
+        return view('trace.mobile.trace-tracking', compact('trace'));
     }
 
     public function traceShipped(Request $request)
@@ -105,12 +105,12 @@ class PublicController extends Controller
     {
         $data = Trace::where('reference', $code)->first();
 //        return $data;
-        return view(subDomainPath('mobile.trace-info'), compact('data'));
+        return view('trace.mobile.trace-info', compact('data'));
     }
 
     public function farmerQr(Request $request)
     {
-        return view(subDomainPath('mobile.scan-qr-farmer'));
+        return view('trace.mobile.scan-qr-farmer');
     }
 
     public function loanRegistration()
@@ -174,14 +174,9 @@ class PublicController extends Controller
 
     }
 
-    public function loneProviderProfileCreate()
-    {
-        return view(subDomainPath('loan-provider.profile.create'));
-    }
-
     public function farmerProfileCreate()
     {
-        return view(subDomainPath('farmer.profile.create'));
+        return view('trace.profile.create');
     }
 
     public function traceRegistration()
@@ -217,7 +212,7 @@ class PublicController extends Controller
         if($data->save()){
 
             $data->assignRole(stringSlug('Farmer'));
-            $number = Farmer::count() + 1;
+            $number = str_pad(Farmer::count() + 1, 5, 0, STR_PAD_LEFT);
             $farmer = new Farmer();
             $farmer->account_id = $number;
             $farmer->user_id = $data->id;

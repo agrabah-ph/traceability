@@ -19,12 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin-generate-permissions', function () {
-    echo "Generating Spot Market Permission<br>";
-    Artisan::call('permission:spot_market');
-    return 'Done';
-});
-
 Route::get('/registration', 'Controller@registration');
 
 Route::get('qr-reader', 'PublicController@qrReader')->name('qr-reader');
@@ -88,130 +82,54 @@ Route::middleware(['auth', 'verified', 'has_profile'])->group(function () {
 // GLOBAL ROUTES END
 
 
-
-// ROUTES FOR WHARF
-Route::domain('wharf.'.config('dev.domain_ext'))->group(function () {
-
-    Route::post('wharf-user-registration-store', 'PublicController@wharfUserRegistrationStore')->name('wharf-user-registration-store');
-
-    Route::middleware(['auth', 'verified'])->group(function () {
-        Route::resource('purchase-order', 'PurchaseOrderController');
-        Route::resource('spot-market', 'SpotMarketController');
-        Route::get('spot-market-cart', 'SpotMarketController@cart')->name('spot-market.cart');
-        Route::get('spot-market-my-orders', 'SpotMarketController@myOrders')->name('spot-market.my_orders');
-        Route::post('spot-market-add-to-cart', 'SpotMarketController@addToCart')->name('spot-market.add_cart');
-        Route::post('spot-market-lock-in-order', 'SpotMarketController@lockInOrder')->name('spot-market.lock_in_order');
-        Route::post('spot-market-verify-payment', 'SpotMarketController@verifyPayment')->name('spot-market.verify_payment');
-
-        Route::post('spot-market-post-bid', 'SpotMarketController@postBid')->name('spot-market.post_bid');
-        Route::post('spot-market-refresh-bid', 'SpotMarketController@refreshBid')->name('spot-market.refresh_bid');
-
-        Route::get('spot-market-my-bids', 'SpotMarketController@myBids')->name('spot-market.my_bids');
-        Route::post('spot-market-make-winner', 'SpotMarketController@makeWinner')->name('spot-market.make_winner');
-        Route::get('spot-market-winning-bids', 'SpotMarketController@winningBids')->name('spot-market.winning_bids');
-        Route::post('spot-market-complete-bid', 'SpotMarketController@completeBid')->name('spot-market.complete_bid');
-    });
-});
-
-// ROUTES FOR LOAN
-Route::domain('loan.'.config('dev.domain_ext'))->group(function () {
-
-    Route::get('loan-registration', 'PublicController@loanRegistration')->name('loan-registration');
-    Route::post('loan-user-registration-store', 'PublicController@loanUserRegistrationStore')->name('loan-user-registration-store');
-
-    Route::middleware(['auth', 'verified'])->group(function () {
-
-        Route::get('loan-provider/profile/create', 'PublicController@loneProviderProfileCreate')->name('loan-provider-profile-create');
-        Route::post('loan-provider/profile/store', 'LoanProviderController@profileStore')->name('loan-provider-profile-store');
-
-        Route::get('farmer/profile/create', 'PublicController@farmerProfileCreate')->name('farmer-profile-create');
-        Route::post('farmer/profile/store', 'FarmerController@profileStore')->name('farmer-profile-store');
-
-
-        Route::post('user-profile-store', 'ProfileController@profileStore')->name('user-profile-store');
-
-    });
-
-    Route::middleware(['auth', 'verified', 'has_profile'])->group(function () {
-
-        Route::get('loan-provider-dashboard', 'HomeController@loanProviderDashboard')->name('loan-provider-dashboard');
-        Route::get('verify-disbursement', 'LoanController@verifyDisbursement')->name('verify-disbursement');
-
-        Route::resource('products', 'LoanProductController');
-
-//        Route::get('loan/product/show', 'FarmerController@loanProductShow')->name('loan-product-show');
-        Route::get('loan/product/list', 'FarmerController@loanProductList')->name('loan-product-list');
-        Route::get('loan-product-list-get', 'FarmerController@loanProductListGet')->name('loan-product-list-get');
-        Route::get('loan-apply', 'FarmerController@loanApply')->name('loan-apply');
-        Route::post('loan-submit-form', 'FarmerController@submitLoanApplication')->name('loan-submit-form');
-
-        Route::get('my-loans/', 'LoanController@index')->name('my-loans');
-        Route::post('verify-loan', 'LoanController@verify')->name('verify-loan');
-        Route::get('generateSchedule', 'LoanController@getPaymentSchedule')->name('generate-schedule');
-
-//        Route::get('loan/applicants', 'LoanProviderController@loanApplicant')->name('loan-applicant');
-        Route::get('loan-update-status', 'LoanProviderController@loanUpdateStatus')->name('loan-update-status');
-
-        Route::get('custom-forms', 'LoanProviderController@customForms')->name('custom-forms');
-
-        Route::get('check-disbursement', 'LoanDisbursementController@getList')->name('check-disbursement');
-        Route::post('store-disbursement', 'LoanDisbursementController@storeDisbursement')->name('store-disbursement');
-
-
-        Route::get('reports/loan', 'ReportController@loanReportIndex')->name('loan-report');
-        Route::get('get-loan-report', 'ReportController@loanReportList')->name('get-loan-report');
-
-    });
-
-});
-
 // ROUTES FOR TRACE
-Route::domain('trace.'.config('dev.domain_ext'))->group(function () {
+Route::get('farmer/profile/create', 'PublicController@farmerProfileCreate')->name('farmer-profile-create');
+Route::post('farmer/profile/store', 'FarmerController@profileStore')->name('farmer-profile-store');
+Route::post('user-profile-store', 'ProfileController@profileStore')->name('user-profile-store');
 
-    Route::get('farmer-check', 'FarmerController@farmerCheck')->name('farmer-check');
+Route::get('farmer-check', 'FarmerController@farmerCheck')->name('farmer-check');
 
-    Route::get('trace-registration', 'PublicController@traceRegistration')->name('trace-registration');
-    Route::post('trace-user-registration-store', 'PublicController@traceUserRegistrationStore')->name('trace-user-registration-store');
+Route::get('trace-registration', 'PublicController@traceRegistration')->name('trace-registration');
+Route::post('trace-user-registration-store', 'PublicController@traceUserRegistrationStore')->name('trace-user-registration-store');
 
-    Route::get('farmer-qr', 'PublicController@farmerQr')->name('farmer-qr');
-    Route::get('trace-shipped', 'PublicController@traceShipped')->name('trace-shipped');
-    Route::get('trace-tracking/{code}', 'PublicController@traceTracking')->name('trace-tracking');
-    Route::get('trace-update-status', 'PublicController@traceUpdate')->name('trace-update-status');
-    Route::get('trace-info/{code}', 'PublicController@traceInfo')->name('trace-info');
-
-
-    Route::middleware(['auth', 'verified'])->group(function () {
-
-        // FARMER START
-        Route::get('farmer-qr-print/{account}', 'FarmerController@farmerQrPrint')->name('farmer-qr-print');
-        Route::get('farmers/login', 'FarmerController@farmerLogin')->name('farmer-login');
-        Route::post('farmers/login-form', 'FarmerController@farmerLoginForm')->name('farmer-login-form');
-        Route::get('farmers-info/{account}', 'FarmerController@farmerInfo')->name('farmers-info');
-        Route::get('farmers/inventory-listing/{account}', 'FarmerController@farmerInventory')->name('farmer-inventory-listing');
-        Route::get('farmers/inventory/{account}', 'FarmerController@farmerInventory')->name('farmer-inventory');
-        // FARMER END
-
-        // FARMER START
-        Route::resource('inventory', 'InventoryController');
-        Route::get('farmer-inventory-list', 'InventoryController@farmerInventoryList')->name('farmer-inventory-list');
-        Route::get('farmer-inventory-list-item', 'InventoryController@farmerInventoryListItem')->name('farmer-inventory-list-item');
-        Route::get('inv-listing/{account}', 'InventoryController@farmerInventoryListing')->name('inv-listing');
-        Route::post('inv-listing-store', 'InventoryController@inventoryListingStore')->name('inv-listing-store');
-        Route::get('inv-listing-delete', 'InventoryController@inventoryListingDelete')->name('inv-listing-delete');
-        // FARMER START
-
-        // FARMER START
-        Route::resource('trace', 'Trace\TraceController');
-        Route::post('trace-store', 'Trace\TraceController@traceStore')->name('trace-store');
-        Route::get('trace-qr-print/{reference}', 'Trace\TraceController@traceQrPrint')->name('trace-qr-print');
-        // Route::get('trace-shipped/{reference}', 'TraceController@traceShipped')->name('trace-shipped');
-        // FARMER START
+Route::get('farmer-qr', 'PublicController@farmerQr')->name('farmer-qr');
+Route::get('trace-shipped', 'PublicController@traceShipped')->name('trace-shipped');
+Route::get('trace-tracking/{code}', 'PublicController@traceTracking')->name('trace-tracking');
+Route::get('trace-update-status', 'PublicController@traceUpdate')->name('trace-update-status');
+Route::get('trace-info/{code}', 'PublicController@traceInfo')->name('trace-info');
 
 
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    // FARMER START
+    Route::get('farmer-qr-print/{account}', 'FarmerController@farmerQrPrint')->name('farmer-qr-print');
+    Route::get('farmers/login', 'FarmerController@farmerLogin')->name('farmer-login');
+    Route::post('farmers/login-form', 'FarmerController@farmerLoginForm')->name('farmer-login-form');
+    Route::get('farmers-info/{account}', 'FarmerController@farmerInfo')->name('farmers-info');
+    Route::get('farmers/inventory-listing/{account}', 'FarmerController@farmerInventory')->name('farmer-inventory-listing');
+    Route::get('farmers/inventory/{account}', 'FarmerController@farmerInventory')->name('farmer-inventory');
+    // FARMER END
+
+    // FARMER START
+    Route::resource('inventory', 'InventoryController');
+    Route::get('farmer-inventory-list', 'InventoryController@farmerInventoryList')->name('farmer-inventory-list');
+    Route::get('farmer-inventory-list-item', 'InventoryController@farmerInventoryListItem')->name('farmer-inventory-list-item');
+    Route::get('inv-listing/{account}', 'InventoryController@farmerInventoryListing')->name('inv-listing');
+    Route::post('inv-listing-store', 'InventoryController@inventoryListingStore')->name('inv-listing-store');
+    Route::get('inv-listing-delete', 'InventoryController@inventoryListingDelete')->name('inv-listing-delete');
+    // FARMER START
+
+    // FARMER START
+    Route::resource('trace', 'Trace\TraceController');
+    Route::post('trace-store', 'Trace\TraceController@traceStore')->name('trace-store');
+    Route::get('trace-qr-print/{reference}', 'Trace\TraceController@traceQrPrint')->name('trace-qr-print');
+    // Route::get('trace-shipped/{reference}', 'TraceController@traceShipped')->name('trace-shipped');
+    // FARMER START
 
 
 
-    });
+
+
 });
 
 

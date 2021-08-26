@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ subdomain_title(null) }} | @yield('title')</title>
     <title>Trace | @yield('title')</title>
 
     {{--    <link rel="apple-touch-icon" sizes="180x180" href="{{ URL::to('/favicon_io/apple-touch-icon.png') }}">--}}
@@ -45,10 +44,10 @@
                             <span class="text-muted text-xs block"> {!! Auth::user()->name !!} <b class="caret"></b></span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Contacts</a></li>
-                            <li><a class="dropdown-item" href="#">Mailbox</a></li>
-                            <li class="dropdown-divider"></li>
+{{--                            <li><a class="dropdown-item" href="#">Profile</a></li>--}}
+{{--                            <li><a class="dropdown-item" href="#">Contacts</a></li>--}}
+{{--                            <li><a class="dropdown-item" href="#">Mailbox</a></li>--}}
+{{--                            <li class="dropdown-divider"></li>--}}
                             <li><a class="dropdown-item btn-logout" href="#" id="">Logout</a></li>
                         </ul>
                     </div>
@@ -57,7 +56,7 @@
                     </div>
                 </li>
 
-                @include(subdomain_name().'.menu')
+                @include('trace.menu')
 
             </ul>
 
@@ -102,7 +101,7 @@
                 <strong></strong>
             </div>
             <div>
-                <strong>Copyright</strong> {{ subdomain_title('ucwords') }}
+                <strong>Copyright</strong> TRACE
                 <strong></strong>
             </div>
         </div>

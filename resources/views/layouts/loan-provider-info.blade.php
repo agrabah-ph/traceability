@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ subdomain_title(null) }}</title>
+    <title>Agrabah</title>
 
 
     <link href="{{ asset('images/favicon.png') }}" rel="shortcut icon">
