@@ -45,7 +45,7 @@
 {{--                        @endif--}}
 {{--                    </div>--}}
                     <div class="form-group">
-                        <label>Please type your email address asdfas</label>
+                        <label>Please type your email address</label>
                         {{Form::email('email',null, array('class'=>'form-control', 'placeholder'=>'yourname@domain.com', 'autocomplete'=>'off', 'autofocus'))}}
                         @if($errors->has('email'))
                             <span class="text-danger">{{$errors->first('email')}}</span>

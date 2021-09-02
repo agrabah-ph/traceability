@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="mb-2">
                                     <h3 class="mb-0">{{ $trace->receiver->value_1 }}</h3>
-                                    <small class="text-success">Mobile</small>
+                                    <small class="text-success">Email</small>
                                 </div>
                                 <div class="mb-2">
                                     <h3 class="mb-0">{{ $trace->receiver->text_0 }}</h3>

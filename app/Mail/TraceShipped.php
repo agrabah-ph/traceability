@@ -7,19 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TraceShipped extends Mailable
+class TraceShipped extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-    public $details;
+    public $trace;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($details)
+    public function __construct($trace)
     {
-        $this->details = $details;
+        $this->trace = $trace;
     }
 
     /**
@@ -30,7 +30,7 @@ class TraceShipped extends Mailable
     public function build()
     {
         return $this->markdown('emails.trace.shipped')
-            ->with('details', $this->details);
+            ->with('details', $this->trace);
 
 //        return $this->markdown('emails.trace.shipped');
     }

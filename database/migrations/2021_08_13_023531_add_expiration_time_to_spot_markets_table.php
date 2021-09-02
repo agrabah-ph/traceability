@@ -27,7 +27,7 @@ class AddExpirationTimeToSpotMarketsTable extends Migration
     {
         Schema::table('spot_markets', function (Blueprint $table) {
             //
-            $table->dropColumn('expiration_date');
+            $table->dropColumn('expiration_time');
         });
     }
 }

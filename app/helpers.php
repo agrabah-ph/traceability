@@ -15,7 +15,7 @@ use CreatvStudio\Itexmo\Facades\Itexmo;
 if (!function_exists('emailNotification')) {
     function emailNotification($type, $id)
     {
-
+        
     }
 }
 
