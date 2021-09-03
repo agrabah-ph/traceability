@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Artisan;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 // GLOBAL ROUTES START
 Route::get('/', function () {
     return view('welcome');
