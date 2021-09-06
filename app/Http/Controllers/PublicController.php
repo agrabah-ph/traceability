@@ -218,7 +218,7 @@ class PublicController extends Controller
             $farmer->user_id = $user->id;
             $farmer->save();
 
-            $user->sendEmailVerificationNotification();
+//            $user->sendEmailVerificationNotification();
             event(new NewUserRegisteredEvent($user));
             Auth::loginUsingId($user->id);
             return redirect()->route('home');
