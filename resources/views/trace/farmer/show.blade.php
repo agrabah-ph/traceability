@@ -39,7 +39,7 @@
                             <div class="col-sm-6">
                                 <div class="mb-2">
                                     <h3 class="mb-0">{{ $data->account_id }}</h3>
-                                    <small class="text-success">Name</small>
+                                    <small class="text-success">Account ID</small>
                                 </div>
                                 <div class="mb-2">
                                     <h3 class="mb-0">{{ $data->profile->first_name }} {{ $data->profile->last_name }}</h3>
@@ -51,10 +51,10 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <div class="mb-2">
-                                    <h3 class="mb-0">{{ $data->profile->address }}</h3>
-                                    <small class="text-success">Address</small>
-                                </div>
+{{--                                <div class="mb-2">--}}
+{{--                                    <h3 class="mb-0">{{ $data->profile->address }}</h3>--}}
+{{--                                    <small class="text-success">Address</small>--}}
+{{--                                </div>--}}
                                 <div class="mb-2">
                                     <h3 class="mb-0">{{ $data->profile->education }}</h3>
                                     <small class="text-success">Education</small>
