@@ -98,6 +98,8 @@ class PublicController extends Controller
             'status'=>$update
         ));
 
+        emailNotification('trace-status-update', $trace->id);
+
 //        return response()->json();
     }
 

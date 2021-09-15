@@ -161,18 +161,19 @@ class TraceController extends Controller
 //            $modelInfo->text_1 = base64_encode(file_get_contents(public_path('images/trace/'.$code.'.png'))); // address
             if($trace->info()->save($modelInfo)){
 
-                $myEmail = $data[1];
-
-                $details = [
-                    'title' => 'Agrabah Shipping details.',
-                    'url' => route('trace-tracking', array('code'=>$trace->reference)),
-                    'body' => '<p>Please present this CODE upon receiving your package.</p><br><table><thead><tr><th colspan="4" align="center">Dispatch Information</th></tr></thead><tbody><tr><td width="150" align="left">Driver Name</td><td align="left">'. $data[4] .'</td></tr><tr><td align="left">Mobile no.</td><td align="left">'. $data[5] .'</td></tr><tr><td align="left">Vehicle Type</td><td align="left">'. $data[6] .'</td></tr><tr><td align="left">Plate No.</td><td align="left">'. $data[7] .'</td></tr></tbody></table><br><br><br>',
-                    'code' => $modelInfo->value_3,
-                    'email' => $myEmail
-                ];
+//                $myEmail = $data[1];
+//
+//                $details = [
+//                    'title' => 'Agrabah Shipping details.',
+//                    'url' => route('trace-tracking', array('code'=>$trace->reference)),
+//                    'body' => '<p>Please present this CODE upon receiving your package.</p><br><table><thead><tr><th colspan="4" align="center">Dispatch Information</th></tr></thead><tbody><tr><td width="150" align="left">Driver Name</td><td align="left">'. $data[4] .'</td></tr><tr><td align="left">Mobile no.</td><td align="left">'. $data[5] .'</td></tr><tr><td align="left">Vehicle Type</td><td align="left">'. $data[6] .'</td></tr><tr><td align="left">Plate No.</td><td align="left">'. $data[7] .'</td></tr></tbody></table><br><br><br>',
+//                    'code' => $modelInfo->value_3,
+//                    'email' => $myEmail
+//                ];
 
 //                event(new TraceCreatedEvent($trace));
-                Mail::to($myEmail)->send(new TraceShipped($details));
+//                Mail::to($myEmail)->send(new TraceShipped($details));
+
             }
 
             $modelInfo = new ModelInfo();
@@ -183,6 +184,8 @@ class TraceController extends Controller
             $modelInfo->value_3 = $data[7];
             $modelInfo->value_4 = $data[8];
             $trace->info()->save($modelInfo);
+
+            emailNotification('trace-created', $trace->id);
 
             foreach($data[11] as $id){
                 $inventory = Inventory::find($id);
