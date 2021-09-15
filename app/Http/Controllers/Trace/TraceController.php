@@ -127,9 +127,9 @@ class TraceController extends Controller
         $code = Str::random(6);
         $data = $request->input('datas');
         $trace = new Trace();
-        $trace->reference = $data[8];
+        $trace->reference = $data[9];
         $trace->code = $code;
-        $trace->url = route('trace-info', array('code'=>$data[8]));
+        $trace->url = route('trace-info', array('code'=>$data[9]));
         $trace->user_id = Auth::user()->id;
         if($trace->save()){
             QrCode::size(500)
@@ -181,9 +181,10 @@ class TraceController extends Controller
             $modelInfo->value_1 = $data[5];
             $modelInfo->value_2 = $data[6];
             $modelInfo->value_3 = $data[7];
+            $modelInfo->value_4 = $data[8];
             $trace->info()->save($modelInfo);
 
-            foreach($data[10] as $id){
+            foreach($data[11] as $id){
                 $inventory = Inventory::find($id);
                 $inventory->status = 'Loaded';
                 $inventory->trace_id = $trace->id;

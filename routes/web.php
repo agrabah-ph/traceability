@@ -100,6 +100,8 @@ Route::get('trace-info/{code}', 'PublicController@traceInfo')->name('trace-info'
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('bfar/trace', 'BfarController@traceIndex')->name('trace-bfar');
+    Route::get('bfar/trace/{id}', 'BfarController@traceShow')->name('trace-bfar-show');
 
     // FARMER START
     Route::get('farmer-qr-print/{account}', 'FarmerController@farmerQrPrint')->name('farmer-qr-print');

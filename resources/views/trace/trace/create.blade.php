@@ -66,14 +66,26 @@
                             <label>Mobile no.</label>
                             <input type="text" name="driver-mobile" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label>Vehicle Type</label>
-                            <input type="text" name="vehicle-type" class="form-control">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Vehicle Type</label>
+                                    <input type="text" name="vehicle-type" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Plate No.</label>
+                                    <input type="text" name="vehicle-plate" class="form-control">
+                                </div>
+                            </div>
                         </div>
+
                         <div class="form-group">
-                            <label>Plate No.</label>
-                            <input type="text" name="vehicle-plate" class="form-control">
+                            <label>Place of Origin</label>
+                            <textarea name="origin-address" class="form-control no-resize"></textarea>
                         </div>
+
                     </div>
                 </div>
             </div>

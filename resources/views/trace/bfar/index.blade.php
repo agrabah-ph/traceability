@@ -1,6 +1,6 @@
 @extends('trace.master')
 
-@section('title', 'Blank')
+@section('title', 'Trace List')
 
 @section('content')
 
@@ -9,7 +9,7 @@
             <h2>@yield('title')</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="\">Dashboard</a>
+                    <a href="{{ route('home') }}">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item active">
                     <strong>@yield('title')</strong>
@@ -18,7 +18,7 @@
         </div>
         <div class="col-sm-8">
             <div class="title-action">
-                <a href="#" class="btn btn-primary">This is action area</a>
+                {{--                <a href="#" class="btn btn-primary">This is action area</a>--}}
             </div>
         </div>
     </div>
@@ -28,12 +28,55 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Blank <small>page</small></h5>
-                    </div>
+                    {{--                    <div class="ibox-title">--}}
+                    {{--                        <h5>Blank <small>page</small></h5>--}}
+                    {{--                    </div>--}}
                     <div class="ibox-content">
 
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="table-responsive">
+                            <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
+                                <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Origin</th>
+                                    <th>Destination</th>
+                                    <th>Status</th>
+                                    <th class="text-right" data-sort-ignore="true"><i class="fa fa-cogs text-success"></i></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($datas as $data)
+                                    <tr>
+                                        <td>{{ $data->reference }}</td>
+                                        <td>{{ $data->dispatch->value_4 }}</td>
+                                        <td>{{ $data->receiver->text_0 }}</td>
+                                        <td>{{ $data->status }}</td>
+                                        <td class="text-right">
+                                            <div class="btn-group text-right">
+                                                <a href="{{ route('trace-bfar-show', array('id'=>$data->id)) }}" class="action btn-white btn btn-xs"><i class="fa fa-search text-success"></i> Show</a>
+{{--                                                <a href="{{ route('trace-info', array('code'=>$data->reference)) }}" class="action btn-white btn btn-xs" target="_blank"><i class="fa fa-search text-success"></i> Page</a>--}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <ul class="pagination pull-right"></ul>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
 
                     </div>
                 </div>
