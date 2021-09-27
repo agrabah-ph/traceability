@@ -39,7 +39,11 @@ class HomeController extends Controller
             $farmer = Inventory::where('leader_id', Auth::user()->leader->account_id)->distinct('farmer_id')->count('farmer_id');
 
             return view('trace.dashboard', compact( 'inventory', 'trace', 'farmer'));
-        }else{
+        }
+        elseif (auth()->user()->hasRole('bfar')){
+            return view('trace.bfar.dashboard');
+        }
+        else{
             return view('layouts.activation');
         }
 

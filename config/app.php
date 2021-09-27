@@ -172,6 +172,7 @@ return [
         HieuLe\Active\ActiveServiceProvider::class,
         CreatvStudio\Itexmo\ItexmoServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Stevebauman\Location\LocationServiceProvider::class,
 
         /*
          * Application Service Providers...

@@ -20,11 +20,12 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "2.4",
         "laravelcollective/html": "^6.2",
-        "pusher/pusher-php-server": "v4.1.1",
         "maatwebsite/excel": "^3.1",
+        "pusher/pusher-php-server": "v4.1.1",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-medialibrary": "^7.0.0",
         "spatie/laravel-permission": "^4.0",
+        "stevebauman/location": "^6.2",
         "tightenco/collect": "^5.4",
         "yajra/laravel-datatables": "1.5"
     },
