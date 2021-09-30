@@ -111,7 +111,7 @@
                     id: $('#profile-info-box').data('id')
                 }, function(data){
                     console.log(data);
-                    $('#profile-info-box').empty().append(displayLoanApplicationDetails(data.profile, null));
+                    $('#profile-info-box').empty().append(viewProfile(data.profile, null));
                 });
             }
 

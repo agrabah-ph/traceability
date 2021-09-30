@@ -153,7 +153,7 @@ if (!function_exists('emailAddress')) {
         switch ($recipient){
             case 'bfar':
                 $data = Settings::where('name', 'bfar')->with('profile')->first();
-                if($data->profile->landline !== null){
+                if(!empty($data->profile->landline)){
                     $email = $data->profile->landline;
                 }
                 break;

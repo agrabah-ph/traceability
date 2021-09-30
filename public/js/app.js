@@ -79743,6 +79743,189 @@ $(document).ready(function () {
     '</div>' + '</div>' + '<div class="col">' + '<h2 class="text-success"><strong>Membership / Group</strong></h2>' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>Organization</dt>' + '<dd>' + profile.farming_info[2][2] + '</dd>' + '</dl>' + '</div>' + '</div>' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>Others</dt>' + '<dd>' + '<ul class="list-inline-item">' + groups.join('') + '</ul>' + '</dd>' + '</dl>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>' + '<div role="tabpanel" id="tab-3" class="tab-pane">' + '<div class="panel-body">' + '<div class="row">' + '<div class="col-lg-4">' + '<dl>' + '<dt>Status</dt>' + '<dd>' + profile.employment_info[0][2][0] + '</dd>' + '</dl>' + '</div>' + '<div class="col">' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>' + profile.employment_info[0][2][1][1] + '</dt>' + '<dd>' + profile.employment_info[0][2][1][2] + '</dd>' + '</dl>' + '<dl>' + '<dt>' + profile.employment_info[0][2][2][1] + '</dt>' + '<dd>' + profile.employment_info[0][2][2][2] + '</dd>' + '</dl>' + '</div>' + '<div class="col">' + '<dl>' + '<dt>' + profile.employment_info[0][2][3][1] + '</dt>' + '<dd>' + profile.employment_info[0][2][3][2] + '</dd>' + '</dl>' + '<dl>' + '<dt>' + profile.employment_info[0][2][4][1] + '</dt>' + '<dd>' + profile.employment_info[0][2][4][2] + '</dd>' + '</dl>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>' + '<div role="tabpanel" id="tab-4" class="tab-pane">' + '<div class="panel-body">' + '<table class="table table-borderless">' + '<thead>' + '<tr>' + '<th></th>' + '<th class="text-right">Business</th>' + '<th class="text-right">Employment</th>' + '<th class="text-right">Total</th>' + '</tr>' + '</thead>' + '<tbody>' + '<tr>' + '<td>Applicant Monthly Income</td>' + '<td class="text-right">' + numFormat(rowAAIncome) + '</td>' + '<td class="text-right">' + numFormat(rowABIncome) + '</td>' + '<td class="text-right">' + numFormat(rowASum) + '</td>' + '</tr>' + '<tr>' + '<td>Spouse\'s Monthly Income</td>' + '<td class="text-right">' + numFormat(rowBAIncome) + '</td>' + '<td class="text-right">' + numFormat(rowBBIncome) + '</td>' + '<td class="text-right">' + numFormat(rowBSum) + '</td>' + '</tr>' + '<tr>' + '<td>Other Monthly Income</td>' + '<td></td>' + '<td></td>' + '<td class="text-right">' + numFormat(rowCIncome) + '</td>' + '</tr>' + '<tr>' + '<td>Other Source of Income</td>' + '<td></td>' + '<td></td>' + '<td class="text-right">' + numFormat(rowDIncome) + '</td>' + '</tr>' + '<tr>' + '<td>Total Monthly Income</td>' + '<td></td>' + '<td></td>' + '<td class="text-right">' + numFormat(rowABCDSum) + '</td>' + '</tr>' + '<tr>' + '<td>Less Monthly Expenses <small><br>(Living, Utilitites, rental, transpo..)</small></td>' + '<td></td>' + '<td></td>' + '<td class="text-right">' + numFormat(rowEExpense) + '</td>' + '</tr>' + '<tr>' + '<td>Loan Amortization <small><br>(Mortgage/loan)</small></td>' + '<td></td>' + '<td></td>' + '<td class="text-right">' + numFormat(rowFExpense) + '</td>' + '</tr>' + '<tr>' + '<td>Total Expenses</td>' + '<td></td>' + '<td></td>' + '<td class="text-right">' + numFormat(rowEFSum) + '</td>' + '</tr>' + '</tbody>' + '<tfoot>' + '<tr>' + '<td><h2><strong>NET MONTHLY INCOME</strong></h2></td>' + '<td></td>' + '<td></td>' + '<td class="text-right"><h2><strong>' + numFormat(totalIncomeSum) + '</strong></h2></td>' + '</tr>' + '</tfoot>' + '</table>' + '</div>' + '</div>' + loanDetailContent + '</div>' + '</div>' + '';
     return content;
   };
+
+  window.displayLoanProviderDetails = function (data) {
+    var content, image;
+    image = data.profile.image === null ? '<img alt="image" class="img-fluid" src="/img/blank-profile.jpg">' : '<img alt="image" class="img-fluid" src="' + data.profile.image + '">';
+    content = '' + '<div class="row animated fadeInRight">' + '<div class="col-md-4">' + '<div class="ibox">' + '<div class="ibox-title">' + '<h5>Bank Detail</h5>' + '</div>' + '<div>' + '<div class="ibox-content no-padding border-left-right">' + image + '</div>' + '<div class="ibox-content profile-content">' + '<h2 class="text-success"><strong>' + data.profile.bank_name + '</strong></h2>' + '<h4><strong>' + data.profile.branch_name + '</strong> [ ' + data.profile.branch_code + ' ]</h4>' + '<p><i class="fa fa-map-marker"></i> ' + data.profile.branch_address + '</p>' + '</div>' + '</div>' + '</div>' + '</div>' + '<div class="col-md-8">' + '<div class="ibox ">' + '<div class="ibox-title">' + '<h5>Contacts Detail</h5>' + '</div>' + '<div class="ibox-content">' + '<div class="row">' + '<div class="col-lg-6">' + '<h2 class="mb-3 text-info"><strong>Primary contact</strong></h2>' + '<h3 class="mb-1"><strong>' + data.profile.first_name + ' ' + data.profile.last_name + '</strong></h3>' + '<div class="m-t-xs font-bold">' + data.profile.designation + '</div>' + '<address class="mt-2">' + '<div><i class="fa fa-phone"></i> ' + data.profile.landline + '</div>' + '<div><i class="fa fa-mobile"></i> ' + data.profile.mobile + '</div>' + '</address>' + '</div>' + '<div class="col-lg-6">' + '<h2 class="mb-3 text-info"><strong>Secondary contact</strong></h2>' + '<h3 class="mb-1"><strong>' + data.profile.contact_person + '</strong></h3>' + '<div class="m-t-xs font-bold">' + data.profile.contact_designation + '</div>' + '<address class="mt-2">' + '<div><i class="fa fa-phone"></i> ' + data.profile.contact_number + '</div>' + '</address>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>' + '';
+    return content;
+  };
+
+  window.viewProfile = function (profile, loanDetail) {
+    // console.log(loanDetail);
+    var content, viewSecondary, viewSpouseComaker, viewFarming, viewEmployment, viewIncomeAsset;
+    var menus = new Array(),
+        views = new Array();
+
+    if (profile.secondary_info.length > 0) {
+      // console.log(profile.secondary_info);
+      var dependents = new Array();
+
+      if (profile.secondary_info[3][2] !== null) {
+        for (var a = 0; a < profile.secondary_info[3][2].length; a++) {
+          dependents.push('' + '<tr>' + '<td>' + profile.secondary_info[3][2][a][0] + '</td>' + '<td>' + profile.secondary_info[3][2][a][1] + '</td>' + '</tr>' + '');
+        }
+      }
+
+      var landlord = profile.secondary_info[2][2] === 'Rented' ? '<dl><dt>Landlords Address</dt><dd>' + profile.secondary_info[2][3][0] + '</dd></dl><dl><dt>Landlords Contact No.</dt><dd>' + profile.secondary_info[2][3][1] + '</dd></dl>' : '';
+      dependents = profile.secondary_info[3][2] !== null ? dependents.join('') : '' + '<tr>' + '<td colspan="2" class="text-center">None</td>' + '</tr>' + '';
+      viewSecondary = '' + '<h2 class="text-success"><strong>Secondary Information</strong></h2>' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>Current Address</dt>' + '<dd>' + profile.secondary_info[0][2] + '</dd>' + '</dl>' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>Years of Stay</dt>' + '<dd>' + profile.secondary_info[1][2] + '</dd>' + '</dl>' + '</div>' + '<div class="col">' + '<dl>' + '<dt>Address Status</dt>' + '<dd>' + profile.secondary_info[2][2] + '</dd>' + '</dl>' + '</div>' + '</div>' + landlord + '</div>' + '<div class="col">' + '<dl>' + '<dt>Dependents</dt>' + '<dd>' + '<table class="table table-borderless table-striped">' + '<thead>' + '<tr>' + '<th>Name</th>' + '<th>Birthday</th>' + '</tr>' + '</thead>' + '<tbody>' + dependents + '</tbody>' + '</table>' + '</dd>' + '</dl>' + '</div>' + '</div>' + '';
+    }
+
+    if (loanDetail !== null) {
+      if (loanDetail.spouse_comaker_info.length > 0) {
+        // console.log(loanDetail.spouse_comaker_info);
+        menus.push('<li><a class="nav-link" data-toggle="tab" href="#tab-2">Spouse / Co-Maker Info</a></li>');
+        views.push('' + '<div role="tabpanel" id="tab-2" class="tab-pane">' + '<div class="panel-body">' + '<h2 class="text-success"><strong>Spouse/Co-maker Information</strong></h2>' + '<div class="row">' + '<div class="col">' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>First name</dt>' + '<dd>' + loanDetail.spouse_comaker_info[0][2] + '</dd>' + '</dl>' + '<dl>' + '<dt>Middle name</dt>' + '<dd>' + loanDetail.spouse_comaker_info[1][2] + '</dd>' + '</dl>' + '<dl>' + '<dt>Last name</dt>' + '<dd>' + loanDetail.spouse_comaker_info[2][2] + '</dd>' + '</dl>' + '</div>' + '<div class="col">' + '<dl>' + '<dt>Date of Birth</dt>' + '<dd>' + loanDetail.spouse_comaker_info[3][2] + '</dd>' + '</dl>' + '<dl>' + '<dt>Age</dt>' + '<dd>' + getAge(loanDetail.spouse_comaker_info[3][2]) + '</dd>' + '</dl>' + '</div>' + '</div>' + '</div>' + '<div class="col">' + '<div class="row">' + '<div class="col ">' + '<dl>' + '<dt>Civil Status</dt>' + '<dd>' + loanDetail.spouse_comaker_info[4][2] + '</dd>' + '</dl>' + '</div>' + '<div class="col">' + '<dl>' + '<dt>Gender</dt>' + '<dd>' + loanDetail.spouse_comaker_info[5][2] + '</dd>' + '</dl>' + '</div>' + '</div>' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>Land Line</dt>' + '<dd>' + loanDetail.spouse_comaker_info[6][2] + '</dd>' + '</dl>' + '</div>' + '<div class="col">' + '<dl>' + '<dt>Mobile</dt>' + '<dd>' + loanDetail.spouse_comaker_info[7][2] + '</dd>' + '</dl>' + '</div>' + '</div>' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>Tin No.</dt>' + '<dd>' + loanDetail.spouse_comaker_info[8][2] + '</dd>' + '</dl>' + '</div>' + '<div class="col">' + '<dl>' + '<dt>SSS / GSIS No.</dt>' + '<dd>' + loanDetail.spouse_comaker_info[9][2] + '</dd>' + '</dl>' + '</div>' + '</div>' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>Education</dt>' + '<dd>' + loanDetail.spouse_comaker_info[10][2] + '</dd>' + '</dl>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>' + '');
+      }
+
+      if (loanDetail.farming_info.length > 0) {
+        // console.log(loanDetail.farming_info);
+        var groups = new Array();
+
+        for (var a = 2; a < loanDetail.farming_info.length; a++) {
+          if (loanDetail.farming_info[a][2] === "1") {
+            groups.push('' + '<li>' + loanDetail.farming_info[a][1] + '</li>' + '');
+          }
+        }
+
+        menus.push('<li><a class="nav-link" data-toggle="tab" href="#tab-3">Farming Info</a></li>');
+        views.push('' + '<div role="tabpanel" id="tab-3" class="tab-pane">' + '<div class="panel-body">' + '<div class="row">' + '<div class="col">' + '<h2 class="text-success"><strong>Farming Information</strong></h2>' + '<div class="row">' + '<dl class="col">' + '<dt>Farm Description</dt>' + '<dd>' + loanDetail.farming_info[0][2] + '</dd>' + '</dl>' + '</div>' + '</div>' + '<div class="col">' + '<h2 class="text-success"><strong>Membership / Group</strong></h2>' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>Organization</dt>' + '<dd>' + loanDetail.farming_info[2][2] + '</dd>' + '</dl>' + '</div>' + '</div>' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>Others</dt>' + '<dd>' + '<ul class="list-inline-item">' + groups.join('') + '</ul>' + '</dd>' + '</dl>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>' + '');
+      }
+
+      if (loanDetail.employment_info.length > 0) {
+        // console.log(loanDetail.employment_info);
+        menus.push('<li><a class="nav-link" data-toggle="tab" href="#tab-4">Employment</a></li>');
+        views.push('' + '<div role="tabpanel" id="tab-4" class="tab-pane">' + '<div class="panel-body">' + '<h2 class="text-success"><strong>Employment Information</strong></h2>' + '<div class="row">' + '<div class="col-lg-4">' + '<dl>' + '<dt>Status</dt>' + '<dd>' + loanDetail.employment_info[0][2][0] + '</dd>' + '</dl>' + '</div>' + '<div class="col">' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>' + loanDetail.employment_info[0][2][1][1] + '</dt>' + '<dd>' + loanDetail.employment_info[0][2][1][2] + '</dd>' + '</dl>' + '<dl>' + '<dt>' + loanDetail.employment_info[0][2][2][1] + '</dt>' + '<dd>' + loanDetail.employment_info[0][2][2][2] + '</dd>' + '</dl>' + '</div>' + '<div class="col">' + '<dl>' + '<dt>' + loanDetail.employment_info[0][2][3][1] + '</dt>' + '<dd>' + loanDetail.employment_info[0][2][3][2] + '</dd>' + '</dl>' + '<dl>' + '<dt>' + loanDetail.employment_info[0][2][4][1] + '</dt>' + '<dd>' + loanDetail.employment_info[0][2][4][2] + '</dd>' + '</dl>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>' + '');
+      }
+
+      if (loanDetail.income_asset_info.length > 0) {
+        // console.log(loanDetail.income_asset_info);
+        var rowAAIncome = parseInt(loanDetail.income_asset_info[0][2] === null ? 0 : loanDetail.income_asset_info[0][2]);
+        var rowABIncome = parseInt(loanDetail.income_asset_info[1][2] === null ? 0 : loanDetail.income_asset_info[1][2]);
+        var rowBAIncome = parseInt(loanDetail.income_asset_info[2][2] === null ? 0 : loanDetail.income_asset_info[2][2]);
+        var rowBBIncome = parseInt(loanDetail.income_asset_info[3][2] === null ? 0 : loanDetail.income_asset_info[3][2]);
+        var rowCIncome = parseInt(loanDetail.income_asset_info[4][2] === null ? 0 : loanDetail.income_asset_info[4][2]);
+        var rowDIncome = parseInt(loanDetail.income_asset_info[5][2] === null ? 0 : loanDetail.income_asset_info[5][2]);
+        var rowEExpense = parseInt(loanDetail.income_asset_info[6][2] === null ? 0 : loanDetail.income_asset_info[6][2]);
+        var rowFExpense = parseInt(loanDetail.income_asset_info[7][2] === null ? 0 : loanDetail.income_asset_info[7][2]);
+        var rowASum = 0;
+        var rowBSum = 0;
+        var rowABCDSum = 0;
+        var rowEFSum = 0;
+        var totalIncomeSum = 0;
+        rowASum += rowAAIncome;
+        rowASum += rowABIncome;
+        rowBSum += rowBAIncome;
+        rowBSum += rowBBIncome;
+        rowABCDSum += rowAAIncome;
+        rowABCDSum += rowABIncome;
+        rowABCDSum += rowBAIncome;
+        rowABCDSum += rowBBIncome;
+        rowABCDSum += rowCIncome;
+        rowABCDSum += rowDIncome;
+        rowEFSum += rowEExpense;
+        rowEFSum += rowFExpense;
+        totalIncomeSum += rowABCDSum;
+        totalIncomeSum -= rowEFSum;
+        menus.push('<li><a class="nav-link" data-toggle="tab" href="#tab-5">Monthly Income</a></li>');
+        views.push('' + '<div role="tabpanel" id="tab-5" class="tab-pane">' + '<div class="panel-body">' + '<table class="table table-borderless">' + '<thead>' + '<tr>' + '<th></th>' + '<th class="text-right">Business</th>' + '<th class="text-right">Employment</th>' + '<th class="text-right">Total</th>' + '</tr>' + '</thead>' + '<tbody>' + '<tr>' + '<td>Applicant Monthly Income</td>' + '<td class="text-right">' + numFormat(rowAAIncome) + '</td>' + '<td class="text-right">' + numFormat(rowABIncome) + '</td>' + '<td class="text-right">' + numFormat(rowASum) + '</td>' + '</tr>' + '<tr>' + '<td>Spouse\'s Monthly Income</td>' + '<td class="text-right">' + numFormat(rowBAIncome) + '</td>' + '<td class="text-right">' + numFormat(rowBBIncome) + '</td>' + '<td class="text-right">' + numFormat(rowBSum) + '</td>' + '</tr>' + '<tr>' + '<td>Other Monthly Income</td>' + '<td></td>' + '<td></td>' + '<td class="text-right">' + numFormat(rowCIncome) + '</td>' + '</tr>' + '<tr>' + '<td>Other Source of Income</td>' + '<td></td>' + '<td></td>' + '<td class="text-right">' + numFormat(rowDIncome) + '</td>' + '</tr>' + '<tr>' + '<td>Total Monthly Income</td>' + '<td></td>' + '<td></td>' + '<td class="text-right">' + numFormat(rowABCDSum) + '</td>' + '</tr>' + '<tr>' + '<td>Less Monthly Expenses <small><br>(Living, Utilitites, rental, transpo..)</small></td>' + '<td></td>' + '<td></td>' + '<td class="text-right">' + numFormat(rowEExpense) + '</td>' + '</tr>' + '<tr>' + '<td>Loan Amortization <small><br>(Mortgage/loan)</small></td>' + '<td></td>' + '<td></td>' + '<td class="text-right">' + numFormat(rowFExpense) + '</td>' + '</tr>' + '<tr>' + '<td>Total Expenses</td>' + '<td></td>' + '<td></td>' + '<td class="text-right">' + numFormat(rowEFSum) + '</td>' + '</tr>' + '</tbody>' + '<tfoot>' + '<tr>' + '<td><h2><strong>NET MONTHLY INCOME</strong></h2></td>' + '<td></td>' + '<td></td>' + '<td class="text-right"><h2><strong>' + numFormat(totalIncomeSum) + '</strong></h2></td>' + '</tr>' + '</tfoot>' + '</table>' + '</div>' + '</div>' + '');
+      }
+
+      if (loanDetail.info_loan_detail.length > 0) {
+        console.log(loanDetail.info_loan_detail);
+        var loanPurpose = new Array();
+
+        for (var a = 0; a < loanDetail.info_loan_detail[0][1].length; a++) {
+          loanPurpose.push('' + '<li>' + loanDetail.info_loan_detail[0][1][a] + '</li>' + '');
+        }
+
+        loanPurpose = loanPurpose.join('');
+        var placeUse = new Array();
+
+        for (var a = 0; a < loanDetail.info_loan_detail[1][1].length; a++) {
+          placeUse.push('' + '<li>' + loanDetail.info_loan_detail[1][1][a] + '</li>' + '');
+        }
+
+        placeUse = placeUse.join('');
+        var bankAccount = '';
+
+        if (loanDetail.credit_financial_info[0][1].length > 0) {
+          bankAccount = new Array();
+
+          for (var a = 0; a < loanDetail.credit_financial_info[0][1].length; a++) {
+            var bankAccountA = loanDetail.credit_financial_info[0][1][a][0][1] === null ? 'N/A' : loanDetail.credit_financial_info[0][1][a][0][1];
+            var bankAccountB = loanDetail.credit_financial_info[0][1][a][1][1] === null ? 'N/A' : loanDetail.credit_financial_info[0][1][a][1][1];
+            bankAccount.push('' + '<tr>' + '<td>' + bankAccountA + '</td>' + '<td>' + bankAccountB + '</td>' + '</tr>' + '');
+          }
+
+          bankAccount = bankAccount.join('');
+        }
+
+        var creditRef = '';
+
+        if (loanDetail.credit_financial_info[1][1].length > 0) {
+          creditRef = new Array();
+
+          for (var a = 0; a < loanDetail.credit_financial_info[1][1].length; a++) {
+            var creditRefA = loanDetail.credit_financial_info[1][1][a][0][1] === null ? 'N/A' : loanDetail.credit_financial_info[1][1][a][0][1];
+            var creditRefB = loanDetail.credit_financial_info[1][1][a][1][1] === null ? 'N/A' : loanDetail.credit_financial_info[1][1][a][1][1];
+            creditRef.push('' + '<tr>' + '<td>' + creditRefA + '</td>' + '<td>' + creditRefB + '</td>' + '</tr>' + '');
+          }
+
+          creditRef = creditRef.join('');
+        }
+
+        var tradeRef = '';
+
+        if (loanDetail.trade_reference_info[0][1].length > 0) {
+          tradeRef = new Array();
+
+          for (var a = 0; a < loanDetail.trade_reference_info[0][1].length; a++) {
+            tradeRef.push('' + '<tr>' + '<td>' + loanDetail.trade_reference_info[0][1][a][0][1] + '</td>' + '<td>' + loanDetail.trade_reference_info[0][1][a][1][1] + '</td>' + '<td>' + loanDetail.trade_reference_info[0][1][a][2][1] + '</td>' + '</tr>' + '');
+          }
+
+          tradeRef = tradeRef.join('');
+        }
+
+        var refAttachment = '';
+
+        if (loanDetail.reference_id[0][1].length > 0) {
+          refAttachment = new Array();
+
+          for (var a = 0; a < loanDetail.reference_id[0][1].length; a++) {
+            refAttachment.push('' + '<div class="col-6">' + '<dl>' + '<dt>' + loanDetail.reference_id[0][1][a][0] + '</dt>' + '<dd>' + '<img src="' + loanDetail.reference_id[0][1][a][1] + '" class="img-fluid" alt="">' + '</dd>' + '</dl>' + '</div>' + '');
+          }
+
+          refAttachment = refAttachment.join('');
+        }
+
+        var collateral = null;
+
+        switch (loanDetail.info_loan_detail[2][1][0]) {
+          case 'Motor Vehicle':
+            collateral = '<dd>' + loanDetail.info_loan_detail[2][1][0] + ' : ' + loanDetail.info_loan_detail[2][1][1][1] + ' <small>[' + loanDetail.info_loan_detail[2][1][1][0] + ']</small></dd>';
+            break;
+
+          case 'None':
+            collateral = '<dd>' + loanDetail.info_loan_detail[2][1][0] + '</dd>';
+            break;
+
+          default:
+            collateral = '<dd>' + loanDetail.info_loan_detail[2][1][0] + ' : ' + loanDetail.info_loan_detail[2][1][1][0] + '</dd>';
+            break;
+        }
+
+        menus.push('<li><a class="nav-link" data-toggle="tab" href="#tab-6">Loan Information</a></li>');
+        views.push('' + '<div role="tabpanel" id="tab-6" class="tab-pane">' + '<div class="panel-body">' + '<h2 class="text-success"><strong>Loan Details</strong></h2>' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>Purpose of Loan</dt>' + '<dd>' + '<ul class="list-inline-item">' + loanPurpose + '</ul>' + '</dd>' + '</dl>' + '</div>' + '</div>' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>Place of use</dt>' + '<dd>' + '<ul class="list-inline-item">' + placeUse + '</ul>' + '</dd>' + '</dl>' + '</div>' + '<div class="col">' + '<dl>' + '<dt>Collateral</dt>' + '<dd>' + collateral + '</dd>' + '</dl>' + '</div>' + '</div>' + '<h2 class="text-success"><strong>Credit / Financial Information</strong></h2>' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>Bank Accounts</dt>' + '<dd>' + '<table class="table table-borderless">' + '<thead>' + '<tr>' + '<th><small>Account Type</small></th>' + '<th><small>Account No.</small></th>' + '</tr>' + '</thead>' + '<tbody>' + bankAccount + '</tbody>' + '</table>' + '</dd>' + '</dl>' + '</div>' + '<div class="col">' + '<dl>' + '<dt>Credit References</dt>' + '<dd>' + '<table class="table table-borderless">' + '<thead>' + '<tr>' + '<th><small>Bank / Financing</small></th>' + '<th><small>Monthly Amortization</small></th>' + '</tr>' + '</thead>' + '<tbody>' + creditRef + '</tbody>' + '</table>' + '</dd>' + '</dl>' + '</div>' + '</div>' + '<h2 class="text-success"><strong>Trade and other Reference</strong></h2>' + '<div class="row">' + '<div class="col">' + '<table class="table table-borderless">' + '<thead>' + '<tr>' + '<th><small>Customer name / Co maker</small></th>' + '<th><small>Address</small></th>' + '<th><small>Contact No.</small></th>' + '</tr>' + '</thead>' + '<tbody>' + tradeRef + '</tbody>' + '</table>' + '</div>' + '</div>' + '<h2 class="text-success"><strong>Reference ID\'s / Documents</strong></h2>' + '<div class="row">' + refAttachment + '</div>' + '</div>' + '</div>' + '');
+      }
+    }
+
+    menus = menus.join('');
+    views = views.join('');
+    content = '' + '<div class="tabs-container" id="loan-app-detail">' + '<ul class="nav nav-tabs" role="tablist">' + '<li><a class="nav-link active" data-toggle="tab" href="#tab-1"> Profile</a></li>' + menus + '</ul>' + '<div class="tab-content">' + '<div role="tabpanel" id="tab-1" class="tab-pane active">' + '<div class="panel-body">' + '<h2 class="text-success"><strong>Personal Information</strong></h2>' + '<div class="row">' + '<div class="col-3">' + '<img src="' + profile.image + '" alt="profile-picture" class="img-fluid">' + '</div>' + '<div class="col">' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>First name</dt>' + '<dd>' + profile.first_name + '</dd>' + '</dl>' + '<dl>' + '<dt>Middle name</dt>' + '<dd>' + profile.middle_name + '</dd>' + '</dl>' + '<dl>' + '<dt>Last name</dt>' + '<dd>' + profile.last_name + '</dd>' + '</dl>' + '</div>' + '<div class="col">' + '<dl>' + '<dt>Date of Birth</dt>' + '<dd>' + profile.bday + '</dd>' + '</dl>' + '<dl>' + '<dt>Age</dt>' + '<dd>' + getAge(profile.dob) + '</dd>' + '</dl>' + '</div>' + '</div>' + '</div>' + '<div class="col">' + '<div class="row">' + '<div class="col ">' + '<dl>' + '<dt>Civil Status</dt>' + '<dd>' + profile.civil_status + '</dd>' + '</dl>' + '</div>' + '<div class="col">' + '<dl>' + '<dt>Gender</dt>' + '<dd>' + profile.gender + '</dd>' + '</dl>' + '</div>' + '</div>' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>Land Line</dt>' + '<dd>' + profile.landline + '</dd>' + '</dl>' + '</div>' + '<div class="col">' + '<dl>' + '<dt>Mobile</dt>' + '<dd>' + profile.mobile + '</dd>' + '</dl>' + '</div>' + '</div>' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>Tin No.</dt>' + '<dd>' + profile.tin + '</dd>' + '</dl>' + '</div>' + '<div class="col">' + '<dl>' + '<dt>SSS / GSIS No.</dt>' + '<dd>' + profile.sss_gsis + '</dd>' + '</dl>' + '</div>' + '</div>' + '<div class="row">' + '<div class="col">' + '<dl>' + '<dt>Education</dt>' + '<dd>' + profile.education + '</dd>' + '</dl>' + '</div>' + '</div>' + '</div>' + '</div>' + viewSecondary + '</div>' + '</div>' + views + '</div>' + '</div>' + '';
+    return content;
+  };
 });
 
 /***/ }),
@@ -79765,9 +79948,9 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Files\jhazFiles\Work\MamsLTG\Projects\agrabah\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\Files\jhazFiles\Work\MamsLTG\Projects\agrabah\resources\js\script.js */"./resources/js/script.js");
-module.exports = __webpack_require__(/*! D:\Files\jhazFiles\Work\MamsLTG\Projects\agrabah\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Files\jhazFiles\Work\MamsLTG\Projects\logistics\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\Files\jhazFiles\Work\MamsLTG\Projects\logistics\resources\js\script.js */"./resources/js/script.js");
+module.exports = __webpack_require__(/*! D:\Files\jhazFiles\Work\MamsLTG\Projects\logistics\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

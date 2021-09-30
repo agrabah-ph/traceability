@@ -185,8 +185,6 @@ class TraceController extends Controller
             $modelInfo->value_4 = $data[8];
             $trace->info()->save($modelInfo);
 
-            emailNotification('trace-created', $trace->id);
-
             foreach($data[11] as $id){
                 $inventory = Inventory::find($id);
                 $inventory->status = 'Loaded';
@@ -194,6 +192,8 @@ class TraceController extends Controller
                 $inventory->save();
             }
 
+
+            emailNotification('trace-created', $trace->id);
             $url = route('trace.show', array('trace'=>$trace));
             return response()->json($url);
         }
