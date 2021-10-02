@@ -81,7 +81,7 @@
 
                         <button type="submit" class="btn-submit">Login</button>
 
-                        {{--<a href="" class="link d-flex justify-content-center">Forgot password?</a>--}}
+                        <a href="{{route('password.request')}}" class="link d-flex justify-content-center">Forgot password?</a>
 
                         <div class="register-text text-center">Not registered yet? <a href="/registration">Sign up</a> now!</div>
                     </form>
