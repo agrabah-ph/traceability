@@ -79,7 +79,6 @@ Route::middleware(['auth', 'verified', 'has_profile'])->group(function () {
     Route::get('loan/proof/{id}/{filename}', 'LoanController@proofPhoto')->name('loan-proof');
     Route::get('loan/applicants', 'LoanProviderController@loanApplicant')->name('loan-applicant');
 
-
 });
 // GLOBAL ROUTES END
 
@@ -129,10 +128,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('trace-qr-print/{reference}', 'Trace\TraceController@traceQrPrint')->name('trace-qr-print');
     // Route::get('trace-shipped/{reference}', 'TraceController@traceShipped')->name('trace-shipped');
     // FARMER START
-
-
-
-
 
 });
 
