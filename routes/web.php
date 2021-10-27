@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Artisan;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/php_info', function () {
+    phpinfo();
+});
 
 Route::get('/registration', 'Controller@registration');
 
