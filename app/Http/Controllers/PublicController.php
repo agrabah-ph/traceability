@@ -316,4 +316,9 @@ class PublicController extends Controller
 //        smsNotification('loan-due', 1);
         return $loans;
     }
+
+    public function scan()
+    {
+        return view('trace.scan');
+    }
 }

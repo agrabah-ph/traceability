@@ -99,6 +99,8 @@ Route::get('trace-tracking/{code}', 'PublicController@traceTracking')->name('tra
 Route::get('trace-update-status', 'PublicController@traceUpdate')->name('trace-update-status');
 Route::get('trace-info/{code}', 'PublicController@traceInfo')->name('trace-info');
 
+Route::get('scan', 'PublicController@scan')->name('scan');
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('bfar/trace', 'BfarController@traceIndex')->name('trace-bfar');

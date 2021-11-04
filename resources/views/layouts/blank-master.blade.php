@@ -102,7 +102,7 @@
                 <strong></strong>
             </div>
             <div>
-                <strong>Copyright</strong> {{ subdomain_title('ucwords') }}
+                <strong>Copyright</strong>
                 <strong></strong>
             </div>
         </div>
