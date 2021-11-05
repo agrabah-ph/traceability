@@ -26,7 +26,20 @@
     <div id="app" class="wrapper wrapper-content">
 
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Blank <small>page</small></h5>
+                    </div>
+                    <div class="ibox-content">
+
+                        <input type="file" accept="image/*" capture>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Blank <small>page</small></h5>
