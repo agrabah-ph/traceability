@@ -28,7 +28,7 @@
         "datatables.net-buttons-bs4": "^1.7.1",
         "html5-qrcode": "^2.0.10",
         "instascan": "^1.0.0",
-        "vue-qrcode-reader": "^3.0.3",
+        "vue-qrcode-reader": "^3.0.6",
         "vue-server-renderer": "^2.6.14"
     }
 }

@@ -19,13 +19,16 @@
 
         <div class="farmer-login mt-5">
                 <form action="{!! route('farmer-login-form') !!}" method="post" id="form"> @csrf
+                    <div class="form-group">
+                        <i class="fa fa-qrcode text-success" id="scan-qr" style="font-size: 44px"></i>
+                    </div>
                     <div class="form-group mb-5">
     {{--                    <input type="text" name="farmer-id" class="form-control text-center">--}}
                         <div class="error-bag"></div>
                         @if($errors->has('farmer'))
                             <span class="text-danger">{{$errors->first('farmer')}}</span>
                         @endif
-                        {{Form::text('farmer',null, array('class'=>'form-control numonly', 'autofocus'))}}
+                        {{Form::text('farmer',null, array('class'=>'form-control numonly', 'id'=>'farmer-id-input', 'autofocus'))}}
                         <label><strong class="text-uppercase">Farmer ID</strong></label>
                     </div>
 
@@ -38,6 +41,24 @@
 
         </div>
     </section>
+
+    <div class="modal inmodal fade" id="modal" data-type="" tabindex="-1" role="dialog" aria-hidden="true" data-category="" data-variant="" data-bal="">
+        <div id="modal-size">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 15px;">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <qr-scanner></qr-scanner>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="modal-save-btn">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 @endsection
@@ -53,6 +74,25 @@
 {{--        {!! Html::script('/js/html5-qrcode.min.js') !!}--}}
     <script>
         $(document).ready(function(){
+            var modal = $('#modal');
+
+            $(document).on('click', '#scan-qr', function(){
+                modal.data('type', 'qr-scan');
+                // modal.data('id', id);
+                modal.data('variant', 'farmer-inventory');
+                modal.find('.modal-title').text('Scan QR Code');
+                modal.find('#modal-size').removeClass().addClass('modal-dialog modal-sm');
+                // modal.find('.modal-body').empty().append('' +
+                //     '<qr-scanner></qr-scanner>' +
+                // '');
+
+                modal.modal({backdrop: 'static', keyboard: false});
+            });
+
+            $(document).on('click', '#modal-save-btn', function(){
+                $('#farmer-id-input').val($('#scan-result').text());
+                modal.modal('toggle');
+            });
 
             $('.form-control').keydown(function(event){
                 if(event.keyCode === 13) {
@@ -92,17 +132,6 @@
                 return result;
             }
 
-            // function onScanSuccess(qrCodeMessage) {
-            //     console.log(qrCodeMessage);
-            //     var farmerBarCode = document.getElementById('FarmerBarcode');
-            //     farmerBarCode.value = qrCodeMessage;
-            //
-            //     document.getElementById('Button6').click();
-            //
-            // }
-            // var html5QrcodeScanner = new Html5QrcodeScanner(
-            //     "qr-reader", { fps: 10, qrbox: 250 });
-            // html5QrcodeScanner.render(onScanSuccess);
         });
     </script>
 @endsection

@@ -33,7 +33,7 @@
                     </div>
                     <div class="ibox-content">
 
-                        <input type="file" accept="image/*" capture>
+                        <div id="qr-reader" style="width:500px"></div>
 
                     </div>
                 </div>
@@ -46,19 +46,9 @@
                     </div>
                     <div class="ibox-content">
 
-                        <div id="qr-reader" style="width:500px"></div>
-                        <div id="qr-reader-results"></div>
+                        <h2>Result: <strong id="qr-reader-results"></strong></h2>
 
-{{--                        <video id="preview"></video>--}}
-
-{{--                        <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">--}}
-{{--                            <label class="btn btn-primary active">--}}
-{{--                                <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera--}}
-{{--                            </label>--}}
-{{--                            <label class="btn btn-secondary">--}}
-{{--                                <input type="radio" name="options" value="2" autocomplete="off"> Back Camera--}}
-{{--                            </label>--}}
-{{--                        </div>--}}
+{{--                        <div id="qr-reader-results"></div>--}}
 
                     </div>
                 </div>
@@ -72,121 +62,31 @@
 
 
 @section('styles')
-    <style>
-        /*#preview{*/
-        /*    width:500px;*/
-        /*    height: 500px;*/
-        /*    margin:0px auto;*/
-        /*}*/
-
-    </style>
     {{--{!! Html::style('') !!}--}}
-    {{--    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">--}}
-    {{--    {!! Html::style('/css/template/plugins/sweetalert/sweetalert.css') !!}--}}
+
 @endsection
 
 @section('scripts')
     {{--    {!! Html::script('') !!}--}}
     {!! Html::script('/js/html5-qrcode.min.js') !!}
-    {{--    {!! Html::script(asset('vendor/datatables/buttons.server-side.js')) !!}--}}
-    {{--    {!! $dataTable->scripts() !!}--}}
-    {{--    {!! Html::script('/js/template/plugins/sweetalert/sweetalert.min.js') !!}--}}
-{{--    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>--}}
-    {{--    {!! Html::script('/js/template/moment.js') !!}--}}
+{{--    {!! Html::script('/js/instascan.min.js') !!}--}}
     <script>
 
-        function docReady(fn) {
-            // see if DOM is already available
-            if (document.readyState === "complete"
-                || document.readyState === "interactive") {
-                // call on next available tick
-                setTimeout(fn, 1);
-            } else {
-                document.addEventListener("DOMContentLoaded", fn);
+        var resultContainer = document.getElementById('qr-reader-results');
+        var lastResult, countResults = 0;
+
+        function onScanSuccess(decodedText, decodedResult) {
+            if (decodedText !== lastResult) {
+                ++countResults;
+                lastResult = decodedText;
+                // Handle on success condition with the decoded message.
+                console.log(`Scan result ${decodedText}`, decodedResult);
             }
         }
 
-        docReady(function () {
-            var resultContainer = document.getElementById('qr-reader-results');
-            var lastResult, countResults = 0;
-            function onScanSuccess(decodedText, decodedResult) {
-                if (decodedText !== lastResult) {
-                    ++countResults;
-                    lastResult = decodedText;
-                    // Handle on success condition with the decoded message.
-                    console.log(`Scan result ${decodedText}`, decodedResult);
-                }
-            }
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess);
 
-            var html5QrcodeScanner = new Html5QrcodeScanner(
-                "qr-reader", { fps: 10, qrbox: 250 });
-            html5QrcodeScanner.render(onScanSuccess);
-        });
-
-
-        // var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
-        // scanner.addListener('scan',function(content){
-        //     alert(content);
-        //     //window.location.href=content;
-        // });
-        // Instascan.Camera.getCameras().then(function (cameras){
-        //     if(cameras.length>0){
-        //         scanner.start(cameras[0]);
-        //         $('[name="options"]').on('change',function(){
-        //             if($(this).val()==1){
-        //                 if(cameras[0]!=""){
-        //                     scanner.start(cameras[0]);
-        //                 }else{
-        //                     alert('No Front camera found!');
-        //                 }
-        //             }else if($(this).val()==2){
-        //                 if(cameras[1]!=""){
-        //                     scanner.start(cameras[1]);
-        //                 }else{
-        //                     alert('No Back camera found!');
-        //                 }
-        //             }
-        //         });
-        //     }else{
-        //         console.error('No cameras found.');
-        //         alert('No cameras found.');
-        //     }
-        // }).catch(function(e){
-        //     console.error(e);
-        //     alert(e);
-        // });
-
-
-        {{--$(document).ready(function(){--}}
-        {{--    --}}{{--var modal = $('#modal');--}}
-        {{--    --}}{{--$(document).on('click', '', function(){--}}
-        {{--    --}}{{--    modal.modal({backdrop: 'static', keyboard: false});--}}
-        {{--    --}}{{--    modal.modal('toggle');--}}
-        {{--    --}}{{--});--}}
-
-        {{--    --}}{{-- var table = $('#table').DataTable({--}}
-        {{--    --}}{{--     processing: true,--}}
-        {{--    --}}{{--     serverSide: true,--}}
-        {{--    --}}{{--     ajax: {--}}
-        {{--    --}}{{--         url: '{!! route('') !!}',--}}
-        {{--    --}}{{--         data: function (d) {--}}
-        {{--    --}}{{--             d.branch_id = '';--}}
-        {{--    --}}{{--         }--}}
-        {{--    --}}{{--     },--}}
-        {{--    --}}{{--     columnDefs: [--}}
-        {{--    --}}{{--         { className: "text-right", "targets": [ 0 ] }--}}
-        {{--    --}}{{--     ],--}}
-        {{--    --}}{{--     columns: [--}}
-        {{--    --}}{{--         { data: 'name', name: 'name' },--}}
-        {{--    --}}{{--         { data: 'action', name: 'action' }--}}
-        {{--    --}}{{--     ]--}}
-        {{--    --}}{{-- });--}}
-
-        {{--    --}}{{--table.ajax.reload();--}}
-
-
-
-
-        {{--});--}}
     </script>
 @endsection
