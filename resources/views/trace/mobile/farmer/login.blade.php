@@ -84,13 +84,16 @@
                     ++countResults;
                     lastResult = decodedText;
                     // Handle on success condition with the decoded message.
-                    console.log(`Scan result ${decodedText}`, decodedResult);
-                    resultContainer.text(decodedText);
+                    // console.log(`Scan result ${decodedText}`, decodedResult);
+                    // resultContainer.text(decodedText);
+
+                    $('#farmer-id-input').val(decodedText);
+                    modal.modal('toggle');
                 }
             }
 
             var html5QrcodeScanner = new Html5QrcodeScanner(
-                "qr-reader", { fps: 10, qrbox: 250 }
+                "qr-reader", { fps: 10, qrbox: 100 }
             );
 
             $(document).on('click', '#scan-qr', function(){
@@ -108,10 +111,10 @@
                 modal.modal({backdrop: 'static', keyboard: false});
             });
 
-            $(document).on('shown.bs.modal', function (event) {
+            $(document).on('show.bs.modal', function (event) {
                 switch (modal.data('type')) {
                     case 'qr-scan':
-                        modal.find('.modal-header').hide();
+                        modal.find('.modal-title').hide();
                         modal.find('.modal-footer').hide();
                         html5QrcodeScanner.render(onScanSuccess);
                         break;
@@ -121,7 +124,7 @@
             $(document).on('hidden.bs.modal', function (event) {
                 switch (modal.data('type')) {
                     case 'qr-scan':
-                        modal.find('.modal-header').show();
+                        modal.find('.modal-title').show();
                         modal.find('.modal-footer').show();
                         break;
                 }
@@ -163,6 +166,7 @@
                         }
                     }else{
                         error += 1;
+                        $('#farmer-id-input').val('');
                         errorMge = 'Farmer not exists!';
                     }
                 });
