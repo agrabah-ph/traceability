@@ -1985,6 +1985,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
+    showModal: function showModal() {
+      var element = this.$refs.modal.$el;
+      $(element).modal('toggle');
+    },
     onDecode: function onDecode(result) {
       this.result = result;
     },
@@ -81590,9 +81594,9 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Files\jhazFiles\Work\MamsLTG\Projects\logistics\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\Files\jhazFiles\Work\MamsLTG\Projects\logistics\resources\js\script.js */"./resources/js/script.js");
-module.exports = __webpack_require__(/*! D:\Files\jhazFiles\Work\MamsLTG\Projects\logistics\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Files\Documents\Projects\logistics\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\Files\Documents\Projects\logistics\resources\js\script.js */"./resources/js/script.js");
+module.exports = __webpack_require__(/*! D:\Files\Documents\Projects\logistics\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

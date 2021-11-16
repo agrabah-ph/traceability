@@ -57,14 +57,17 @@
                                 <h5>Dispatch <small>info</small></h5>
                             </div>
                             <div class="panel-body">
+
                                 <div class="mb-2">
                                     <h3 class="mb-0">{{ $trace->dispatch->value_0 }}</h3>
                                     <small class="text-success">Driver Name</small>
                                 </div>
+
                                 <div class="mb-2">
                                     <h3 class="mb-0">{{ $trace->dispatch->value_1 }}</h3>
                                     <small class="text-success">Mobile no.</small>
                                 </div>
+
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-2">
@@ -79,12 +82,11 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="mb-2">
                                     <h3 class="mb-0">{{ $trace->dispatch->value_4 }}</h3>
                                     <small class="text-success">Place of Origin</small>
                                 </div>
-
-
 
                             </div>
                         </div>
@@ -105,6 +107,7 @@
 
 {{--                        </div>--}}
 {{--                    </div>--}}
+
                 </div>
 
                 <div class="row">

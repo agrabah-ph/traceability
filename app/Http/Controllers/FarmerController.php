@@ -73,7 +73,7 @@ class FarmerController extends Controller
             $farmer->save();
             QrCode::size(500)
                 ->format('png')
-                ->generate($farmer->url, public_path('images/farmer/'.$farmer->account_id.'.png'));
+                ->generate($farmer->account_id, public_path('images/farmer/'.$farmer->account_id.'.png'));
             $profile = new Profile();
             $profile->first_name = $request->input('first_name');
             $profile->middle_name = $request->input('middle_name');

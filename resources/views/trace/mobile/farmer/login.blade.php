@@ -42,7 +42,7 @@
         </div>
     </section>
 
-    <div class="modal inmodal fade" id="modal" data-type="" tabindex="-1" role="dialog" aria-hidden="true" data-category="" data-variant="" data-bal="">
+    <div class="modal inmodal fade" id="modal" ref="modal" data-type="" tabindex="-1" role="dialog" aria-hidden="true" data-category="" data-variant="" data-bal="">
         <div id="modal-size">
             <div class="modal-content">
                 <div class="modal-header" style="padding: 15px;">
@@ -50,7 +50,8 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body">
-                    <qr-scanner></qr-scanner>
+                    <div id="qr-reader" style="width:300px"></div>
+                    <div id="qr-reader-results"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
@@ -71,22 +72,59 @@
 {{--        {!! Html::script('https://unpkg.com/vue-qrcode-reader@3.0.3/dist/VueQrcodeReader.umd.min.js') !!}--}}
 
 {{--        <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>--}}
-{{--        {!! Html::script('/js/html5-qrcode.min.js') !!}--}}
+        {!! Html::script('/js/html5-qrcode.min.js') !!}
     <script>
         $(document).ready(function(){
             var modal = $('#modal');
+            var resultContainer = $('#qr-reader-results');
+            var lastResult, countResults = 0;
+
+            function onScanSuccess(decodedText, decodedResult) {
+                if (decodedText !== lastResult) {
+                    ++countResults;
+                    lastResult = decodedText;
+                    // Handle on success condition with the decoded message.
+                    console.log(`Scan result ${decodedText}`, decodedResult);
+                    resultContainer.text(decodedText);
+                }
+            }
+
+            var html5QrcodeScanner = new Html5QrcodeScanner(
+                "qr-reader", { fps: 10, qrbox: 250 }
+            );
 
             $(document).on('click', '#scan-qr', function(){
+                console.log('modal click');
                 modal.data('type', 'qr-scan');
                 // modal.data('id', id);
                 modal.data('variant', 'farmer-inventory');
                 modal.find('.modal-title').text('Scan QR Code');
                 modal.find('#modal-size').removeClass().addClass('modal-dialog modal-sm');
                 // modal.find('.modal-body').empty().append('' +
-                //     '<qr-scanner></qr-scanner>' +
+                //     '<div id="qr-reader" style="width:300px"></div>' +
+                //     '<div id="qr-reader-results"></div>' +
                 // '');
 
                 modal.modal({backdrop: 'static', keyboard: false});
+            });
+
+            $(document).on('shown.bs.modal', function (event) {
+                switch (modal.data('type')) {
+                    case 'qr-scan':
+                        modal.find('.modal-header').hide();
+                        modal.find('.modal-footer').hide();
+                        html5QrcodeScanner.render(onScanSuccess);
+                        break;
+                }
+            });
+
+            $(document).on('hidden.bs.modal', function (event) {
+                switch (modal.data('type')) {
+                    case 'qr-scan':
+                        modal.find('.modal-header').show();
+                        modal.find('.modal-footer').show();
+                        break;
+                }
             });
 
             $(document).on('click', '#modal-save-btn', function(){

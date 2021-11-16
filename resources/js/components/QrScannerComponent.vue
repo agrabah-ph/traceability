@@ -23,6 +23,10 @@
         },
 
         methods: {
+            showModal() {
+                let element = this.$refs.modal.$el
+                $(element).modal('toggle')
+            },
             onDecode (result) {
                 this.result = result
             },
