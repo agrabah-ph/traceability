@@ -20,7 +20,7 @@
         <div class="farmer-login mt-5">
                 <form action="{!! route('farmer-login-form') !!}" method="post" id="form"> @csrf
                     <div class="form-group">
-                        <i class="fa fa-qrcode text-success" id="scan-qr" style="font-size: 44px"></i>
+                        <i class="fa fa-qrcode text-success" id="scan-qr" style="font-size: 44px; cursor: pointer;"></i>
                     </div>
                     <div class="form-group mb-5">
     {{--                    <input type="text" name="farmer-id" class="form-control text-center">--}}
@@ -50,8 +50,9 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body">
-                    <div id="qr-reader" style="width:300px"></div>
+                    <div id="qr-reader"></div>
                     <div id="qr-reader-results"></div>
+                    <div id="qr-reader-result"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
@@ -76,8 +77,11 @@
     <script>
         $(document).ready(function(){
             var modal = $('#modal');
-            var resultContainer = $('#qr-reader-results');
+            var resultContainer = $('#farmer-id-input');
             var lastResult, countResults = 0;
+            let html5QrcodeScanner = new Html5QrcodeScanner(
+                "qr-reader", { fps: 10, qrbox: 300 }
+            );
 
             function onScanSuccess(decodedText, decodedResult) {
                 if (decodedText !== lastResult) {
@@ -85,13 +89,10 @@
                     lastResult = decodedText;
                     // Handle on success condition with the decoded message.
                     console.log(`Scan result ${decodedText}`, decodedResult);
-                    resultContainer.text(decodedText);
+                    resultContainer.val(decodedText);
+                    modal.modal('toggle');
                 }
             }
-
-            var html5QrcodeScanner = new Html5QrcodeScanner(
-                "qr-reader", { fps: 10, qrbox: 250 }
-            );
 
             $(document).on('click', '#scan-qr', function(){
                 console.log('modal click');
@@ -111,9 +112,31 @@
             $(document).on('shown.bs.modal', function (event) {
                 switch (modal.data('type')) {
                     case 'qr-scan':
-                        modal.find('.modal-header').hide();
+                        // modal.find('.modal-header').hide();
+                        var camWidth = parseInt(modal.find('.modal-body').width()) - 30;
+                        html5QrcodeScanner = new Html5QrcodeScanner(
+                            "qr-reader", { fps: 10, qrbox: camWidth }
+                        );
+
+
+                        modal.find('.modal-title').hide();
                         modal.find('.modal-footer').hide();
+                        modal.find('.modal-body').empty().append('' +
+                            '<div id="qr-reader" style="width:'+ parseInt(modal.find('.modal-body').width()) +'px"></div>' +
+                            '<div id="qr-reader-results"></div>' +
+                            '<div id="qr-reader-result"></div>' +
+                        '');
+
                         html5QrcodeScanner.render(onScanSuccess);
+                        $('#qr-reader-results').text(camWidth);
+                        $('#qr-reader-result').text(parseInt(modal.width()));
+                        break;
+                }
+            });
+
+            $(document).on('show.bs.modal', function (event) {
+                switch (modal.data('type')) {
+                    case 'qr-scan':
                         break;
                 }
             });
@@ -121,8 +144,24 @@
             $(document).on('hidden.bs.modal', function (event) {
                 switch (modal.data('type')) {
                     case 'qr-scan':
-                        modal.find('.modal-header').show();
+                        // modal.find('.modal-header').show();
+                        modal.find('.modal-title').show();
                         modal.find('.modal-footer').show();
+                        // modal.find('.modal-body').empty();
+                        html5QrcodeScanner.html5Qrcode.stop();
+                        // html5QrCode.stop();
+
+                        // modal.find('.modal-body').find('.qr-reader__dashboard_section_csr').find('button').trigger('click');
+                        break;
+                }
+            });
+
+            $(document).on('hide.bs.modal', function (event) {
+                switch (modal.data('type')) {
+                    case 'qr-scan':
+                        modal.find('.modal-body').empty();
+                        // modal.find('.modal-header').show();
+                        // modal.find('.modal-body').find('.qr-reader__dashboard_section_csr').find('button').trigger('click');
                         break;
                 }
             });

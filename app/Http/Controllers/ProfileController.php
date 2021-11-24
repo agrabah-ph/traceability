@@ -103,7 +103,7 @@ class ProfileController extends Controller
         $userType->save();
         QrCode::size(500)
             ->format('png')
-            ->generate($userType->url, public_path('images/'.$type.'/'.$userType->account_id.'.png'));
+            ->generate($userType->account_id, public_path('images/'.$type.'/'.$userType->account_id.'.png'));
 
         $profile = new Profile();
         $profile->first_name = $inputs[0][1][2];
