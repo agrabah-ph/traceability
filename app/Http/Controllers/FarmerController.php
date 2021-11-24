@@ -71,6 +71,7 @@ class FarmerController extends Controller
         if($farmer->save()){
             $farmer->url = route('farmer.show', array('farmer'=>$farmer));
             $farmer->save();
+
             QrCode::size(500)
                 ->format('png')
                 ->generate($farmer->account_id, public_path('images/farmer/'.$farmer->account_id.'.png'));
