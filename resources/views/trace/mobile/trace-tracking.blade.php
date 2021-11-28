@@ -73,7 +73,7 @@
                                                                 <td>{{ $data->quality }}; {{ $data->quantity }} {{ $data->unit }}</td>
                                                                 <td class="text-right">{{ $data->status }}</td>
                                                                 <td class="text-right">
-                                                                    @if($data->receiver_remark == null)
+                                                                    @if( ($data->status == 'Delivered') && ($data->receiver_remark == null) )
                                                                         <textarea name="" class="form-control no-resize"></textarea>
                                                                         <button type="button" class="btn btn-success btn-block btn-action" data-action="submit-remark" data-id="{{ $data->id }}">Submit Remark</button>
                                                                     @else
