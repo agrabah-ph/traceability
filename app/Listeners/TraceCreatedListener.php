@@ -18,7 +18,7 @@ class TraceCreatedListener implements ShouldQueue
      */
     public function handle($event)
     {
-        dd($event);
+//        dd($event);
 //        Mail::to($event->details['email'])->send(new TraceShipped($event->details));
 
         $trace = Trace::find($event->trace->id);

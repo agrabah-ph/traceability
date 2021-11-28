@@ -34,7 +34,7 @@ if (!function_exists('emailNotification')) {
                     'code' => ''
                 ];
                 Mail::to($data->receiver->value_1)->send(new TraceShipped($details));
-                Mail::to(emailAddress('bfar', null))->send(new TraceShipped($details2));
+//                Mail::to(emailAddress('bfar', null))->send(new TraceShipped($details2));
                 break;
             case 'trace-status-update':
                 $data = Trace::find($id);
@@ -45,7 +45,7 @@ if (!function_exists('emailNotification')) {
                     'code' => ''
                 ];
 
-                Mail::to(emailAddress('bfar', null))->send(new TraceShipped($details));
+//                Mail::to(emailAddress('bfar', null))->send(new TraceShipped($details));
                 break;
         }
     }

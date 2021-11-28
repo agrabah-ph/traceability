@@ -321,4 +321,13 @@ class PublicController extends Controller
     {
         return view('trace.scan');
     }
+
+    public function submitRemark(Request $request)
+    {
+        $data = Inventory::find($request->input('id'));
+        $data->receiver_remark = $request->input('remark');
+        $data->save();
+
+        return $data;
+    }
 }

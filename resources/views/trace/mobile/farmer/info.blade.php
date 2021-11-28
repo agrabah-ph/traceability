@@ -24,26 +24,26 @@
 
         <div class="row">
 
-{{--            <div class="col-sm-3">--}}
-{{--                <div class="ibox float-e-margins">--}}
-{{--                    <div class="ibox-title">--}}
-{{--                        <h5>Farmer <small>Info</small></h5>--}}
-{{--                    </div>--}}
-{{--                    <div class="ibox-content">--}}
-{{--                        <div class="mb-2">--}}
-{{--                            <h3 class="mb-0">{!! $data->account_id !!}</h3>--}}
-{{--                            <small class="text-success">Account ID</small>--}}
-{{--                        </div>--}}
-{{--                        <div class="mb-2">--}}
-{{--                            <h3 class="mb-0">{!! $data->profile->first_name !!} {!! $data->profile->last_name !!}</h3>--}}
-{{--                            <small class="text-success">Name</small>--}}
-{{--                        </div>--}}
-{{--                        --}}{{--                        <div class="mb-2">--}}
-{{--                        --}}{{--                            <button class="btn btn-block btn-success btn-xl btn-action">Add Item</button>--}}
-{{--                        --}}{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            {{--            <div class="col-sm-3">--}}
+            {{--                <div class="ibox float-e-margins">--}}
+            {{--                    <div class="ibox-title">--}}
+            {{--                        <h5>Farmer <small>Info</small></h5>--}}
+            {{--                    </div>--}}
+            {{--                    <div class="ibox-content">--}}
+            {{--                        <div class="mb-2">--}}
+            {{--                            <h3 class="mb-0">{!! $data->account_id !!}</h3>--}}
+            {{--                            <small class="text-success">Account ID</small>--}}
+            {{--                        </div>--}}
+            {{--                        <div class="mb-2">--}}
+            {{--                            <h3 class="mb-0">{!! $data->profile->first_name !!} {!! $data->profile->last_name !!}</h3>--}}
+            {{--                            <small class="text-success">Name</small>--}}
+            {{--                        </div>--}}
+            {{--                        --}}{{--                        <div class="mb-2">--}}
+            {{--                        --}}{{--                            <button class="btn btn-block btn-success btn-xl btn-action">Add Item</button>--}}
+            {{--                        --}}{{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
 
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
@@ -96,7 +96,6 @@
             </div>
 
         </div>
-
 
     </section>
 
@@ -151,50 +150,57 @@
                         modal.find('#modal-size').removeClass().addClass('modal-dialog modal-sm');
                         modal.find('.modal-body').empty().append('' +
                             '<div class="form-group">' +
-                                '<label>Products <small class="text-danger">*</small></label>' +
-                                '<select name="product" class="select2 form-control">' +
-                                    '<option value=""></option>' +
-                                    lists.join('') +
-                                '</select>' +
+                            '<label>Products <small class="text-danger">*</small></label>' +
+                            '<select name="product" class="select2 form-control">' +
+                            '<option value=""></option>' +
+                            lists.join('') +
+                            '</select>' +
                             '</div>' +
                             '<div class="row">' +
-                                '<div class="col">' +
-                                    '<div class="form-group">' +
-                                        '<label>Quality <small class="text-danger">*</small></label>' +
-                                        '<select name="quality" class="form-control">' +
-                                            '<option value="">select</option>' +
-                                            '<option value="High">High</option>' +
-                                            '<option value="Medium">Medium</option>' +
-                                            '<option value="Low">Low</option>' +
-                                        '</select>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="col">' +
-                                    '<div class="form-group">' +
-                                        '<label>Unit <small class="text-danger">*</small></label>' +
-                                        '<select name="unit" class="form-control"></select>' +
-                                    '</div>' +
-                                '</div>' +
+                            '<div class="col">' +
+                            '<div class="form-group">' +
+                            '<label>Quality <small class="text-danger">*</small></label>' +
+                            '<select name="quality" class="form-control">' +
+                            '<option value="">select</option>' +
+                            '<option value="High">High</option>' +
+                            '<option value="Medium">Medium</option>' +
+                            '<option value="Low">Low</option>' +
+                            '</select>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="col">' +
+                            '<div class="form-group">' +
+                            '<label>Unit <small class="text-danger">*</small></label>' +
+                            '<select name="unit" class="form-control"></select>' +
+                            '</div>' +
+                            '</div>' +
                             '</div>' +
                             '<div class="row">' +
-                                '<div class="col-lg-5 form-group">' +
-                                    '<label>Qty <small class="text-danger">*</small></label>' +
-                                    '<input type="number" name="quantity" value="0" class="form-control numonly amount-input text-right">' +
-                                '</div>' +
-                                '<div class="col form-group">' +
-                                    '<label>Unit price <small class="text-danger">*</small></label>' +
-                                    '<input type="text" name="price" value="0" class="form-control numonly amount-input text-right">' +
-                                '</div>' +
+                            '<div class="col">' +
+                            '<div class="form-group">' +
+                            '<label>Qty <small class="text-danger">*</small></label>' +
+                            '<input type="number" name="quantity" value="0" class="form-control numonly amount-input text-right">' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="col">' +
+                            '<div class="form-group">' +
+                            '<label>Unit price <small class="text-danger">*</small></label>' +
+                            '<input type="text" name="price" value="0" class="form-control numonly amount-input text-right">' +
+                            '</div>' +
+                            '</div>' +
                             '</div>' +
                             '<div class="row">' +
-                                '<div class="col form-group">' +
-                                    '<label>Total amount <small class="text-danger">*</small></label>' +
-                                    '<input type="text" name="total" placeholder="0.00" class="form-control text-right" readonly>' +
-                                '</div>' +
+                            '<div class="col form-group">' +
+                            '<label>Total amount <small class="text-danger">*</small></label>' +
+                            '<input type="text" name="total" placeholder="0.00" class="form-control text-right" readonly>' +
+                            '</div>' +
                             '</div>' +
                             '<div class="form-group">' +
-                                '<label>Remark</label>' +
-                                '<textarea name="remark" class="form-control no-resize"></textarea>' +
+                            '<label>Remark</label>' +
+                            '<textarea name="remark" class="form-control no-resize"></textarea>' +
+                            '</div>' +
+                            '<div id="batch-box">' +
+                            '<button type="button" class="btn btn-success btn-block btn-action" data-action="add-batch">Add Batch ID</button>' +
                             '</div>' +
                             '');
 
@@ -224,30 +230,36 @@
                         invDetails.push(modal.find('input[name=price]').val());
                         invDetails.push(modal.find('input[name=total]').val());
                         invDetails.push(modal.find('textarea[name=remark]').val());
+                        if(modal.find('.batch-id')[0]){
+                            invDetails.push(modal.find('.batch-id').val());
+                        }else{
+                            invDetails.push(null);
+                        }
+
 
                         console.log(invDetails);
 
                         $.post('{!! route('inv-listing-store') !!}', {
-                            _token: '{!! csrf_token() !!}',
-                            details: invDetails
-                        }, function(data){
-                            console.log(data);
-                            $('#inv-list').append('' +
-                                '<tr>' +
-                                    '<td>'+ data.product.display_name +'</td>' +
-                                    '<td>'+ data.quality +'</td>' +
-                                    '<td class="text-right">'+ data.quantity +' '+ data.unit +'</td>' +
-                                    '<td class="text-right">' +
-                                        '<div class="btn-group text-right">' +
-                                            '<button class="btn btn-white btn-xs btn-action" data-action="remove-item" data-id="'+ data.id +'"><i class="fa fa-times text-danger"></i></button>' +
-                                        '</div>' +
-                                    '</td>' +
-                                '</tr>' +
-                                '');
-                            modal.modal('toggle');
-                        });
+                                _token: '{!! csrf_token() !!}',
+                                details: invDetails
+                            }, function(data){
+                                console.log(data);
+                                $('#inv-list').append('' +
+                                    '<tr>' +
+                                        '<td>'+ data.product.display_name +'</td>' +
+                                        '<td>'+ data.quality +'</td>' +
+                                        '<td class="text-right">'+ data.quantity +' '+ data.unit +'</td>' +
+                                        '<td class="text-right">' +
+                                            '<div class="btn-group text-right">' +
+                                                '<button class="btn btn-white btn-xs btn-action" data-action="remove-item" data-id="'+ data.id +'"><i class="fa fa-times text-danger"></i></button>' +
+                                            '</div>' +
+                                        '</td>' +
+                                    '</tr>' +
+                                    '');
+                                modal.modal('toggle');
+                            });
 
-                        break;
+                            break;
                     case 'remove-item':
                         var tr = $(this).closest('tr');
                         $.get('{!! route('inv-listing-delete') !!}', {
@@ -258,10 +270,104 @@
                             console.log('deleted');
                         });
                         break;
+                    case 'add-batch':
+
+                        $.get('{!! route('inv-batch-list-get') !!}', function(data){
+                            console.log(data);
+
+                            if(data.length > 0){
+                                var list = new Array();
+                                for(var a = 0; a < data.length; a++){
+                                    list.push('<option value="'+ data[a] +'">'+ data[a] +'</option>');
+                                }
+                                modal.find('#batch-box').empty().append('' +
+                                    '<div class="form-group">' +
+                                    '<label>Batch ID</label>' +
+                                    '<select name="batch-id" class="form-control batch-id">' +
+                                    // '<option value="">select</option>' +
+                                    list +
+                                    '</select>' +
+                                    '</div>' +
+                                    '<button type="button" class="btn btn-warning btn-block btn-action" data-action="new-batch">New Batch ID</button>' +
+                                    '');
+                                showBatchList(data[0]);
+                            }else{
+                                var randomVal = Math.random().toString(36).substr(2, 20);
+                                modal.find('#batch-box').empty().append('' +
+                                    '<div class="form-group">' +
+                                    '<label>Batch ID</label>' +
+                                    '<div class="input-group">' +
+                                    '<input type="text" name="batch-id" value="'+ randomVal +'" class="form-control batch-id" readonly>' +
+                                    '<span class="input-group-append">' +
+                                    '<button type="button" class="btn btn-white btn-action" data-action="refresh-batch-id"><i class="fa fa-refresh text-success"></i></button>' +
+                                    '</span>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '');
+                            }
+                        });
+
+                        // modal.find('#batch-box').empty().append();
+                        break;
+                    case 'refresh-batch-id':
+                        var reRandomVal = Math.random().toString(36).substr(2, 20);
+                        modal.find('#batch-box').find('input[name=batch-id]').val(reRandomVal);
+                        break;
+                    case 'new-batch':
+                        var randomVal = Math.random().toString(36).substr(2, 20);
+                        modal.find('#batch-box').empty().append('' +
+                            '<div class="form-group">' +
+                            '<label>Batch ID</label>' +
+                            '<div class="input-group">' +
+                            '<input type="text" name="batch-id" value="'+ randomVal +'" class="form-control batch-id" readonly>' +
+                            '<span class="input-group-append">' +
+                            '<button type="button" class="btn btn-white btn-action" data-action="refresh-batch-id"><i class="fa fa-refresh text-success"></i></button>' +
+                            '</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '');
+                        break;
                 }
 
                 // modal.modal('toggle');
             });
+
+            function showBatchList(value){
+                var lists = new Array();
+                jQuery.ajaxSetup({async:false});
+                $.get('{!! route('inv-batch-list') !!}', {
+                    id: value
+                }, function(data){
+                    console.log(data);
+                    if(data.length > 0){
+                        for(var a = 0; a < data.length; a++){
+                            lists.push('' +
+                                '<tr>' +
+                                '<td>'+ data[a].product.display_name +'</td>' +
+                                '<td>'+ data[a].quality +'</td>' +
+                                '<td class="text-right">'+ data[a].quantity +' '+ data[a].unit +'</td>' +
+                                '</tr>' +
+                                '');
+                        }
+                    }
+                });
+                modal.find('#batch-box').append('' +
+                    '<div class="table-responsive">' +
+                    '<table class="table table-striped">' +
+                    '<thead>' +
+                    '<tr>' +
+                    '<th>Product</th>' +
+                    '<th>Quality</th>' +
+                    '<th class="text-right" style="width: 100px;">Qty</th>' +
+                    '</tr>' +
+                    '</thead>' +
+                    '<tbody>' +
+                    lists.join('') +
+                    '</tbody>' +
+                    '</table>' +
+                    '</div>' +
+                    '');
+            }
 
             $(document).on('change', 'select[name=product]', function(){
                 console.log('change');
@@ -277,6 +383,11 @@
                     }
                 });
                 modal.find('select[name=unit]').empty().append(lists);
+            });
+
+            $(document).on('change', 'select[name=batch-id]', function(){
+                modal.find('#batch-box').children().last().remove();
+                showBatchList($(this).val());
             });
 
             $(document).on('keyup change', '.amount-input', function(){

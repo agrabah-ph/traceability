@@ -127,6 +127,8 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
+                                    <th>Product ID</th>
+                                    <th>Batch ID</th>
                                     <th>Product</th>
                                     <th>Detail</th>
                                     <th class="text-right">Farmer</th>
@@ -147,7 +149,7 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <td class="text-right" colspan="4">
+                                    <td class="text-right" colspan="6">
                                         <button type="button" class="btn btn-success btn-action" data-action="add-item">Add</button>
                                     </td>
                                 </tr>
@@ -270,6 +272,8 @@
                                 for(var a = 0; a < data.length; a++){
                                     products.push('' +
                                         '<tr data-id="'+ data[a].id +'">' +
+                                            '<td>'+ data[a].reference_id +'</td>' +
+                                            '<td>'+ data[a].batch_id +'</td>' +
                                             '<td>'+ data[a].product.display_name +'</td>' +
                                             '<td>'+ data[a].quality +'; '+ data[a].quantity +' '+ data[a].unit +'</td>' +
                                             '<td class="text-right">'+ data[a].farmer.profile.first_name +' '+ data[a].farmer.profile.last_name +'</td>' +
@@ -339,13 +343,15 @@
                             products.push('' +
                                 '<tr>' +
                                 '<td>' +
-                                '<div class="i-checks">' +
-                                '<label>' +
-                                '<input type="checkbox" name="" class="modal-item" value="'+ data[a].id +'">' +
-                                '<i></i> ' + data[a].product.display_name +
-                                '</label>' +
-                                '</div>' +
+                                    '<div class="i-checks">' +
+                                    '<label>' +
+                                    '<input type="checkbox" name="" class="modal-item" value="'+ data[a].id +'">' +
+                                    '<i></i> ' + data[a].reference_id +
+                                    '</label>' +
+                                    '</div>' +
                                 '</td>' +
+                                '<td>'+ data[a].batch_id +'</td>' +
+                                '<td>'+ data[a].product.display_name +'</td>' +
                                 '<td>'+ data[a].quality +'; '+ data[a].quantity +' '+ data[a].unit +'</td>' +
                                 '<td class="text-right">'+ data[a].farmer.profile.first_name +' '+ data[a].farmer.profile.last_name +'</td>' +
                                 '</tr>' +
@@ -358,6 +364,8 @@
                             '<table class="table table-striped">' +
                                 '<thead>' +
                                 '<tr>' +
+                                    '<th>Product ID</th>' +
+                                    '<th>Batch ID</th>' +
                                     '<th>Product</th>' +
                                     '<th>Details</th>' +
                                     '<th class="text-right">Farmer</th>' +

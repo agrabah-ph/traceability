@@ -148,8 +148,11 @@ class InventoryController extends Controller
 
     public function inventoryListingStore(Request $request)
     {
+        $referenceId = Str::random(20);
         $details = $request->input('details');
         $inventory = new Inventory();
+        $inventory->batch_id = $details[9];
+        $inventory->reference_id = $referenceId;
         $inventory->leader_id = Auth::user()->leader->id;
         $inventory->farmer_id = $details[1];
         $inventory->product_id = $details[2];
@@ -170,6 +173,23 @@ class InventoryController extends Controller
             return response()->json($inventory);
         }
 
+    }
+
+    public function inventoryBatchListGet()
+    {
+        $data = Inventory::where('batch_id', '!=', null)
+            ->where('status', 'Accepted')
+            ->groupBy('batch_id')
+            ->pluck('batch_id')->all();
+        return response()->json($data);
+    }
+
+    public function inventoryBatchList(Request $request)
+    {
+        $data = Inventory::where('batch_id', $request->input('id'))
+            ->with('farmer', 'product')
+            ->get();
+        return response()->json($data);
     }
 
     public function inventoryListingDelete(Request $request)

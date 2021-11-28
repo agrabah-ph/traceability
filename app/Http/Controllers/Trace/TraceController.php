@@ -199,6 +199,12 @@ class TraceController extends Controller
         }
     }
 
+    public function resendTraceDetails($id){
+        emailNotification('trace-created', $id);
+
+        return redirect()->back();
+    }
+
     public function traceQrPrint($reference)
     {
         $data = Trace::where('reference', $reference)->first();

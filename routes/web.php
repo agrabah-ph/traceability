@@ -27,6 +27,7 @@ Route::get('qr-reader', 'PublicController@qrReader')->name('qr-reader');
 Route::get('sms-test', 'PublicController@smsTest')->name('sms-test');
 Route::get('test', 'PublicController@test')->name('test');
 Route::get('export', 'PublicController@export')->name('export');
+Route::get('submit-remark', 'PublicController@submitRemark')->name('submit-remark');
 
 
 //Auth::routes();
@@ -122,12 +123,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('inv-listing/{account}', 'InventoryController@farmerInventoryListing')->name('inv-listing');
     Route::post('inv-listing-store', 'InventoryController@inventoryListingStore')->name('inv-listing-store');
     Route::get('inv-listing-delete', 'InventoryController@inventoryListingDelete')->name('inv-listing-delete');
+    Route::get('inv-batch-list-get', 'InventoryController@inventoryBatchListGet')->name('inv-batch-list-get');
+    Route::get('inv-batch-list', 'InventoryController@inventoryBatchList')->name('inv-batch-list');
     // FARMER START
 
     // FARMER START
     Route::resource('trace', 'Trace\TraceController');
     Route::post('trace-store', 'Trace\TraceController@traceStore')->name('trace-store');
     Route::get('trace-qr-print/{reference}', 'Trace\TraceController@traceQrPrint')->name('trace-qr-print');
+    Route::get('resend-trace-details/{id}', 'Trace\TraceController@resendTraceDetails')->name('resend-trace-details');
     // Route::get('trace-shipped/{reference}', 'TraceController@traceShipped')->name('trace-shipped');
     // FARMER START
 

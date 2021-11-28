@@ -63,6 +63,7 @@
                                                             <th>Product</th>
                                                             <th>Detail</th>
                                                             <th class="text-right">Status</th>
+                                                            <th class="text-right">Remark</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody id="item-list">
@@ -71,9 +72,25 @@
                                                                 <td>{{ $data->product->display_name }}</td>
                                                                 <td>{{ $data->quality }}; {{ $data->quantity }} {{ $data->unit }}</td>
                                                                 <td class="text-right">{{ $data->status }}</td>
+                                                                <td class="text-right">
+                                                                    @if($data->receiver_remark == null)
+                                                                        <textarea name="" class="form-control no-resize"></textarea>
+                                                                        <button type="button" class="btn btn-success btn-block btn-action" data-action="submit-remark" data-id="{{ $data->id }}">Submit Remark</button>
+                                                                    @else
+                                                                        <p>{{ $data->receiver_remark }}</p>
+                                                                    @endif
+
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                         </tbody>
+{{--                                                        <tfoot>--}}
+{{--                                                        <tr>--}}
+{{--                                                            <td colspan="4">--}}
+{{--                                                                <button type="button" class="btn btn-success btn-block">Submit Remarks</button>--}}
+{{--                                                            </td>--}}
+{{--                                                        </tr>--}}
+{{--                                                        </tfoot>--}}
                                                     </table>
                                                 </div>
                                             </div>
@@ -118,7 +135,23 @@
     {{--        {!! Html::script('') !!}--}}
     <script>
         $(document).ready(function(){
+            $(document).on('click', '.btn-action', function(){
+                var container = $(this).closest('td');
+                var id = $(this).data('id');
+                var remark = $(this).closest('td').find('textarea').val();
 
+                console.log(id);
+                console.log(remark);
+
+                $.get('{!! route('submit-remark') !!}', {
+                    id: id,
+                    remark: remark
+                }, function(data){
+                    if(data.receiver_remark !== null){
+                        container.empty().append('<p>'+ data.receiver_remark +'</p>')
+                    }
+                });
+            })
         });
     </script>
 @endsection

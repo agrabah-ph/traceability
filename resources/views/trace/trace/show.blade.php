@@ -47,6 +47,9 @@
                                     <h3 class="mb-0">{{ $trace->receiver->text_0 }}</h3>
                                     <small class="text-success">Address</small>
                                 </div>
+                                <div class="mb-2">
+                                    <a href="{!! route('resend-trace-details', array('id' => $trace->id )) !!}" class="btn btn-info">Resend Email</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -111,6 +114,7 @@
                                             <th class="text-right">Farmer</th>
                                             <th class="text-right">Community Leader</th>
                                             <th class="text-right">Status</th>
+                                            <th class="text-right">Receiver Remark</th>
                                         </tr>
                                         </thead>
                                         <tbody id="item-list">
@@ -121,6 +125,7 @@
                                                 <td class="text-right">{{ $data->farmer->profile->first_name }} {{ $data->farmer->profile->last_name }}</td>
                                                 <td class="text-right">{{ $data->leader->profile->first_name }} {{ $data->leader->profile->last_name }}</td>
                                                 <td class="text-right">{{ $data->status }}</td>
+                                                <td class="text-right"><p>{{ $data->receiver_remark }}</p></td>
                                             </tr>
                                         @endforeach
                                         </tbody>
