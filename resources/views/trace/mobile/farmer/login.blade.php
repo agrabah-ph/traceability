@@ -50,8 +50,10 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body">
-                    <div id="qr-reader" style="width:300px"></div>
+                    <div id="qr-reader" style="width:100%"></div>
                     <div id="qr-reader-results"></div>
+{{--                    <div id="qr-reader-width"></div>--}}
+{{--                    <div id="qr-width"></div>--}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
@@ -76,8 +78,15 @@
     <script>
         $(document).ready(function(){
             var modal = $('#modal');
-            var resultContainer = $('#qr-reader-results');
+            var resultContainer = $('#farmer-id-input');
             var lastResult, countResults = 0;
+
+            var qrReaderWidth = $('#qr-reader').width();
+            var qrReader = parseInt(qrReaderWidth) - 200;
+
+            var html5QrcodeScanner = new Html5QrcodeScanner(
+                "qr-reader", { fps: 10, qrbox: 200 }
+            );
 
             function onScanSuccess(decodedText, decodedResult) {
                 if (decodedText !== lastResult) {
@@ -85,13 +94,14 @@
                     lastResult = decodedText;
                     // Handle on success condition with the decoded message.
                     console.log(`Scan result ${decodedText}`, decodedResult);
-                    resultContainer.text(decodedText);
+                    resultContainer.val(decodedText);
+                    modal.modal('toggle');
+
+                    html5QrcodeScanner.html5Qrcode.stop()
                 }
             }
 
-            var html5QrcodeScanner = new Html5QrcodeScanner(
-                "qr-reader", { fps: 10, qrbox: 250 }
-            );
+
 
             $(document).on('click', '#scan-qr', function(){
                 console.log('modal click');
@@ -101,19 +111,35 @@
                 modal.find('.modal-title').text('Scan QR Code');
                 modal.find('#modal-size').removeClass().addClass('modal-dialog modal-sm');
                 // modal.find('.modal-body').empty().append('' +
-                //     '<div id="qr-reader" style="width:300px"></div>' +
+                //     '<div id="qr-reader" style="width: 100%"></div>' +
                 //     '<div id="qr-reader-results"></div>' +
+                //     // '<div id="qr-reader-width"></div>' +
+                //     // '<div id="qr-width"></div>' +
                 // '');
 
                 modal.modal({backdrop: 'static', keyboard: false});
             });
 
             $(document).on('shown.bs.modal', function (event) {
+
+
+
+
+
                 switch (modal.data('type')) {
                     case 'qr-scan':
-                        modal.find('.modal-header').hide();
+                        modal.find('#qr-reader-width').text(qrReaderWidth);
+                        modal.find('#qr-width').text(qrReader);
+                        modal.find('.modal-title').hide();
                         modal.find('.modal-footer').hide();
                         html5QrcodeScanner.render(onScanSuccess);
+                        break;
+                }
+            });
+
+            $(document).on('show.bs.modal', function (event) {
+                switch (modal.data('type')) {
+                    case 'qr-scan':
                         break;
                 }
             });
@@ -121,7 +147,7 @@
             $(document).on('hidden.bs.modal', function (event) {
                 switch (modal.data('type')) {
                     case 'qr-scan':
-                        modal.find('.modal-header').show();
+                        modal.find('.modal-title').show();
                         modal.find('.modal-footer').show();
                         break;
                 }
