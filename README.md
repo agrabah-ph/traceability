@@ -39,4 +39,4 @@ Agrabah knows that with a better marketplace, we can help our Filipino farmers a
 1. install dependencies with ```composer install```    
 1. if database is empty, install migration with ```artisan migrate:install```
 1. run migration ```artisan migrate```
-1. browse to http://agrabah-trace.test
+1. browse to https://trace.agrabah.ph/
