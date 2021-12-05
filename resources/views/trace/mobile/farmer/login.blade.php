@@ -101,8 +101,6 @@
                 }
             }
 
-
-
             $(document).on('click', '#scan-qr', function(){
                 console.log('modal click');
                 modal.data('type', 'qr-scan');
@@ -121,11 +119,6 @@
             });
 
             $(document).on('shown.bs.modal', function (event) {
-
-
-
-
-
                 switch (modal.data('type')) {
                     case 'qr-scan':
                         modal.find('#qr-reader-width').text(qrReaderWidth);
