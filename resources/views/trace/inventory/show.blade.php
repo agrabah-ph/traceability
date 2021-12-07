@@ -46,6 +46,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Product details</h5>
+                        </div>
+                        <div class="ibox-content">
+
+                        </div>
+                    </div>
+                </div>
             </div>
     </div>
 

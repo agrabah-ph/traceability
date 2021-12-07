@@ -45,22 +45,25 @@
                             <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
                             <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Reference #</th>
+                                <th>Batch #</th>
                                 <th>Details</th>
                                 <th>Status</th>
                                 <th>Farmer</th>
-                                <th>Comm. Leader</th>
                                 <th class="text-right" data-sort-ignore="true"><i class="fa fa-cogs text-success"></i></th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($datas as $data)
                                 <tr>
-                                    <td>{{ $data->product->display_name }}</td>
-                                    <td>{{ $data->quality }}; {{ $data->quantity }} {{ $data->unit }}</td>
+                                    <td>{{ $data->reference_id }}</td>
+                                    <td>{{ $data->batch_id }}</td>
+                                    <td>
+                                        {{ $data->product->display_name }} <br>
+                                        {{ $data->quality }}; {{ $data->quantity }} {{ $data->unit }}
+                                    </td>
                                     <td>{{ $data->status }}</td>
                                     <td>{{ $data->farmer->profile->first_name }} {{ $data->farmer->profile->last_name }}</td>
-                                    <td>{{ $data->leader->profile->first_name }} {{ $data->leader->profile->last_name }}</td>
                                     <td class="text-right">
                                         <div class="btn-group text-right">
                                             <a href="{{ route('inventory.show', array('inventory'=>$data)) }}" class="action btn-white btn btn-xs"><i class="fa fa-search text-success"></i> Show</a>
