@@ -56,7 +56,8 @@
                             <tbody>
                             @foreach($datas as $data)
                                 <tr>
-                                    <td>{{ $data->reference_id }}</td>
+{{--                                    <td>{{ $data->reference_id }}</td>--}}
+                                    <td>{!! QrCode::size(50)->generate($data->reference_id); !!} {{ $data->reference_id }}</td>
                                     <td>{{ $data->batch_id }}</td>
                                     <td>
                                         {{ $data->product->display_name }} <br>

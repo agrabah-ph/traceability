@@ -46,16 +46,31 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+{{--                <div style="width: 340px;">--}}
+                <div class="col-auto">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Product details</h5>
+                            <h5>Inventory ID</h5>
                         </div>
                         <div class="ibox-content">
-
+                            {!! QrCode::size(150)->generate($inventory->reference_id); !!} <br><br>
+                            <a href="{{ route('inventory-qr-print', array('id'=>$inventory->reference_id)) }}" class="btn btn-white btn-block" target="_blank"><i class="fa fa-print text-success"></i></a>
                         </div>
                     </div>
                 </div>
+                @if($inventory->batch_id !== null)
+                <div class="col-auto">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Batch ID</h5>
+                        </div>
+                        <div class="ibox-content">
+                            {!! QrCode::size(150)->generate($inventory->batch_id); !!} <br><br>
+                            <a href="{{ route('inventory-qr-print', array('id'=>$inventory->batch_id)) }}" class="btn btn-white btn-block" target="_blank"><i class="fa fa-print text-success"></i></a>
+                        </div>
+                    </div>
+                </div>
+                @endif
             </div>
     </div>
 
