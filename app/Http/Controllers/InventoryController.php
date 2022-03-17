@@ -197,8 +197,8 @@ class InventoryController extends Controller
         Inventory::where('id', $request->input('id'))->delete();
     }
 
-    public function qrPrint($id)
+    public function qrPrint($id, $type)
     {
-        return view('trace.inventory.print', compact('id'));
+        return view('trace.inventory.print', compact('id', 'type'));
     }
 }

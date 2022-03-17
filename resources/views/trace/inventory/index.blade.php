@@ -50,6 +50,7 @@
                                 <th>Details</th>
                                 <th>Status</th>
                                 <th>Farmer</th>
+                                <th>Timestamp</th>
                                 <th class="text-right" data-sort-ignore="true"><i class="fa fa-cogs text-success"></i></th>
                             </tr>
                             </thead>
@@ -65,6 +66,7 @@
                                     </td>
                                     <td>{{ $data->status }}</td>
                                     <td>{{ $data->farmer->profile->first_name }} {{ $data->farmer->profile->last_name }}</td>
+                                    <td>{{ $data->created_at }}</td>
                                     <td class="text-right">
                                         <div class="btn-group text-right">
                                             <a href="{{ route('inventory.show', array('inventory'=>$data)) }}" class="action btn-white btn btn-xs"><i class="fa fa-search text-success"></i> Show</a>

@@ -41,6 +41,7 @@ class PublicController extends Controller
             $trace->info()->save($modelInfo);
             $trace->active = 0;
             $trace->delivered = 1;
+            $trace->note = $request->input('note');
             $trace->save();
             Trace::find($trace->id)->inventories()->update(array(
                 'status'=>'Delivered'
@@ -57,6 +58,7 @@ class PublicController extends Controller
     public function traceUpdate(Request $request)
     {
         $action = $request->input('action');
+        $note = $request->input('note');
         $update = '';
         $trace = Trace::find($request->input('id'));
         $modelInfo = new ModelInfo();
@@ -83,12 +85,14 @@ class PublicController extends Controller
                 $modelInfo->value_1 = 'Delivered to Client';
                 $trace->active = 0;
                 $trace->delivered = 1;
+                $trace->note = $note;
                 break;
             case 'Undeliverable':
                 $update = $action;
                 $modelInfo->value_0 = $action;
                 $modelInfo->value_1 = 'Unable to Deliver';
                 $trace->active = 0;
+                $trace->note = $note;
                 break;
         }
         $trace->save();

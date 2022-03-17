@@ -39,6 +39,11 @@
                                     <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
                                 </div>
                             </div>
+                            <div class="col-sm-8 text-right">
+                                <div class="form-group">
+                                    <a href="{!! route('trace.create') !!}" class="btn btn-success btn-action">Create Trace</a>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="table-responsive">
@@ -49,16 +54,18 @@
                                 <th>Client</th>
                                 <th>Client Address</th>
                                 <th>Status</th>
+                                <th>Timestamp</th>
                                 <th class="text-right" data-sort-ignore="true"><i class="fa fa-cogs text-success"></i></th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($datas as $data)
                                 <tr>
-                                    <td>{{ $data->reference }}</td>
+                                    <td>Batch ID: {{ $data->reference }}</td>
                                     <td>{{ $data->receiver->value_0 }}</td>
                                     <td>{{ $data->receiver->text_0 }}</td>
                                     <td>{{ $data->status }}</td>
+                                    <td>{{ $data->created_at }}</td>
                                     <td class="text-right">
                                         <div class="btn-group text-right">
                                             <a href="{{ route('trace.show', array('trace'=>$data)) }}" class="action btn-white btn btn-xs"><i class="fa fa-search text-success"></i> Show</a>

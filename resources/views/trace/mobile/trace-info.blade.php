@@ -90,6 +90,10 @@
 {{--                            </div>--}}
                             @switch($data->trace)
                                 @case('Arrive')
+                                <div class="form-group col-sm-12">
+                                    <label><strong class="text-uppercase">Note:</strong></label>
+                                    <textarea class="form-control note" name="note" rows="3"></textarea>
+                                </div>
                                 <div class="col-sm-6">
                                     <button class="btn btn-block btn-success btn-action p-3" data-id="{{ $data->id }}" data-action="Delivered">DELIVERED</button>
                                 </div>
@@ -98,7 +102,7 @@
                                 </div>
                                 @break
                                 @default
-                                <div class="col-sm-12">
+                                <div class="form-group col-sm-12">
                                     <button class="btn btn-block btn-success btn-action p-3" data-id="{{ $data->id }}" data-action="{{ $data->trace }}">
                                         @switch($data->trace)
                                             @case('Loaded')
@@ -149,7 +153,13 @@
     <script>
         $(document).ready(function(){
             $(document).on('click', '.btn-action', function(){
+                localStorage.setItem('note', $('.note').val());
+                setTimeout(() => { 
+                    $('.status-btn-box').find('input[name=note]').val(localStorage.getItem('note'));
+                }, 500);
+
                 var id = $(this).data('id');
+
                 let action;
                 console.log('id: '+ id);
                 console.log('action: '+ $(this).data('action'));
@@ -176,8 +186,10 @@
                         break;
                     case 'Reference':
                         var input = $('.status-btn-box').find('input[name=code]');
+                        var note = $('.status-btn-box').find('input[name=note]').val();
                         $.get('{!! route('trace-shipped') !!}', {
-                            code: input.val()
+                            code: input.val(),
+                            note: note
                         }, function(data){
                             if(data === 'success'){
                                 swal({
@@ -221,6 +233,7 @@
                     if (isConfirm) {
                         $.get('{!! route('trace-update-status') !!}', {
                             id: id,
+                            note: $('.note').val(),
                             action: action
                         }, function(){
                             location.reload();
@@ -238,6 +251,7 @@
                         box.empty().append('' +
                             '<div class="farmer-login text-center">' +
                                 '<div class="form-group mb-3">' +
+                                    '<input type="hidden" name="note" class="form-control">' +
                                     '<input type="text" name="code" class="form-control">' +
                                     '<label><strong class="text-uppercase">receiver REFERENCE ID</strong></label>' +
                                 '</div>' +
@@ -248,7 +262,7 @@
                     case 'Reference':
                         // box.empty().append('' +
                         //     '<div class="col-sm-6">' +
-                        //         '<button class="btn btn-block btn-success btn-action p-3" data-id="" data-action="Delivered">DELIVERED</button>' +
+                        //         '<button class"=btn btn-block btn-success btn-action p-3" data-id="" data-action="Delivered">DELIVERED</button>' +
                         //     '</div>' +
                         //     '<div class="col-sm-6">' +
                         //         '<button class="btn btn-block btn-danger btn-action p-3" data-id="" data-action="Returned">UNDELIVERABLE</button>' +

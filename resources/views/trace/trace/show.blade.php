@@ -155,6 +155,10 @@
                                     <div class="col-7 content">
                                         <p class="m-b-xs"><strong>{{ $timeline->value_0 }}</strong></p>
                                         <p>{{ $timeline->value_1 }}</p>
+                                        @if ($timeline->value_0 == "Delivered" && $trace->note || $timeline->value_0 == "Undeliverable" && $trace->note)
+                                            <p><strong>NOTE:</strong></p>
+                                            <p>{{ $trace->note }}</p>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

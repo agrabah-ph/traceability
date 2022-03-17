@@ -8,6 +8,21 @@
     <section class="container animated fadeInRight">
         <div class="row">
             <div class="col-lg-3">
+                <a href="{{ route('trace.index') }}">
+                    <div class="widget style1 yellow-bg">
+                        <div class="row">
+                            <div class="col-4">
+                                <i class="fa fa-truck fa-5x"></i>
+                            </div>
+                            <div class="col-8 text-right">
+                                <span> Create Trace </span>
+                                <h2 class="font-bold">{{ $trace }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
                 <a href="{{ route('farmer-login') }}">
                     <div class="widget style1 blue-bg">
                         <div class="row">
@@ -46,21 +61,6 @@
                             <div class="col-8 text-right">
                                 <span> Inventories </span>
                                 <h2 class="font-bold">{{ $inventory }}</h2>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3">
-                <a href="{{ route('trace.index') }}">
-                    <div class="widget style1 yellow-bg">
-                        <div class="row">
-                            <div class="col-4">
-                                <i class="fa fa-truck fa-5x"></i>
-                            </div>
-                            <div class="col-8 text-right">
-                                <span> Trace </span>
-                                <h2 class="font-bold">{{ $trace }}</h2>
                             </div>
                         </div>
                     </div>

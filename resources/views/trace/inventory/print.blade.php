@@ -17,7 +17,11 @@
             <div class="div p-3">
                 {!! QrCode::size(250)->generate($id); !!}
             </div>
-            <h4>{{ $id }}</h4>
+            @if ($type == "inventory_id")
+                <h4>Inventory ID: {{ $id }}</h4>
+            @elseif ($type == "batch_id")
+                <h4>Batch ID: {{ $id }}</h4>
+            @endif
         </div>
     </section>
 

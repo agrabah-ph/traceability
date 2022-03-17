@@ -118,7 +118,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // FARMER START
     Route::resource('inventory', 'InventoryController');
-    Route::get('inventory-qr-print/{id}', 'InventoryController@qrPrint')->name('inventory-qr-print');
+    Route::get('inventory-qr-print/{id}/type={type}', 'InventoryController@qrPrint')->name('inventory-qr-print');
     Route::get('farmer-inventory-list', 'InventoryController@farmerInventoryList')->name('farmer-inventory-list');
     Route::get('farmer-inventory-list-item', 'InventoryController@farmerInventoryListItem')->name('farmer-inventory-list-item');
     Route::get('inv-listing/{account}', 'InventoryController@farmerInventoryListing')->name('inv-listing');

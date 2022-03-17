@@ -14,9 +14,9 @@
         <a href="{!! route('farmer.index') !!}"><i class="fa fa-users"></i> <span class="nav-label">Farmer</span></a>
     </li>
 
-    <li class="{{ (request()->is('inventory*')) ? 'active' : '' }}">
+    <!-- <li class="{{ (request()->is('inventory*')) ? 'active' : '' }}">
         <a href="{!! route('inventory.index') !!}"><i class="fa fa-list-alt"></i> <span class="nav-label">Inventory</span></a>
-    </li>
+    </li> -->
 
     <li class="{{ (request()->is('product*')) ? 'active' : '' }}">
         <a href="{!! route('product.index') !!}"><i class="fa fa-cubes"></i> <span class="nav-label">Products</span></a>
